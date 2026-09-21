@@ -15,3 +15,9 @@ declare module "*.module.css" {
   const classes: { readonly [key: string]: string };
   export = classes;
 }
+
+/**
+ * Plain stylesheets are imported for their side effects only (Bun's bundler
+ * inlines them). Declared so `tsc --noEmit` accepts `import "./index.css"`.
+ */
+declare module "*.css";

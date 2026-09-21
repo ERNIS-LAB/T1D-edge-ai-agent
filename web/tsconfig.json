@@ -21,7 +21,8 @@
     "noUncheckedIndexedAccess": true,
     "noImplicitOverride": true,
 
-    "baseUrl": ".",
+    // No "baseUrl": it was removed in TypeScript 7, and "paths" resolves
+    // relative to this file without it.
     "paths": {
       "@/*": ["./src/*"]
     },
