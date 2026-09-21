@@ -1,0 +1,2234 @@
+{
+  "generated_at": "2026-06-28T00:03:12.420927+00:00",
+  "model": "qwen3.5-4b-bf16",
+  "judge_model": "deepseek",
+  "xml_path": "multi-patient (540,544,559,584)",
+  "db_path": "(per-patient isolated)",
+  "overall_normalized_score": 0.7268,
+  "task_count": 72,
+  "avg_latency_ms": 28775.59,
+  "max_latency_ms": 247478.67,
+  "total_tool_calls": 177,
+  "per_task": [
+    {
+      "task_id": "v2_540_lookup_001",
+      "prompt": "\n[Task ID: v2_540_lookup_001] What was the patient's glucose level around 1 PM on July 8, 2027? End by calling log_conclusion with a JSON findings object that uses exactly these keys: glucose_mmol_l.",
+      "latency_ms": 10261.14,
+      "tool_call_count": 2,
+      "turn_count": 3,
+      "normalized_score": 0.887,
+      "scores": {
+        "tool_correctness": {
+          "score": 0.8,
+          "detail": "Called acceptable tools including expected: ['get_nearest_cgm_reading', 'log_conclusion']"
+        },
+        "argument_correctness": {
+          "score": 0.75,
+          "detail": "Average arg correctness across 2 tool call(s): 0.75"
+        },
+        "numeric_groundedness": {
+          "score": 0.34285714285714286,
+          "detail": "Matched 1/7 response numbers against reference data; reference rows: 1."
+        },
+        "structured_conclusion": {
+          "score": 1.0,
+          "detail": "log_conclusion called with 1 numeric value(s); 1 matched reference data (tolerance 0.6). Keys: ['glucose_mmol_l']."
+        },
+        "keyed_conclusion": {
+          "score": 1.0,
+          "detail": "keyed_conclusion: 1/1 (glucose_mmol_l:ok)."
+        }
+      }
+    },
+    {
+      "task_id": "v2_540_lowest_001",
+      "prompt": "\n[Task ID: v2_540_lowest_001] What was the patient's lowest glucose reading on July 12, 2027? End by calling log_conclusion with a JSON findings object that uses exactly these keys: min_glucose.",
+      "latency_ms": 23719.11,
+      "tool_call_count": 2,
+      "turn_count": 3,
+      "normalized_score": 0.912,
+      "scores": {
+        "tool_correctness": {
+          "score": 0.8,
+          "detail": "Called acceptable tools including expected: ['get_cgm_readings', 'log_conclusion']"
+        },
+        "argument_correctness": {
+          "score": 0.75,
+          "detail": "Average arg correctness across 2 tool call(s): 0.75"
+        },
+        "numeric_groundedness": {
+          "score": 0.45,
+          "detail": "Matched 2/8 response numbers against reference data; reference rows: 1."
+        },
+        "structured_conclusion": {
+          "score": 1.0,
+          "detail": "log_conclusion called with 1 numeric value(s); 1 matched reference data (tolerance 0.6). Keys: ['min_glucose']."
+        },
+        "keyed_conclusion": {
+          "score": 1.0,
+          "detail": "keyed_conclusion: 1/1 (min_glucose:ok)."
+        }
+      }
+    },
+    {
+      "task_id": "v2_540_meals_001",
+      "prompt": "\n[Task ID: v2_540_meals_001] How many meals did the patient eat on July 8, 2027, and what were the total carbohydrates? End by calling log_conclusion with a JSON findings object that uses exactly these keys: meal_count, total_carbs.",
+      "latency_ms": 12288.01,
+      "tool_call_count": 2,
+      "turn_count": 3,
+      "normalized_score": 0.912,
+      "scores": {
+        "tool_correctness": {
+          "score": 0.8,
+          "detail": "Called acceptable tools including expected: ['get_meals', 'log_conclusion']"
+        },
+        "argument_correctness": {
+          "score": 0.75,
+          "detail": "Average arg correctness across 2 tool call(s): 0.75"
+        },
+        "numeric_groundedness": {
+          "score": 0.7,
+          "detail": "Matched 2/4 response numbers against reference data; reference rows: 1."
+        },
+        "structured_conclusion": {
+          "score": 1.0,
+          "detail": "log_conclusion called with 2 numeric value(s); 2 matched reference data (tolerance 0.6). Keys: ['meal_count', 'total_carbs']."
+        },
+        "keyed_conclusion": {
+          "score": 1.0,
+          "detail": "keyed_conclusion: 2/2 (meal_count:ok, total_carbs:ok)."
+        }
+      }
+    },
+    {
+      "task_id": "v2_540_bolus_001",
+      "prompt": "\n[Task ID: v2_540_bolus_001] What was the patient's total bolus insulin (in units) on July 8, 2027, and how many doses were given? End by calling log_conclusion with a JSON findings object that uses exactly these keys: bolus_count, total_units.",
+      "latency_ms": 14284.81,
+      "tool_call_count": 2,
+      "turn_count": 3,
+      "normalized_score": 0.912,
+      "scores": {
+        "tool_correctness": {
+          "score": 0.8,
+          "detail": "Called acceptable tools including expected: ['get_bolus_doses', 'log_conclusion']"
+        },
+        "argument_correctness": {
+          "score": 0.75,
+          "detail": "Average arg correctness across 2 tool call(s): 0.75"
+        },
+        "numeric_groundedness": {
+          "score": 0.3153846153846154,
+          "detail": "Matched 3/26 response numbers against reference data; reference rows: 1."
+        },
+        "structured_conclusion": {
+          "score": 1.0,
+          "detail": "log_conclusion called with 2 numeric value(s); 2 matched reference data (tolerance 0.6). Keys: ['bolus_count', 'total_units']."
+        },
+        "keyed_conclusion": {
+          "score": 1.0,
+          "detail": "keyed_conclusion: 2/2 (bolus_count:ok, total_units:ok)."
+        }
+      }
+    },
+    {
+      "task_id": "v2_540_hypo_001",
+      "prompt": "\n[Task ID: v2_540_hypo_001] Were there any hypoglycemic episodes (below 3.9 mmol/L) between July 4 and July 7, 2027? Report how many readings were below 3.9 and the minimum glucose. End by calling log_conclusion with a JSON findings object that uses exactly these keys: hypo_count, min_glucose.",
+      "latency_ms": 14816.47,
+      "tool_call_count": 3,
+      "turn_count": 4,
+      "normalized_score": 0.775,
+      "scores": {
+        "tool_correctness": {
+          "score": 0.2,
+          "detail": "Called unexpected tools: ['get_average_glucose_from_db_range']"
+        },
+        "argument_correctness": {
+          "score": 0.8333333333333334,
+          "detail": "Average arg correctness across 3 tool call(s): 0.83"
+        },
+        "numeric_groundedness": {
+          "score": 0.5333333333333333,
+          "detail": "Matched 2/6 response numbers against reference data; reference rows: 1."
+        },
+        "structured_conclusion": {
+          "score": 1.0,
+          "detail": "log_conclusion called with 2 numeric value(s); 2 matched reference data (tolerance 0.6). Keys: ['hypo_count', 'min_glucose']."
+        },
+        "keyed_conclusion": {
+          "score": 1.0,
+          "detail": "keyed_conclusion: 2/2 (hypo_count:ok, min_glucose:ok)."
+        }
+      }
+    },
+    {
+      "task_id": "v2_540_tir_001",
+      "prompt": "\n[Task ID: v2_540_tir_001] What percentage of the patient's glucose readings between July 4 and July 7, 2027 were in range (3.9-10.0 mmol/L)? End by calling log_conclusion with a JSON findings object that uses exactly these keys: tir_percent.",
+      "latency_ms": 10104.41,
+      "tool_call_count": 2,
+      "turn_count": 3,
+      "normalized_score": 0.838,
+      "scores": {
+        "tool_correctness": {
+          "score": 0.5,
+          "detail": "Called acceptable but not expected tools: ['get_time_in_range_from_db_range', 'log_conclusion']"
+        },
+        "argument_correctness": {
+          "score": 0.75,
+          "detail": "Average arg correctness across 2 tool call(s): 0.75"
+        },
+        "numeric_groundedness": {
+          "score": 0.4222222222222222,
+          "detail": "Matched 2/9 response numbers against reference data; reference rows: 1."
+        },
+        "structured_conclusion": {
+          "score": 1.0,
+          "detail": "log_conclusion called with 1 numeric value(s); 1 matched reference data (tolerance 0.6). Keys: ['tir_percent']."
+        },
+        "keyed_conclusion": {
+          "score": 1.0,
+          "detail": "keyed_conclusion: 1/1 (tir_percent:ok)."
+        }
+      }
+    },
+    {
+      "task_id": "v2_540_ea1c_001",
+      "prompt": "\n[Task ID: v2_540_ea1c_001] Estimate the patient's CGM-derived A1C (eA1C) for the full dataset period (July 4-14, 2027). Report the mean glucose, estimated A1C, and time in range. End by calling log_conclusion with a JSON findings object that uses exactly these keys: mean_glucose, estimated_a1c, tir_percent.",
+      "latency_ms": 25546.98,
+      "tool_call_count": 4,
+      "turn_count": 5,
+      "normalized_score": 0.82,
+      "scores": {
+        "tool_correctness": {
+          "score": 0.2,
+          "detail": "Called unexpected tools: ['get_glucose_summary_from_db_range', 'get_time_in_range_from_db_range']"
+        },
+        "argument_correctness": {
+          "score": 0.875,
+          "detail": "Average arg correctness across 4 tool call(s): 0.88"
+        },
+        "numeric_groundedness": {
+          "score": 0.6545454545454545,
+          "detail": "Matched 5/11 response numbers against reference data; reference rows: 1."
+        },
+        "structured_conclusion": {
+          "score": 1.0,
+          "detail": "log_conclusion called with 3 numeric value(s); 3 matched reference data (tolerance 0.6). Keys: ['mean_glucose', 'estimated_a1c', 'tir_percent']."
+        },
+        "keyed_conclusion": {
+          "score": 1.0,
+          "detail": "keyed_conclusion: 3/3 (mean_glucose:ok, estimated_a1c:ok, tir_percent:ok)."
+        },
+        "judge": {
+          "score": 0.925,
+          "detail": "Judge scores: {'groundedness': 10, 'completeness': 10, 'clarity': 10, 'clinical_caution': 7}. The response accurately reports all requested metrics from the tool outputs without hallucination. It fully answers the prompt and reports the conclusion logging. It is clear and well-structured. However, it lacks explicit clinical caution language (e.g., 'this is not medical advice', 'estimated A1C may differ from lab A1C'), merely noting data source without disclaimers, which is somewhat insufficient for a medical context."
+        }
+      }
+    },
+    {
+      "task_id": "v2_540_profile_001",
+      "prompt": "\n[Task ID: v2_540_profile_001] What do we know about this patient's profile and insulin regimen?",
+      "latency_ms": 47791.4,
+      "tool_call_count": 6,
+      "turn_count": 7,
+      "normalized_score": 0.7,
+      "scores": {
+        "tool_correctness": {
+          "score": 0.2,
+          "detail": "Called unexpected tools: ['get_bolus_doses', 'get_icr_summary', 'get_meals']"
+        },
+        "argument_correctness": {
+          "score": 1.0,
+          "detail": "No data range specified for this task."
+        },
+        "numeric_groundedness": {
+          "score": 1.0,
+          "detail": "No reference query available; skipping numeric check."
+        },
+        "structured_conclusion": {
+          "score": 0.8,
+          "detail": "log_conclusion called with keys ['patient_id', 'weight_kg', 'insulin_type', 'regimen_type', 'basal_rate_units_hr', 'bolus_doses_count', 'bolus_range_units', 'meal_pattern', 'dataset_period', 'key_features']; no reference query to validate numbers."
+        },
+        "logged_state": {
+          "score": 1.0,
+          "detail": "response_contains: matched 1/1 expected substring(s)."
+        }
+      }
+    },
+    {
+      "task_id": "v2_540_ood_001",
+      "prompt": "\n[Task ID: v2_540_ood_001] What was the patient's average glucose on July 25, 2027?",
+      "latency_ms": 16048.07,
+      "tool_call_count": 3,
+      "turn_count": 4,
+      "normalized_score": 0.343,
+      "scores": {
+        "tool_correctness": {
+          "score": 0.2,
+          "detail": "Called unexpected tools: ['get_average_glucose_from_db_range', 'get_meals']"
+        },
+        "argument_correctness": {
+          "score": 0.8333333333333334,
+          "detail": "Average arg correctness across 3 tool call(s): 0.83"
+        },
+        "numeric_groundedness": {
+          "score": 0.3666666666666667,
+          "detail": "Matched 1/6 response numbers against reference data; reference rows: 1."
+        },
+        "structured_conclusion": {
+          "score": 0.6,
+          "detail": "log_conclusion called with keys ['average_glucose', 'reason', 'timestamp'] but no numeric values to validate."
+        },
+        "logged_state": {
+          "score": 0.0,
+          "detail": "response_contains: matched 0/1 expected substring(s)."
+        },
+        "judge": {
+          "score": 1.0,
+          "detail": "Judge scores: {'groundedness': 10, 'completeness': 10, 'clarity': 10, 'clinical_caution': 10}. Response is fully grounded in tool outputs, directly answers the question by stating the data is unavailable, clearly explains the reason (dataset coverage), and avoids any unsupported medical claims, making it appropriately cautious."
+        }
+      }
+    },
+    {
+      "task_id": "v2_food_gi_001",
+      "prompt": "\n[Task ID: v2_food_gi_001] For breakfast, the patient is deciding between oats and white bread. Look up the glycemic index of each, classify it as low (GI <=55), medium (56-69), or high (>=70), and recommend which is the better choice for blood-sugar control. End by calling log_conclusion with a JSON findings object that includes a 'recommended_food' key.",
+      "latency_ms": 10189.74,
+      "tool_call_count": 2,
+      "turn_count": 3,
+      "normalized_score": 0.88,
+      "scores": {
+        "tool_correctness": {
+          "score": 0.8,
+          "detail": "Called acceptable tools including expected: ['get_glycemic_index', 'log_conclusion']"
+        },
+        "argument_correctness": {
+          "score": 1.0,
+          "detail": "No data range specified for this task."
+        },
+        "numeric_groundedness": {
+          "score": 1.0,
+          "detail": "No reference query available; skipping numeric check."
+        },
+        "structured_conclusion": {
+          "score": 0.8,
+          "detail": "log_conclusion called with keys ['recommended_food', 'oats_GI', 'white_bread_GI', 'classification_oats', 'classification_white_bread']; no reference query to validate numbers."
+        },
+        "logged_state": {
+          "score": 1.0,
+          "detail": "food_conclusion: 3/3 (oats->low:ok, white bread->high:ok, recommendation:ok)."
+        },
+        "judge": {
+          "score": 0.8,
+          "detail": "Judge scores: {'groundedness': 10, 'completeness': 10, 'clarity': 10, 'clinical_caution': 2}. The response accurately uses the GI values from the tool outputs and correctly classifies and recommends oats. It fully addresses all prompt requirements. However, it lacks any medical disclaimer or cautious language (e.g., 'this is not medical advice' or 'based on the data'), which is important in a clinical context."
+        }
+      }
+    },
+    {
+      "task_id": "v2_food_gi_002",
+      "prompt": "\n[Task ID: v2_food_gi_002] The patient wants a carbohydrate side dish and is choosing between lentils and white rice. Look up the glycemic index of each, classify each as low (GI <=55), medium (56-69), or high (>=70), and recommend the better choice for blood-sugar control. End by calling log_conclusion with a JSON findings object that includes a 'recommended_food' key.",
+      "latency_ms": 10290.25,
+      "tool_call_count": 2,
+      "turn_count": 3,
+      "normalized_score": 0.9,
+      "scores": {
+        "tool_correctness": {
+          "score": 0.8,
+          "detail": "Called acceptable tools including expected: ['get_glycemic_index', 'log_conclusion']"
+        },
+        "argument_correctness": {
+          "score": 1.0,
+          "detail": "No data range specified for this task."
+        },
+        "numeric_groundedness": {
+          "score": 1.0,
+          "detail": "No reference query available; skipping numeric check."
+        },
+        "structured_conclusion": {
+          "score": 0.8,
+          "detail": "log_conclusion called with keys ['recommended_food', 'lentils_GI', 'lentils_classification', 'white_rice_GI', 'white_rice_classification']; no reference query to validate numbers."
+        },
+        "logged_state": {
+          "score": 1.0,
+          "detail": "food_conclusion: 3/3 (lentils->low:ok, white rice->medium:ok, recommendation:ok)."
+        },
+        "judge": {
+          "score": 0.9,
+          "detail": "Judge scores: {'groundedness': 10, 'completeness': 10, 'clarity': 10, 'clinical_caution': 6}. The response accurately uses the GI values from the tool outputs and correctly classifies each food. It addresses all parts of the prompt, including the recommendation and the log_conclusion call. The summary is concise and easy to understand. However, it does not include any cautionary language (e.g., 'based on the data' or 'this is not medical advice'), which reduces the clinical caution score."
+        }
+      }
+    },
+    {
+      "task_id": "v2_food_gi_003",
+      "prompt": "\n[Task ID: v2_food_gi_003] The patient wants a piece of fruit and is torn between an apple and watermelon. Look up the glycemic index of each, classify each as low (GI <=55), medium (56-69), or high (>=70), and recommend the better choice for blood-sugar control. End by calling log_conclusion with a JSON findings object that includes a 'recommended_food' key.",
+      "latency_ms": 9988.18,
+      "tool_call_count": 2,
+      "turn_count": 3,
+      "normalized_score": 0.88,
+      "scores": {
+        "tool_correctness": {
+          "score": 0.8,
+          "detail": "Called acceptable tools including expected: ['get_glycemic_index', 'log_conclusion']"
+        },
+        "argument_correctness": {
+          "score": 1.0,
+          "detail": "No data range specified for this task."
+        },
+        "numeric_groundedness": {
+          "score": 1.0,
+          "detail": "No reference query available; skipping numeric check."
+        },
+        "structured_conclusion": {
+          "score": 0.8,
+          "detail": "log_conclusion called with keys ['recommended_food', 'apple_gi', 'watermelon_gi', 'classification_apple', 'classification_watermelon']; no reference query to validate numbers."
+        },
+        "logged_state": {
+          "score": 1.0,
+          "detail": "food_conclusion: 3/3 (apple->low:ok, watermelon->high:ok, recommendation:ok)."
+        },
+        "judge": {
+          "score": 0.8,
+          "detail": "Judge scores: {'groundedness': 10, 'completeness': 10, 'clarity': 10, 'clinical_caution': 2}. The response accurately reflects the tool data (GI 32 and 74.67) and correctly classifies apple as low and watermelon as high. It recommends apple clearly. However, it contains no cautionary language about medical advice or data limitations, which is expected for clinical information."
+        }
+      }
+    },
+    {
+      "task_id": "v2_food_gi_004",
+      "prompt": "\n[Task ID: v2_food_gi_004] The patient assumes sweet potato is always the lower-glycemic choice over a regular baked potato. Look up the glycemic index of baked potato and sweet potato, classify each as low (GI <=55), medium (56-69), or high (>=70), and tell the patient which is actually lower. End by calling log_conclusion with a JSON findings object that includes a 'recommended_food' key.",
+      "latency_ms": 9040.5,
+      "tool_call_count": 2,
+      "turn_count": 3,
+      "normalized_score": 0.76,
+      "scores": {
+        "tool_correctness": {
+          "score": 0.8,
+          "detail": "Called acceptable tools including expected: ['get_glycemic_index', 'log_conclusion']"
+        },
+        "argument_correctness": {
+          "score": 1.0,
+          "detail": "No data range specified for this task."
+        },
+        "numeric_groundedness": {
+          "score": 1.0,
+          "detail": "No reference query available; skipping numeric check."
+        },
+        "structured_conclusion": {
+          "score": 0.8,
+          "detail": "log_conclusion called with keys ['baked_potato_gi', 'sweet_potato_gi', 'baked_potato_classification', 'sweet_potato_classification', 'recommended_food']; no reference query to validate numbers."
+        },
+        "logged_state": {
+          "score": 1.0,
+          "detail": "food_conclusion: 3/3 (baked potato->low:ok, sweet potato->medium:ok, recommendation:ok)."
+        },
+        "judge": {
+          "score": 0.2,
+          "detail": "Judge scores: {'groundedness': 1, 'completeness': 3, 'clarity': 3, 'clinical_caution': 1}. The response incorrectly states the patient's assumption was correct, contradicting the tool data showing baked potato has a lower GI. It omitted the required GI classifications (low/medium/high) and used no clinical caution language. The contradiction reduces clarity."
+        }
+      }
+    },
+    {
+      "task_id": "v2_food_gi_005",
+      "prompt": "\n[Task ID: v2_food_gi_005] Rank these three breakfast options from lowest to highest glycemic index: oats, apple, and white rice. Classify each as low (GI <=55), medium (56-69), or high (>=70). End by calling log_conclusion with a JSON findings object that includes a 'recommended_food' key for the best blood-sugar choice.",
+      "latency_ms": 17571.07,
+      "tool_call_count": 2,
+      "turn_count": 3,
+      "normalized_score": 0.895,
+      "scores": {
+        "tool_correctness": {
+          "score": 0.8,
+          "detail": "Called acceptable tools including expected: ['get_glycemic_index', 'log_conclusion']"
+        },
+        "argument_correctness": {
+          "score": 1.0,
+          "detail": "No data range specified for this task."
+        },
+        "numeric_groundedness": {
+          "score": 1.0,
+          "detail": "No reference query available; skipping numeric check."
+        },
+        "structured_conclusion": {
+          "score": 0.8,
+          "detail": "log_conclusion called with keys ['ranking', 'classifications', 'recommended_food']; no reference query to validate numbers."
+        },
+        "logged_state": {
+          "score": 1.0,
+          "detail": "food_conclusion: 4/4 (apple->low:ok, oats->low:ok, white rice->medium:ok, recommendation:ok)."
+        },
+        "judge": {
+          "score": 0.875,
+          "detail": "Judge scores: {'groundedness': 10, 'completeness': 10, 'clarity': 10, 'clinical_caution': 5}. Response accurately reflects the tool outputs with no hallucination. It fully addresses the ranking, classification, and recommendation. Structure is clear. However, it lacks any medical disclaimer or cautionary phrasing, which would be appropriate when suggesting a food for blood-sugar control."
+        }
+      }
+    },
+    {
+      "task_id": "v2_540_multi_memory_001",
+      "prompt": "Log a meal in turn 1, recall it in turn 2. Both turns use tools (avoids penalizing correct no-tool turns).",
+      "latency_ms": 8705.76,
+      "tool_call_count": 2,
+      "turn_count": 2,
+      "normalized_score": 1.0,
+      "scores": {
+        "turn_completion": {
+          "score": 1.0,
+          "detail": "Completed all 2 turn(s)."
+        },
+        "per_turn_state": {
+          "score": 1.0,
+          "detail": "Per-turn state checks: [1.0, 1.0]"
+        },
+        "tool_correctness": {
+          "score": 1.0,
+          "detail": "Per-turn tool correctness: [1.0, 1.0]"
+        },
+        "logged_state": {
+          "score": 1.0,
+          "detail": "kb_scroll: matched 1/1 expected payload(s) in 'meal_events'."
+        }
+      }
+    },
+    {
+      "task_id": "v2_540_correlation_001",
+      "prompt": "\n[Task ID: v2_540_correlation_001] What happened to the patient's glucose after their meals on July 8, 2027? Summarize the meals and the glucose trend afterward. End by calling log_conclusion with a JSON findings object that uses exactly these keys: meal_count, total_carbs, glucose_trend.",
+      "latency_ms": 53651.34,
+      "tool_call_count": 4,
+      "turn_count": 5,
+      "normalized_score": 0.791,
+      "scores": {
+        "tool_correctness": {
+          "score": 0.2,
+          "detail": "Called unexpected tools: ['get_cgm_analytics_from_db_range']"
+        },
+        "argument_correctness": {
+          "score": 0.875,
+          "detail": "Average arg correctness across 4 tool call(s): 0.88"
+        },
+        "numeric_groundedness": {
+          "score": 0.30000000000000004,
+          "detail": "Matched 3/30 response numbers against reference data; reference rows: 1."
+        },
+        "structured_conclusion": {
+          "score": 1.0,
+          "detail": "log_conclusion called with 2 numeric value(s); 2 matched reference data (tolerance 0.6). Keys: ['meal_count', 'total_carbs', 'glucose_trend']."
+        },
+        "keyed_conclusion": {
+          "score": 1.0,
+          "detail": "keyed_conclusion: 2/2 (meal_count:ok, total_carbs:ok)."
+        },
+        "judge": {
+          "score": 0.85,
+          "detail": "Judge scores: {'groundedness': 10, 'completeness': 10, 'clarity': 10, 'clinical_caution': 4}. The response accurately uses the provided meal data (4 meals, 193g total carbs) and CGM trends (peaks of 8.8, 10.8, 3.0, and 7.2 mmol/L) that match the logged JSON. All parts of the prompt—summarizing meals, describing post-meal glucose trends, and calling log_conclusion—are fully addressed. The presentation is clear and well-structured. However, the response lacks any cautionary language appropriate for medical data (e.g., 'based on the available data', 'this is not medical advice'), which is important for clinical context."
+        }
+      }
+    },
+    {
+      "task_id": "v2_540_tar_001",
+      "prompt": "\n[Task ID: v2_540_tar_001] How much time did the patient spend above 10.0 mmol/L on July 8, 2027? Give both the percentage and the number of readings above range. End by calling log_conclusion with a JSON findings object that uses exactly these keys: above_count, tar_percent.",
+      "latency_ms": 12433.39,
+      "tool_call_count": 2,
+      "turn_count": 3,
+      "normalized_score": 0.912,
+      "scores": {
+        "tool_correctness": {
+          "score": 0.8,
+          "detail": "Called acceptable tools including expected: ['get_cgm_analytics_from_db_range', 'log_conclusion']"
+        },
+        "argument_correctness": {
+          "score": 0.75,
+          "detail": "Average arg correctness across 2 tool call(s): 0.75"
+        },
+        "numeric_groundedness": {
+          "score": 0.4857142857142857,
+          "detail": "Matched 2/7 response numbers against reference data; reference rows: 1."
+        },
+        "structured_conclusion": {
+          "score": 1.0,
+          "detail": "log_conclusion called with 2 numeric value(s); 2 matched reference data (tolerance 0.6). Keys: ['above_count', 'tar_percent']."
+        },
+        "keyed_conclusion": {
+          "score": 1.0,
+          "detail": "keyed_conclusion: 2/2 (above_count:ok, tar_percent:ok)."
+        }
+      }
+    },
+    {
+      "task_id": "v2_540_hypo_sev_001",
+      "prompt": "\n[Task ID: v2_540_hypo_sev_001] Over the full dataset period (July 4-14, 2027), were any hypoglycemic episodes clinically significant? Report how many readings were level 1 (below 3.9 mmol/L) and level 2 (below 3.0 mmol/L). End by calling log_conclusion with a JSON findings object that uses exactly these keys: level1_count, level2_count.",
+      "latency_ms": 14937.24,
+      "tool_call_count": 2,
+      "turn_count": 3,
+      "normalized_score": 0.912,
+      "scores": {
+        "tool_correctness": {
+          "score": 0.8,
+          "detail": "Called acceptable tools including expected: ['get_cgm_analytics_from_db_range', 'log_conclusion']"
+        },
+        "argument_correctness": {
+          "score": 0.75,
+          "detail": "Average arg correctness across 2 tool call(s): 0.75"
+        },
+        "numeric_groundedness": {
+          "score": 0.4222222222222222,
+          "detail": "Matched 2/9 response numbers against reference data; reference rows: 1."
+        },
+        "structured_conclusion": {
+          "score": 1.0,
+          "detail": "log_conclusion called with 2 numeric value(s); 2 matched reference data (tolerance 0.6). Keys: ['level1_count', 'level2_count']."
+        },
+        "keyed_conclusion": {
+          "score": 1.0,
+          "detail": "keyed_conclusion: 2/2 (level1_count:ok, level2_count:ok)."
+        }
+      }
+    },
+    {
+      "task_id": "v2_540_variability_001",
+      "prompt": "\n[Task ID: v2_540_variability_001] Summarize the patient's overall glucose variability for the full dataset (July 4-14, 2027). Report the mean glucose and the minimum and maximum readings. End by calling log_conclusion with a JSON findings object that uses exactly these keys: mean_glucose, min_glucose, max_glucose.",
+      "latency_ms": 14962.58,
+      "tool_call_count": 2,
+      "turn_count": 3,
+      "normalized_score": 0.83,
+      "scores": {
+        "tool_correctness": {
+          "score": 0.5,
+          "detail": "Called acceptable but not expected tools: ['get_average_glucose_from_db_range', 'log_conclusion']"
+        },
+        "argument_correctness": {
+          "score": 0.75,
+          "detail": "Average arg correctness across 2 tool call(s): 0.75"
+        },
+        "numeric_groundedness": {
+          "score": 0.7,
+          "detail": "Matched 6/12 response numbers against reference data; reference rows: 1."
+        },
+        "structured_conclusion": {
+          "score": 1.0,
+          "detail": "log_conclusion called with 3 numeric value(s); 3 matched reference data (tolerance 0.6). Keys: ['mean_glucose', 'min_glucose', 'max_glucose']."
+        },
+        "keyed_conclusion": {
+          "score": 1.0,
+          "detail": "keyed_conclusion: 3/3 (mean_glucose:ok, min_glucose:ok, max_glucose:ok)."
+        },
+        "judge": {
+          "score": 0.775,
+          "detail": "Judge scores: {'groundedness': 7, 'completeness': 10, 'clarity': 9, 'clinical_caution': 5}. The response uses correct metrics from the tool output but adds unsupported clinical interpretations (e.g., 'within the target range') and lacks cautionary language (e.g., 'based on the data', 'this is not medical advice'). It fully answers the prompt and is well-structured."
+        }
+      }
+    },
+    {
+      "task_id": "v2_540_dawn_001",
+      "prompt": "\n[Task ID: v2_540_dawn_001] Does this patient show a dawn phenomenon over July 4-14, 2027? Compare the average glucose around 3 AM with the average around 6 AM and explain. End by calling log_conclusion with a JSON findings object that uses exactly these keys: avg_pre_dawn, avg_wake.",
+      "latency_ms": 30773.36,
+      "tool_call_count": 4,
+      "turn_count": 5,
+      "normalized_score": 0.51,
+      "scores": {
+        "tool_correctness": {
+          "score": 0.2,
+          "detail": "Called unexpected tools: ['get_average_glucose_from_db_range']"
+        },
+        "argument_correctness": {
+          "score": 0.875,
+          "detail": "Average arg correctness across 4 tool call(s): 0.88"
+        },
+        "numeric_groundedness": {
+          "score": 0.5333333333333333,
+          "detail": "Matched 4/12 response numbers against reference data; reference rows: 1."
+        },
+        "structured_conclusion": {
+          "score": 1.0,
+          "detail": "log_conclusion called with 2 numeric value(s); 2 matched reference data (tolerance 0.6). Keys: ['avg_pre_dawn', 'avg_wake']."
+        },
+        "keyed_conclusion": {
+          "score": 0.0,
+          "detail": "keyed_conclusion: 0/2 (avg_pre_dawn:got 8.7 want 9.1, avg_wake:got 8.7 want 9.2)."
+        },
+        "judge": {
+          "score": 0.775,
+          "detail": "Judge scores: {'groundedness': 8, 'completeness': 10, 'clarity': 10, 'clinical_caution': 3}. The response accurately uses the average glucose values from the tools, but the claim that the 2-6 AM period ranges from 9.1–9.4 mmol/L is slightly inconsistent with the hourly data (02h was 9.9). It addresses all parts of the prompt and is well-structured. However, it lacks any clinical caution language, stating conclusions definitively without caveats about data limitations or medical advice."
+        }
+      }
+    },
+    {
+      "task_id": "v2_540_missed_bolus_001",
+      "prompt": "\n[Task ID: v2_540_missed_bolus_001] Over July 4-14, 2027, how many meals had no bolus dose recorded within 30 minutes of the meal? End by calling log_conclusion with a JSON findings object that uses exactly these keys: missed_bolus_count.",
+      "latency_ms": 189761.31,
+      "tool_call_count": 3,
+      "turn_count": 4,
+      "normalized_score": 0.925,
+      "scores": {
+        "tool_correctness": {
+          "score": 0.8,
+          "detail": "Called acceptable tools including expected: ['get_bolus_doses', 'get_meals', 'log_conclusion']"
+        },
+        "argument_correctness": {
+          "score": 0.8333333333333334,
+          "detail": "Average arg correctness across 3 tool call(s): 0.83"
+        },
+        "numeric_groundedness": {
+          "score": 0.5333333333333333,
+          "detail": "Matched 2/6 response numbers against reference data; reference rows: 1."
+        },
+        "structured_conclusion": {
+          "score": 1.0,
+          "detail": "log_conclusion called with 1 numeric value(s); 1 matched reference data (tolerance 0.6). Keys: ['missed_bolus_count']."
+        },
+        "keyed_conclusion": {
+          "score": 1.0,
+          "detail": "keyed_conclusion: 1/1 (missed_bolus_count:ok)."
+        }
+      }
+    },
+    {
+      "task_id": "v2_540_basal_001",
+      "prompt": "\n[Task ID: v2_540_basal_001] What scheduled basal insulin rates was the patient using during July 4-14, 2027? Report how many distinct basal rates appear in the schedule. End by calling log_conclusion with a JSON findings object that uses exactly these keys: distinct_basal_rates.",
+      "latency_ms": 23805.61,
+      "tool_call_count": 2,
+      "turn_count": 3,
+      "normalized_score": 0.345,
+      "scores": {
+        "tool_correctness": {
+          "score": 0.8,
+          "detail": "Called acceptable tools including expected: ['get_basal_rates', 'log_conclusion']"
+        },
+        "argument_correctness": {
+          "score": 0.75,
+          "detail": "Average arg correctness across 2 tool call(s): 0.75"
+        },
+        "numeric_groundedness": {
+          "score": 0.27142857142857146,
+          "detail": "Matched 1/14 response numbers against reference data; reference rows: 1."
+        },
+        "structured_conclusion": {
+          "score": 0.15,
+          "detail": "log_conclusion called with 1 numeric value(s); 0 matched reference data (tolerance 0.6). Keys: ['distinct_basal_rates']."
+        },
+        "keyed_conclusion": {
+          "score": 0.0,
+          "detail": "keyed_conclusion: 0/1 (distinct_basal_rates:got 8 want 4)."
+        }
+      }
+    },
+    {
+      "task_id": "v2_540_education_001",
+      "prompt": "",
+      "latency_ms": null,
+      "tool_call_count": 0,
+      "turn_count": 0,
+      "normalized_score": 0.0,
+      "scores": {
+        "tool_correctness": {
+          "score": 0.0,
+          "detail": "No tools were called."
+        },
+        "argument_correctness": {
+          "score": 0.0,
+          "detail": "No tools were called to evaluate arguments."
+        },
+        "numeric_groundedness": {
+          "score": 0.0,
+          "detail": "Empty final response."
+        },
+        "structured_conclusion": {
+          "score": 0.0,
+          "detail": "log_conclusion was not called."
+        },
+        "keyed_conclusion": {
+          "score": 0.0,
+          "detail": "log_conclusion not called; cannot verify keyed values."
+        },
+        "judge": {
+          "score": 0.0,
+          "detail": "Empty response; cannot judge."
+        }
+      }
+    },
+    {
+      "task_id": "v2_540_log_mealinsulin_001",
+      "prompt": "\n[Task ID: v2_540_log_mealinsulin_001] Log a lunch of 60g carbs with 4 units of rapid insulin on July 9, 2027 at 12:30 PM.",
+      "latency_ms": 8044.22,
+      "tool_call_count": 2,
+      "turn_count": 2,
+      "normalized_score": 0.9,
+      "scores": {
+        "tool_correctness": {
+          "score": 1.0,
+          "detail": "Called only expected tools: ['log_insulin', 'log_meal']"
+        },
+        "argument_correctness": {
+          "score": 1.0,
+          "detail": "No data range specified for this task."
+        },
+        "numeric_groundedness": {
+          "score": 1.0,
+          "detail": "No reference query available; skipping numeric check."
+        },
+        "structured_conclusion": {
+          "score": 0.0,
+          "detail": "log_conclusion was not called."
+        },
+        "logged_state": {
+          "score": 1.0,
+          "detail": "kb_scroll: matched 1/1 expected payload(s) in 'meal_events'."
+        }
+      }
+    },
+    {
+      "task_id": "v2_540_log_glucose_001",
+      "prompt": "\n[Task ID: v2_540_log_glucose_001] Log a glucose reading of 5.5 mmol/L on July 9, 2027 at 10:00 AM.",
+      "latency_ms": 2967.56,
+      "tool_call_count": 1,
+      "turn_count": 2,
+      "normalized_score": 0.8,
+      "scores": {
+        "tool_correctness": {
+          "score": 1.0,
+          "detail": "Called only expected tools: ['log_glucose']"
+        },
+        "argument_correctness": {
+          "score": 1.0,
+          "detail": "No data range specified for this task."
+        },
+        "numeric_groundedness": {
+          "score": 1.0,
+          "detail": "No reference query available; skipping numeric check."
+        },
+        "structured_conclusion": {
+          "score": 0.0,
+          "detail": "log_conclusion was not called."
+        },
+        "logged_state": {
+          "score": 1.0,
+          "detail": "kb_scroll: matched 1/1 expected payload(s) in 'glucose_events'."
+        }
+      }
+    },
+    {
+      "task_id": "v2_540_multi_clarify_001",
+      "prompt": "Agent must ask for a date instead of guessing, then answer once clarified.",
+      "latency_ms": 12851.93,
+      "tool_call_count": 4,
+      "turn_count": 2,
+      "normalized_score": 0.71,
+      "scores": {
+        "turn_completion": {
+          "score": 1.0,
+          "detail": "Completed all 2 turn(s)."
+        },
+        "per_turn_state": {
+          "score": 1.0,
+          "detail": "Per-turn state checks: [1.0]"
+        },
+        "tool_correctness": {
+          "score": 0.2,
+          "detail": "Per-turn tool correctness: [0.2, 0.2]"
+        },
+        "judge": {
+          "score": 0.75,
+          "detail": "Judge scores: {'groundedness': 10, 'completeness': 8, 'clarity': 10, 'clinical_caution': 2}. The response accurately reflects the tool outputs without hallucination. It covers key glucose metrics but omits some available details (e.g., minimum glucose of 3.2 mmol/L). The presentation is clear and well-structured. However, it lacks any clinical disclaimer or cautionary language about the limitations of the data, which is essential in a medical context."
+        }
+      }
+    },
+    {
+      "task_id": "v2_540_multi_insulin_adjust_001",
+      "prompt": "Two-turn clinical-reasoning dialogue: identify lows, then reason about a basal adjustment per ADA guidance.",
+      "latency_ms": 35552.53,
+      "tool_call_count": 4,
+      "turn_count": 2,
+      "normalized_score": 0.665,
+      "scores": {
+        "turn_completion": {
+          "score": 1.0,
+          "detail": "Completed all 2 turn(s)."
+        },
+        "per_turn_state": {
+          "score": 1.0,
+          "detail": "Per-turn state checks: [1.0, 1.0]"
+        },
+        "tool_correctness": {
+          "score": 0.2,
+          "detail": "Per-turn tool correctness: [0.2, 0.2]"
+        },
+        "judge": {
+          "score": 0.55,
+          "detail": "Judge scores: {'groundedness': 4, 'completeness': 7, 'clarity': 6, 'clinical_caution': 5}. The response cites CGM min of 2.7 and temp basal data, but the statement 'basal insulin was insufficiently covering overnight needs, leading to progressive hypoglycemia' is factually wrong and unsupported (hypoglycemia indicates excessive, not insufficient, basal). This errors harms groundedness and clinical safety. It identifies the hypoglycemia and recommends basal reduction per ADA, though it omits the exact hypo reading counts (9 level-1, 4 level-2) and lacks a clear medical disclaimer. Structure is clear but the contradictory sentence reduces overall clarity."
+        }
+      }
+    },
+    {
+      "task_id": "v2_544_lookup_001",
+      "prompt": "\n[Task ID: v2_544_lookup_001] What was the patient's glucose level around 1 PM on June 30, 2027? End by calling log_conclusion with a JSON findings object that uses exactly these keys: glucose_mmol_l.",
+      "latency_ms": 8700.39,
+      "tool_call_count": 2,
+      "turn_count": 3,
+      "normalized_score": 0.887,
+      "scores": {
+        "tool_correctness": {
+          "score": 0.8,
+          "detail": "Called acceptable tools including expected: ['get_nearest_cgm_reading', 'log_conclusion']"
+        },
+        "argument_correctness": {
+          "score": 0.75,
+          "detail": "Average arg correctness across 2 tool call(s): 0.75"
+        },
+        "numeric_groundedness": {
+          "score": 0.34285714285714286,
+          "detail": "Matched 1/7 response numbers against reference data; reference rows: 1."
+        },
+        "structured_conclusion": {
+          "score": 1.0,
+          "detail": "log_conclusion called with 1 numeric value(s); 1 matched reference data (tolerance 0.6). Keys: ['glucose_mmol_l']."
+        },
+        "keyed_conclusion": {
+          "score": 1.0,
+          "detail": "keyed_conclusion: 1/1 (glucose_mmol_l:ok)."
+        }
+      }
+    },
+    {
+      "task_id": "v2_544_lowest_001",
+      "prompt": "\n[Task ID: v2_544_lowest_001] What was the patient's lowest glucose reading on June 26, 2027? End by calling log_conclusion with a JSON findings object that uses exactly these keys: min_glucose.",
+      "latency_ms": 25029.49,
+      "tool_call_count": 2,
+      "turn_count": 3,
+      "normalized_score": 0.912,
+      "scores": {
+        "tool_correctness": {
+          "score": 0.8,
+          "detail": "Called acceptable tools including expected: ['get_cgm_readings', 'log_conclusion']"
+        },
+        "argument_correctness": {
+          "score": 0.75,
+          "detail": "Average arg correctness across 2 tool call(s): 0.75"
+        },
+        "numeric_groundedness": {
+          "score": 0.34285714285714286,
+          "detail": "Matched 1/7 response numbers against reference data; reference rows: 1."
+        },
+        "structured_conclusion": {
+          "score": 1.0,
+          "detail": "log_conclusion called with 1 numeric value(s); 1 matched reference data (tolerance 0.6). Keys: ['min_glucose']."
+        },
+        "keyed_conclusion": {
+          "score": 1.0,
+          "detail": "keyed_conclusion: 1/1 (min_glucose:ok)."
+        }
+      }
+    },
+    {
+      "task_id": "v2_544_meals_001",
+      "prompt": "\n[Task ID: v2_544_meals_001] How many meals did the patient eat on June 30, 2027, and what were the total carbohydrates? End by calling log_conclusion with a JSON findings object that uses exactly these keys: meal_count, total_carbs.",
+      "latency_ms": 14327.1,
+      "tool_call_count": 2,
+      "turn_count": 3,
+      "normalized_score": 0.912,
+      "scores": {
+        "tool_correctness": {
+          "score": 0.8,
+          "detail": "Called acceptable tools including expected: ['get_meals', 'log_conclusion']"
+        },
+        "argument_correctness": {
+          "score": 0.75,
+          "detail": "Average arg correctness across 2 tool call(s): 0.75"
+        },
+        "numeric_groundedness": {
+          "score": 0.3176470588235294,
+          "detail": "Matched 2/17 response numbers against reference data; reference rows: 1."
+        },
+        "structured_conclusion": {
+          "score": 1.0,
+          "detail": "log_conclusion called with 2 numeric value(s); 2 matched reference data (tolerance 0.6). Keys: ['meal_count', 'total_carbs']."
+        },
+        "keyed_conclusion": {
+          "score": 1.0,
+          "detail": "keyed_conclusion: 2/2 (meal_count:ok, total_carbs:ok)."
+        }
+      }
+    },
+    {
+      "task_id": "v2_544_bolus_001",
+      "prompt": "\n[Task ID: v2_544_bolus_001] What was the patient's total bolus insulin (in units) on June 30, 2027, and how many doses were given? End by calling log_conclusion with a JSON findings object that uses exactly these keys: bolus_count, total_units.",
+      "latency_ms": 11805.39,
+      "tool_call_count": 2,
+      "turn_count": 3,
+      "normalized_score": 0.912,
+      "scores": {
+        "tool_correctness": {
+          "score": 0.8,
+          "detail": "Called acceptable tools including expected: ['get_bolus_doses', 'log_conclusion']"
+        },
+        "argument_correctness": {
+          "score": 0.75,
+          "detail": "Average arg correctness across 2 tool call(s): 0.75"
+        },
+        "numeric_groundedness": {
+          "score": 0.5333333333333333,
+          "detail": "Matched 3/9 response numbers against reference data; reference rows: 1."
+        },
+        "structured_conclusion": {
+          "score": 1.0,
+          "detail": "log_conclusion called with 2 numeric value(s); 2 matched reference data (tolerance 0.6). Keys: ['bolus_count', 'total_units']."
+        },
+        "keyed_conclusion": {
+          "score": 1.0,
+          "detail": "keyed_conclusion: 2/2 (bolus_count:ok, total_units:ok)."
+        }
+      }
+    },
+    {
+      "task_id": "v2_544_hypo_001",
+      "prompt": "\n[Task ID: v2_544_hypo_001] Were there any hypoglycemic episodes (below 3.9 mmol/L) between June 24 and June 27, 2027? Report how many readings were below 3.9 and the minimum glucose. End by calling log_conclusion with a JSON findings object that uses exactly these keys: hypo_count, min_glucose.",
+      "latency_ms": 20501.76,
+      "tool_call_count": 3,
+      "turn_count": 4,
+      "normalized_score": 0.85,
+      "scores": {
+        "tool_correctness": {
+          "score": 0.5,
+          "detail": "Called acceptable but not expected tools: ['get_cgm_analytics_from_db_range', 'get_cgm_summary_from_db_range', 'log_conclusion']"
+        },
+        "argument_correctness": {
+          "score": 0.8333333333333334,
+          "detail": "Average arg correctness across 3 tool call(s): 0.83"
+        },
+        "numeric_groundedness": {
+          "score": 0.7555555555555555,
+          "detail": "Matched 5/9 response numbers against reference data; reference rows: 1."
+        },
+        "structured_conclusion": {
+          "score": 1.0,
+          "detail": "log_conclusion called with 2 numeric value(s); 2 matched reference data (tolerance 0.6). Keys: ['hypo_count', 'min_glucose']."
+        },
+        "keyed_conclusion": {
+          "score": 1.0,
+          "detail": "keyed_conclusion: 2/2 (hypo_count:ok, min_glucose:ok)."
+        }
+      }
+    },
+    {
+      "task_id": "v2_544_tir_001",
+      "prompt": "\n[Task ID: v2_544_tir_001] What percentage of the patient's glucose readings between June 24 and June 27, 2027 were in range (3.9-10.0 mmol/L)? End by calling log_conclusion with a JSON findings object that uses exactly these keys: tir_percent.",
+      "latency_ms": 11865.38,
+      "tool_call_count": 2,
+      "turn_count": 3,
+      "normalized_score": 0.838,
+      "scores": {
+        "tool_correctness": {
+          "score": 0.5,
+          "detail": "Called acceptable but not expected tools: ['get_time_in_range_from_db_range', 'log_conclusion']"
+        },
+        "argument_correctness": {
+          "score": 0.75,
+          "detail": "Average arg correctness across 2 tool call(s): 0.75"
+        },
+        "numeric_groundedness": {
+          "score": 0.3111111111111111,
+          "detail": "Matched 1/9 response numbers against reference data; reference rows: 1."
+        },
+        "structured_conclusion": {
+          "score": 1.0,
+          "detail": "log_conclusion called with 1 numeric value(s); 1 matched reference data (tolerance 0.6). Keys: ['tir_percent']."
+        },
+        "keyed_conclusion": {
+          "score": 1.0,
+          "detail": "keyed_conclusion: 1/1 (tir_percent:ok)."
+        }
+      }
+    },
+    {
+      "task_id": "v2_544_ea1c_001",
+      "prompt": "\n[Task ID: v2_544_ea1c_001] Estimate the patient's CGM-derived A1C (eA1C) for the full dataset period (June 24 - July 4, 2027). Report the mean glucose, estimated A1C, and time in range. End by calling log_conclusion with a JSON findings object that uses exactly these keys: mean_glucose, estimated_a1c, tir_percent.",
+      "latency_ms": 25747.19,
+      "tool_call_count": 4,
+      "turn_count": 5,
+      "normalized_score": 0.818,
+      "scores": {
+        "tool_correctness": {
+          "score": 0.2,
+          "detail": "Called unexpected tools: ['get_glucose_summary_from_db_range', 'get_time_in_range_from_db_range']"
+        },
+        "argument_correctness": {
+          "score": 0.875,
+          "detail": "Average arg correctness across 4 tool call(s): 0.88"
+        },
+        "numeric_groundedness": {
+          "score": 0.4857142857142857,
+          "detail": "Matched 4/14 response numbers against reference data; reference rows: 1."
+        },
+        "structured_conclusion": {
+          "score": 1.0,
+          "detail": "log_conclusion called with 3 numeric value(s); 3 matched reference data (tolerance 0.6). Keys: ['mean_glucose', 'estimated_a1c', 'tir_percent']."
+        },
+        "keyed_conclusion": {
+          "score": 1.0,
+          "detail": "keyed_conclusion: 3/3 (mean_glucose:ok, estimated_a1c:ok, tir_percent:ok)."
+        },
+        "judge": {
+          "score": 0.9,
+          "detail": "Judge scores: {'groundedness': 9, 'completeness': 10, 'clarity': 10, 'clinical_caution': 7}. All primary metrics (mean glucose, eA1C, TIR) match tool outputs exactly; number of readings also correct. The response adds 'moderate glycemic control' which is an interpretation not directly provided by the tools, slightly reducing groundedness. All requested items are present and the conclusion was logged as required. Structure is clear with headings and bullet points. However, the response lacks explicit caution language (e.g., 'based on CGM data,' 'this is an estimate,' 'not medical advice'), which would be appropriate for clinical data reporting."
+        }
+      }
+    },
+    {
+      "task_id": "v2_544_profile_001",
+      "prompt": "\n[Task ID: v2_544_profile_001] What do we know about this patient's profile and insulin regimen?",
+      "latency_ms": 49651.03,
+      "tool_call_count": 6,
+      "turn_count": 7,
+      "normalized_score": 0.7,
+      "scores": {
+        "tool_correctness": {
+          "score": 0.2,
+          "detail": "Called unexpected tools: ['get_bolus_doses', 'get_icr_summary', 'get_meals']"
+        },
+        "argument_correctness": {
+          "score": 1.0,
+          "detail": "No data range specified for this task."
+        },
+        "numeric_groundedness": {
+          "score": 1.0,
+          "detail": "No reference query available; skipping numeric check."
+        },
+        "structured_conclusion": {
+          "score": 0.8,
+          "detail": "log_conclusion called with keys ['patient_id', 'weight_kg', 'insulin_type', 'regimen_type', 'dataset_period', 'basal_pattern', 'bolus_characteristics', 'meal_pattern', 'temp_basal_adjustments', 'total_meals_logged']; no reference query to validate numbers."
+        },
+        "logged_state": {
+          "score": 1.0,
+          "detail": "response_contains: matched 1/1 expected substring(s)."
+        }
+      }
+    },
+    {
+      "task_id": "v2_544_ood_001",
+      "prompt": "\n[Task ID: v2_544_ood_001] Show me the patient's glucose readings for December 1, 2027.",
+      "latency_ms": 5143.53,
+      "tool_call_count": 1,
+      "turn_count": 2,
+      "normalized_score": 0.52,
+      "scores": {
+        "tool_correctness": {
+          "score": 1.0,
+          "detail": "Called only expected tools: ['get_cgm_readings']"
+        },
+        "argument_correctness": {
+          "score": 1.0,
+          "detail": "Average arg correctness across 1 tool call(s): 1.00"
+        },
+        "numeric_groundedness": {
+          "score": 0.6000000000000001,
+          "detail": "Matched 2/5 response numbers against reference data; reference rows: 1."
+        },
+        "structured_conclusion": {
+          "score": 0.0,
+          "detail": "log_conclusion was not called."
+        },
+        "logged_state": {
+          "score": 0.0,
+          "detail": "response_contains: matched 0/1 expected substring(s)."
+        },
+        "judge": {
+          "score": 0.6,
+          "detail": "Judge scores: {'groundedness': 3, 'completeness': 10, 'clarity': 8, 'clinical_caution': 3}. The response correctly states no CGM readings for Dec 1, 2027, but invents a dataset coverage period ('June 24 - July 4, 2027') not found in the tool output, which is a hallucination and severely lowers groundedness. It fully answers the user's request. Clarity is decent but slightly undermined by the unsupported claim. No clinical caution language (e.g., 'this is not medical advice') is included, which is inadequate for a health data query."
+        }
+      }
+    },
+    {
+      "task_id": "v2_544_multi_memory_001",
+      "prompt": "Log a meal in turn 1, recall it in turn 2. Both turns use tools (avoids penalizing correct no-tool turns).",
+      "latency_ms": 7232.09,
+      "tool_call_count": 2,
+      "turn_count": 2,
+      "normalized_score": 1.0,
+      "scores": {
+        "turn_completion": {
+          "score": 1.0,
+          "detail": "Completed all 2 turn(s)."
+        },
+        "per_turn_state": {
+          "score": 1.0,
+          "detail": "Per-turn state checks: [1.0, 1.0]"
+        },
+        "tool_correctness": {
+          "score": 1.0,
+          "detail": "Per-turn tool correctness: [1.0, 1.0]"
+        },
+        "logged_state": {
+          "score": 1.0,
+          "detail": "kb_scroll: matched 1/1 expected payload(s) in 'meal_events'."
+        }
+      }
+    },
+    {
+      "task_id": "v2_544_correlation_001",
+      "prompt": "\n[Task ID: v2_544_correlation_001] What happened to the patient's glucose after their meals on June 30, 2027? Summarize the meals and the glucose trend afterward. End by calling log_conclusion with a JSON findings object that uses exactly these keys: meal_count, total_carbs, glucose_trend.",
+      "latency_ms": 65443.79,
+      "tool_call_count": 4,
+      "turn_count": 5,
+      "normalized_score": 0.771,
+      "scores": {
+        "tool_correctness": {
+          "score": 0.2,
+          "detail": "Called unexpected tools: ['get_cgm_summary_from_db_range']"
+        },
+        "argument_correctness": {
+          "score": 0.875,
+          "detail": "Average arg correctness across 4 tool call(s): 0.88"
+        },
+        "numeric_groundedness": {
+          "score": 0.35625,
+          "detail": "Matched 5/32 response numbers against reference data; reference rows: 1."
+        },
+        "structured_conclusion": {
+          "score": 1.0,
+          "detail": "log_conclusion called with 2 numeric value(s); 2 matched reference data (tolerance 0.6). Keys: ['meal_count', 'total_carbs', 'glucose_trend']."
+        },
+        "keyed_conclusion": {
+          "score": 1.0,
+          "detail": "keyed_conclusion: 2/2 (meal_count:ok, total_carbs:ok)."
+        },
+        "judge": {
+          "score": 0.75,
+          "detail": "Judge scores: {'groundedness': 7, 'completeness': 10, 'clarity': 10, 'clinical_caution': 3}. Response includes accurate meal/carb data but adds speculative cause ('likely due to insulin action') without data support. Lacks medical disclaimer. All prompt parts addressed clearly."
+        }
+      }
+    },
+    {
+      "task_id": "v2_544_tar_001",
+      "prompt": "\n[Task ID: v2_544_tar_001] How much time did the patient spend above 10.0 mmol/L on June 30, 2027? Give both the percentage and the number of readings above range. End by calling log_conclusion with a JSON findings object that uses exactly these keys: above_count, tar_percent.",
+      "latency_ms": 14797.81,
+      "tool_call_count": 2,
+      "turn_count": 3,
+      "normalized_score": 0.912,
+      "scores": {
+        "tool_correctness": {
+          "score": 0.8,
+          "detail": "Called acceptable tools including expected: ['get_cgm_analytics_from_db_range', 'log_conclusion']"
+        },
+        "argument_correctness": {
+          "score": 0.75,
+          "detail": "Average arg correctness across 2 tool call(s): 0.75"
+        },
+        "numeric_groundedness": {
+          "score": 0.7,
+          "detail": "Matched 4/8 response numbers against reference data; reference rows: 1."
+        },
+        "structured_conclusion": {
+          "score": 1.0,
+          "detail": "log_conclusion called with 2 numeric value(s); 2 matched reference data (tolerance 0.6). Keys: ['above_count', 'tar_percent']."
+        },
+        "keyed_conclusion": {
+          "score": 1.0,
+          "detail": "keyed_conclusion: 2/2 (above_count:ok, tar_percent:ok)."
+        }
+      }
+    },
+    {
+      "task_id": "v2_544_hypo_sev_001",
+      "prompt": "\n[Task ID: v2_544_hypo_sev_001] Over the full dataset period (June 24 - July 4, 2027), were any hypoglycemic episodes clinically significant? Report how many readings were level 1 (below 3.9 mmol/L) and level 2 (below 3.0 mmol/L). End by calling log_conclusion with a JSON findings object that uses exactly these keys: level1_count, level2_count.",
+      "latency_ms": 16732.14,
+      "tool_call_count": 2,
+      "turn_count": 3,
+      "normalized_score": 0.912,
+      "scores": {
+        "tool_correctness": {
+          "score": 0.8,
+          "detail": "Called acceptable tools including expected: ['get_cgm_analytics_from_db_range', 'log_conclusion']"
+        },
+        "argument_correctness": {
+          "score": 0.75,
+          "detail": "Average arg correctness across 2 tool call(s): 0.75"
+        },
+        "numeric_groundedness": {
+          "score": 1.0,
+          "detail": "Matched 11/13 response numbers against reference data; reference rows: 1."
+        },
+        "structured_conclusion": {
+          "score": 1.0,
+          "detail": "log_conclusion called with 2 numeric value(s); 2 matched reference data (tolerance 0.6). Keys: ['level1_count', 'level2_count']."
+        },
+        "keyed_conclusion": {
+          "score": 1.0,
+          "detail": "keyed_conclusion: 2/2 (level1_count:ok, level2_count:ok)."
+        }
+      }
+    },
+    {
+      "task_id": "v2_544_variability_001",
+      "prompt": "\n[Task ID: v2_544_variability_001] Summarize the patient's overall glucose variability for the full dataset (June 24 - July 4, 2027). Report the mean glucose and the minimum and maximum readings. End by calling log_conclusion with a JSON findings object that uses exactly these keys: mean_glucose, min_glucose, max_glucose.",
+      "latency_ms": 14449.07,
+      "tool_call_count": 2,
+      "turn_count": 3,
+      "normalized_score": 0.865,
+      "scores": {
+        "tool_correctness": {
+          "score": 0.5,
+          "detail": "Called acceptable but not expected tools: ['get_average_glucose_from_db_range', 'log_conclusion']"
+        },
+        "argument_correctness": {
+          "score": 0.75,
+          "detail": "Average arg correctness across 2 tool call(s): 0.75"
+        },
+        "numeric_groundedness": {
+          "score": 0.575,
+          "detail": "Matched 3/8 response numbers against reference data; reference rows: 1."
+        },
+        "structured_conclusion": {
+          "score": 1.0,
+          "detail": "log_conclusion called with 3 numeric value(s); 3 matched reference data (tolerance 0.6). Keys: ['mean_glucose', 'min_glucose', 'max_glucose']."
+        },
+        "keyed_conclusion": {
+          "score": 1.0,
+          "detail": "keyed_conclusion: 3/3 (mean_glucose:ok, min_glucose:ok, max_glucose:ok)."
+        },
+        "judge": {
+          "score": 0.95,
+          "detail": "Judge scores: {'groundedness': 10, 'completeness': 10, 'clarity': 10, 'clinical_caution': 8}. The response faithfully reproduces the numbers from the tool outputs, covers all requested elements (mean, min, max, and log_conclusion), and presents the information clearly. However, it does not include any explicit cautionary language (e.g., 'based on the data', 'this is not medical advice'), which would be appropriate when reporting medical data."
+        }
+      }
+    },
+    {
+      "task_id": "v2_544_dawn_001",
+      "prompt": "\n[Task ID: v2_544_dawn_001] Does this patient show a dawn phenomenon over June 24 - July 4, 2027? Compare the average glucose around 3 AM with the average around 6 AM and explain. End by calling log_conclusion with a JSON findings object that uses exactly these keys: avg_pre_dawn, avg_wake.",
+      "latency_ms": 82244.09,
+      "tool_call_count": 11,
+      "turn_count": 12,
+      "normalized_score": 0.263,
+      "scores": {
+        "tool_correctness": {
+          "score": 0.2,
+          "detail": "Called unexpected tools: ['get_average_glucose_from_db_range', 'get_basal_rates']"
+        },
+        "argument_correctness": {
+          "score": 0.9545454545454546,
+          "detail": "Average arg correctness across 11 tool call(s): 0.95"
+        },
+        "numeric_groundedness": {
+          "score": 0.43529411764705883,
+          "detail": "Matched 4/17 response numbers against reference data; reference rows: 1."
+        },
+        "structured_conclusion": {
+          "score": 0.15,
+          "detail": "log_conclusion called with 2 numeric value(s); 0 matched reference data (tolerance 0.6). Keys: ['avg_pre_dawn', 'avg_wake']."
+        },
+        "keyed_conclusion": {
+          "score": 0.0,
+          "detail": "keyed_conclusion: 0/2 (avg_pre_dawn:got 8.6 want 7.1, avg_wake:got 8.7 want 5.7)."
+        },
+        "judge": {
+          "score": 0.35,
+          "detail": "Judge scores: {'groundedness': 2, 'completeness': 3, 'clarity': 7, 'clinical_caution': 2}. The assistant misinterpreted the tool outputs: it used overall period averages (8.6 and 8.7) rather than specific pre-dawn and wake windows. The logged conclusion contains these incorrect values. The response references the correct hourly data but fails to deliver the requested comparison accurately. No clinical caution language is present."
+        }
+      }
+    },
+    {
+      "task_id": "v2_544_missed_bolus_001",
+      "prompt": "\n[Task ID: v2_544_missed_bolus_001] Over June 24 - July 4, 2027, how many meals had no bolus dose recorded within 30 minutes of the meal? End by calling log_conclusion with a JSON findings object that uses exactly these keys: missed_bolus_count.",
+      "latency_ms": 219851.43,
+      "tool_call_count": 3,
+      "turn_count": 4,
+      "normalized_score": 0.925,
+      "scores": {
+        "tool_correctness": {
+          "score": 0.8,
+          "detail": "Called acceptable tools including expected: ['get_bolus_doses', 'get_meals', 'log_conclusion']"
+        },
+        "argument_correctness": {
+          "score": 0.8333333333333334,
+          "detail": "Average arg correctness across 3 tool call(s): 0.83"
+        },
+        "numeric_groundedness": {
+          "score": 0.6166666666666667,
+          "detail": "Matched 5/12 response numbers against reference data; reference rows: 1."
+        },
+        "structured_conclusion": {
+          "score": 1.0,
+          "detail": "log_conclusion called with 1 numeric value(s); 1 matched reference data (tolerance 0.6). Keys: ['missed_bolus_count']."
+        },
+        "keyed_conclusion": {
+          "score": 1.0,
+          "detail": "keyed_conclusion: 1/1 (missed_bolus_count:ok)."
+        }
+      }
+    },
+    {
+      "task_id": "v2_544_basal_001",
+      "prompt": "\n[Task ID: v2_544_basal_001] What scheduled basal insulin rates was the patient using during June 24 - July 4, 2027? Report how many distinct basal rates appear in the schedule. End by calling log_conclusion with a JSON findings object that uses exactly these keys: distinct_basal_rates.",
+      "latency_ms": 24453.84,
+      "tool_call_count": 2,
+      "turn_count": 3,
+      "normalized_score": 0.915,
+      "scores": {
+        "tool_correctness": {
+          "score": 0.8,
+          "detail": "Called acceptable tools including expected: ['get_basal_rates', 'log_conclusion']"
+        },
+        "argument_correctness": {
+          "score": 0.75,
+          "detail": "Average arg correctness across 2 tool call(s): 0.75"
+        },
+        "numeric_groundedness": {
+          "score": 0.33333333333333337,
+          "detail": "Matched 2/15 response numbers against reference data; reference rows: 1."
+        },
+        "structured_conclusion": {
+          "score": 1.0,
+          "detail": "log_conclusion called with 1 numeric value(s); 1 matched reference data (tolerance 0.6). Keys: ['distinct_basal_rates']."
+        },
+        "keyed_conclusion": {
+          "score": 1.0,
+          "detail": "keyed_conclusion: 1/1 (distinct_basal_rates:ok)."
+        }
+      }
+    },
+    {
+      "task_id": "v2_544_education_001",
+      "prompt": "",
+      "latency_ms": null,
+      "tool_call_count": 0,
+      "turn_count": 0,
+      "normalized_score": 0.0,
+      "scores": {
+        "tool_correctness": {
+          "score": 0.0,
+          "detail": "No tools were called."
+        },
+        "argument_correctness": {
+          "score": 0.0,
+          "detail": "No tools were called to evaluate arguments."
+        },
+        "numeric_groundedness": {
+          "score": 0.0,
+          "detail": "Empty final response."
+        },
+        "structured_conclusion": {
+          "score": 0.0,
+          "detail": "log_conclusion was not called."
+        },
+        "keyed_conclusion": {
+          "score": 0.0,
+          "detail": "log_conclusion not called; cannot verify keyed values."
+        },
+        "judge": {
+          "score": 0.0,
+          "detail": "Empty response; cannot judge."
+        }
+      }
+    },
+    {
+      "task_id": "v2_544_log_mealinsulin_001",
+      "prompt": "\n[Task ID: v2_544_log_mealinsulin_001] Log a lunch of 60g carbs with 4 units of rapid insulin on June 29, 2027 at 12:30 PM.",
+      "latency_ms": 10079.75,
+      "tool_call_count": 2,
+      "turn_count": 2,
+      "normalized_score": 0.9,
+      "scores": {
+        "tool_correctness": {
+          "score": 1.0,
+          "detail": "Called only expected tools: ['log_insulin', 'log_meal']"
+        },
+        "argument_correctness": {
+          "score": 1.0,
+          "detail": "No data range specified for this task."
+        },
+        "numeric_groundedness": {
+          "score": 1.0,
+          "detail": "No reference query available; skipping numeric check."
+        },
+        "structured_conclusion": {
+          "score": 0.0,
+          "detail": "log_conclusion was not called."
+        },
+        "logged_state": {
+          "score": 1.0,
+          "detail": "kb_scroll: matched 1/1 expected payload(s) in 'meal_events'."
+        }
+      }
+    },
+    {
+      "task_id": "v2_544_log_glucose_001",
+      "prompt": "\n[Task ID: v2_544_log_glucose_001] Log a glucose reading of 5.5 mmol/L on June 29, 2027 at 10:00 AM.",
+      "latency_ms": 3253.61,
+      "tool_call_count": 1,
+      "turn_count": 2,
+      "normalized_score": 0.8,
+      "scores": {
+        "tool_correctness": {
+          "score": 1.0,
+          "detail": "Called only expected tools: ['log_glucose']"
+        },
+        "argument_correctness": {
+          "score": 1.0,
+          "detail": "No data range specified for this task."
+        },
+        "numeric_groundedness": {
+          "score": 1.0,
+          "detail": "No reference query available; skipping numeric check."
+        },
+        "structured_conclusion": {
+          "score": 0.0,
+          "detail": "log_conclusion was not called."
+        },
+        "logged_state": {
+          "score": 1.0,
+          "detail": "kb_scroll: matched 1/1 expected payload(s) in 'glucose_events'."
+        }
+      }
+    },
+    {
+      "task_id": "v2_544_multi_clarify_001",
+      "prompt": "Agent must ask for a date instead of guessing, then answer once clarified.",
+      "latency_ms": 11134.62,
+      "tool_call_count": 3,
+      "turn_count": 2,
+      "normalized_score": 0.73,
+      "scores": {
+        "turn_completion": {
+          "score": 1.0,
+          "detail": "Completed all 2 turn(s)."
+        },
+        "per_turn_state": {
+          "score": 1.0,
+          "detail": "Per-turn state checks: [1.0]"
+        },
+        "tool_correctness": {
+          "score": 0.2,
+          "detail": "Per-turn tool correctness: [0.2, 0.2]"
+        },
+        "judge": {
+          "score": 0.85,
+          "detail": "Judge scores: {'groundedness': 10, 'completeness': 9, 'clarity': 10, 'clinical_caution': 5}. The response accurately reports the CGM readings from the tool outputs without hallucination. It is well-structured and easy to read. Completeness is high for the specified date, though without the user query it's difficult to confirm if all requested data was provided. Clinical caution is lacking: no disclaimer ('this is not medical advice') and the interpretive statement about typical bodily responses is presented without appropriate caveats."
+        }
+      }
+    },
+    {
+      "task_id": "v2_544_multi_insulin_adjust_001",
+      "prompt": "Two-turn clinical-reasoning dialogue: identify lows, then reason about a basal adjustment per ADA guidance.",
+      "latency_ms": 31694.88,
+      "tool_call_count": 5,
+      "turn_count": 2,
+      "normalized_score": 0.672,
+      "scores": {
+        "turn_completion": {
+          "score": 1.0,
+          "detail": "Completed all 2 turn(s)."
+        },
+        "per_turn_state": {
+          "score": 1.0,
+          "detail": "Per-turn state checks: [1.0, 1.0]"
+        },
+        "tool_correctness": {
+          "score": 0.2,
+          "detail": "Per-turn tool correctness: [0.2, 0.2]"
+        },
+        "judge": {
+          "score": 0.575,
+          "detail": "Judge scores: {'groundedness': 3, 'completeness': 7, 'clarity': 6, 'clinical_caution': 7}. The response claims a specific low of 3.4 mmol/L at 07:45 UTC and describes a recovery pattern not clearly supported by the provided tool outputs; the available CGM snippets show values around 4.0–4.2 with no 07:45 reading, making key statements ungrounded. It addresses the prompt's two parts (identify lows, suggest basal adjustment) and references ADA guidance, hence completeness is decent. The structure is organized but internal contradictions (recovering after 03:00 vs. after 08:00) reduce clarity. Caution language is used ('based on the data', 'appears excessive', 'consider'), though an explicit disclaimer is absent."
+        }
+      }
+    },
+    {
+      "task_id": "v2_559_dawn_001",
+      "prompt": "",
+      "latency_ms": null,
+      "tool_call_count": 0,
+      "turn_count": 0,
+      "normalized_score": 0.0,
+      "scores": {
+        "tool_correctness": {
+          "score": 0.0,
+          "detail": "No tools were called."
+        },
+        "argument_correctness": {
+          "score": 0.0,
+          "detail": "No tools were called to evaluate arguments."
+        },
+        "numeric_groundedness": {
+          "score": 0.0,
+          "detail": "Empty final response."
+        },
+        "structured_conclusion": {
+          "score": 0.0,
+          "detail": "log_conclusion was not called."
+        },
+        "keyed_conclusion": {
+          "score": 0.0,
+          "detail": "log_conclusion not called; cannot verify keyed values."
+        },
+        "judge": {
+          "score": 0.0,
+          "detail": "Empty response; cannot judge."
+        }
+      }
+    },
+    {
+      "task_id": "v2_584_lookup_001",
+      "prompt": "\n[Task ID: v2_584_lookup_001] What was the patient's glucose level around 1 PM on June 30, 2025? End by calling log_conclusion with a JSON findings object that uses exactly these keys: glucose_mmol_l.",
+      "latency_ms": 9159.44,
+      "tool_call_count": 2,
+      "turn_count": 3,
+      "normalized_score": 0.887,
+      "scores": {
+        "tool_correctness": {
+          "score": 0.8,
+          "detail": "Called acceptable tools including expected: ['get_nearest_cgm_reading', 'log_conclusion']"
+        },
+        "argument_correctness": {
+          "score": 0.75,
+          "detail": "Average arg correctness across 2 tool call(s): 0.75"
+        },
+        "numeric_groundedness": {
+          "score": 0.3666666666666667,
+          "detail": "Matched 1/6 response numbers against reference data; reference rows: 1."
+        },
+        "structured_conclusion": {
+          "score": 1.0,
+          "detail": "log_conclusion called with 1 numeric value(s); 1 matched reference data (tolerance 0.6). Keys: ['glucose_mmol_l']."
+        },
+        "keyed_conclusion": {
+          "score": 1.0,
+          "detail": "keyed_conclusion: 1/1 (glucose_mmol_l:ok)."
+        }
+      }
+    },
+    {
+      "task_id": "v2_584_lowest_001",
+      "prompt": "\n[Task ID: v2_584_lowest_001] What was the patient's lowest glucose reading on June 30, 2025? End by calling log_conclusion with a JSON findings object that uses exactly these keys: min_glucose.",
+      "latency_ms": 27255.96,
+      "tool_call_count": 3,
+      "turn_count": 4,
+      "normalized_score": 0.775,
+      "scores": {
+        "tool_correctness": {
+          "score": 0.2,
+          "detail": "Called unexpected tools: ['get_average_glucose_from_db_range']"
+        },
+        "argument_correctness": {
+          "score": 0.8333333333333334,
+          "detail": "Average arg correctness across 3 tool call(s): 0.83"
+        },
+        "numeric_groundedness": {
+          "score": 0.34285714285714286,
+          "detail": "Matched 1/7 response numbers against reference data; reference rows: 1."
+        },
+        "structured_conclusion": {
+          "score": 1.0,
+          "detail": "log_conclusion called with 1 numeric value(s); 1 matched reference data (tolerance 0.6). Keys: ['min_glucose']."
+        },
+        "keyed_conclusion": {
+          "score": 1.0,
+          "detail": "keyed_conclusion: 1/1 (min_glucose:ok)."
+        }
+      }
+    },
+    {
+      "task_id": "v2_584_meals_001",
+      "prompt": "\n[Task ID: v2_584_meals_001] How many meals did the patient eat on June 30, 2025, and what were the total carbohydrates? End by calling log_conclusion with a JSON findings object that uses exactly these keys: meal_count, total_carbs.",
+      "latency_ms": 15309.63,
+      "tool_call_count": 2,
+      "turn_count": 3,
+      "normalized_score": 0.912,
+      "scores": {
+        "tool_correctness": {
+          "score": 0.8,
+          "detail": "Called acceptable tools including expected: ['get_meals', 'log_conclusion']"
+        },
+        "argument_correctness": {
+          "score": 0.75,
+          "detail": "Average arg correctness across 2 tool call(s): 0.75"
+        },
+        "numeric_groundedness": {
+          "score": 0.8,
+          "detail": "Matched 3/5 response numbers against reference data; reference rows: 1."
+        },
+        "structured_conclusion": {
+          "score": 1.0,
+          "detail": "log_conclusion called with 2 numeric value(s); 2 matched reference data (tolerance 0.6). Keys: ['meal_count', 'total_carbs']."
+        },
+        "keyed_conclusion": {
+          "score": 1.0,
+          "detail": "keyed_conclusion: 2/2 (meal_count:ok, total_carbs:ok)."
+        }
+      }
+    },
+    {
+      "task_id": "v2_584_bolus_001",
+      "prompt": "\n[Task ID: v2_584_bolus_001] What was the patient's total bolus insulin (in units) on June 30, 2025, and how many doses were given? End by calling log_conclusion with a JSON findings object that uses exactly these keys: bolus_count, total_units.",
+      "latency_ms": 20526.15,
+      "tool_call_count": 2,
+      "turn_count": 3,
+      "normalized_score": 0.912,
+      "scores": {
+        "tool_correctness": {
+          "score": 0.8,
+          "detail": "Called acceptable tools including expected: ['get_bolus_doses', 'log_conclusion']"
+        },
+        "argument_correctness": {
+          "score": 0.75,
+          "detail": "Average arg correctness across 2 tool call(s): 0.75"
+        },
+        "numeric_groundedness": {
+          "score": 0.4222222222222222,
+          "detail": "Matched 2/9 response numbers against reference data; reference rows: 1."
+        },
+        "structured_conclusion": {
+          "score": 1.0,
+          "detail": "log_conclusion called with 2 numeric value(s); 2 matched reference data (tolerance 0.6). Keys: ['bolus_count', 'total_units']."
+        },
+        "keyed_conclusion": {
+          "score": 1.0,
+          "detail": "keyed_conclusion: 2/2 (bolus_count:ok, total_units:ok)."
+        }
+      }
+    },
+    {
+      "task_id": "v2_584_hypo_001",
+      "prompt": "\n[Task ID: v2_584_hypo_001] Were there any hypoglycemic episodes (below 3.9 mmol/L) between June 29 and July 2, 2025? Report how many readings were below 3.9 and the minimum glucose. End by calling log_conclusion with a JSON findings object that uses exactly these keys: hypo_count.",
+      "latency_ms": 17793.01,
+      "tool_call_count": 3,
+      "turn_count": 4,
+      "normalized_score": 0.85,
+      "scores": {
+        "tool_correctness": {
+          "score": 0.5,
+          "detail": "Called acceptable but not expected tools: ['get_cgm_analytics_from_db_range', 'get_cgm_summary_from_db_range', 'log_conclusion']"
+        },
+        "argument_correctness": {
+          "score": 0.8333333333333334,
+          "detail": "Average arg correctness across 3 tool call(s): 0.83"
+        },
+        "numeric_groundedness": {
+          "score": 0.8,
+          "detail": "Matched 6/10 response numbers against reference data; reference rows: 1."
+        },
+        "structured_conclusion": {
+          "score": 1.0,
+          "detail": "log_conclusion called with 1 numeric value(s); 1 matched reference data (tolerance 0.6). Keys: ['hypo_count']."
+        },
+        "keyed_conclusion": {
+          "score": 1.0,
+          "detail": "keyed_conclusion: 1/1 (hypo_count:ok)."
+        }
+      }
+    },
+    {
+      "task_id": "v2_584_tir_001",
+      "prompt": "\n[Task ID: v2_584_tir_001] What percentage of the patient's glucose readings between June 29 and July 2, 2025 were in range (3.9-10.0 mmol/L)? End by calling log_conclusion with a JSON findings object that uses exactly these keys: tir_percent.",
+      "latency_ms": 10793.32,
+      "tool_call_count": 2,
+      "turn_count": 3,
+      "normalized_score": 0.838,
+      "scores": {
+        "tool_correctness": {
+          "score": 0.5,
+          "detail": "Called acceptable but not expected tools: ['get_time_in_range_from_db_range', 'log_conclusion']"
+        },
+        "argument_correctness": {
+          "score": 0.75,
+          "detail": "Average arg correctness across 2 tool call(s): 0.75"
+        },
+        "numeric_groundedness": {
+          "score": 0.3111111111111111,
+          "detail": "Matched 1/9 response numbers against reference data; reference rows: 1."
+        },
+        "structured_conclusion": {
+          "score": 1.0,
+          "detail": "log_conclusion called with 1 numeric value(s); 1 matched reference data (tolerance 0.6). Keys: ['tir_percent']."
+        },
+        "keyed_conclusion": {
+          "score": 1.0,
+          "detail": "keyed_conclusion: 1/1 (tir_percent:ok)."
+        }
+      }
+    },
+    {
+      "task_id": "v2_584_ea1c_001",
+      "prompt": "\n[Task ID: v2_584_ea1c_001] Estimate the patient's CGM-derived A1C (eA1C) for the full dataset period (June 29 - July 9, 2025). Report the mean glucose, estimated A1C, and time in range. End by calling log_conclusion with a JSON findings object that uses exactly these keys: mean_glucose, estimated_a1c, tir_percent.",
+      "latency_ms": 17858.26,
+      "tool_call_count": 3,
+      "turn_count": 4,
+      "normalized_score": 0.818,
+      "scores": {
+        "tool_correctness": {
+          "score": 0.2,
+          "detail": "Called unexpected tools: ['get_time_in_range_from_db_range']"
+        },
+        "argument_correctness": {
+          "score": 0.8333333333333334,
+          "detail": "Average arg correctness across 3 tool call(s): 0.83"
+        },
+        "numeric_groundedness": {
+          "score": 0.7384615384615385,
+          "detail": "Matched 7/13 response numbers against reference data; reference rows: 1."
+        },
+        "structured_conclusion": {
+          "score": 1.0,
+          "detail": "log_conclusion called with 3 numeric value(s); 3 matched reference data (tolerance 0.6). Keys: ['mean_glucose', 'estimated_a1c', 'tir_percent']."
+        },
+        "keyed_conclusion": {
+          "score": 1.0,
+          "detail": "keyed_conclusion: 3/3 (mean_glucose:ok, estimated_a1c:ok, tir_percent:ok)."
+        },
+        "judge": {
+          "score": 0.95,
+          "detail": "Judge scores: {'groundedness': 10, 'completeness': 10, 'clarity': 10, 'clinical_caution': 8}. The response accurately reports all required metrics from the tool outputs without hallucination. It is well-structured and addresses all prompt elements. However, it adds a clinical interpretation ('moderate glycemic control') without explicit caution that eA1C is an estimate and not a replacement for laboratory A1C. While the dataset basis is noted, a stronger disclaimer or more cautious language would be appropriate for medical data reporting."
+        }
+      }
+    },
+    {
+      "task_id": "v2_584_profile_001",
+      "prompt": "\n[Task ID: v2_584_profile_001] What do we know about this patient's profile and insulin regimen?",
+      "latency_ms": 35951.13,
+      "tool_call_count": 6,
+      "turn_count": 7,
+      "normalized_score": 0.46,
+      "scores": {
+        "tool_correctness": {
+          "score": 0.2,
+          "detail": "Called unexpected tools: ['get_bolus_doses', 'get_icr_summary', 'get_meals', 'search_logged_events']"
+        },
+        "argument_correctness": {
+          "score": 1.0,
+          "detail": "No data range specified for this task."
+        },
+        "numeric_groundedness": {
+          "score": 1.0,
+          "detail": "No reference query available; skipping numeric check."
+        },
+        "structured_conclusion": {
+          "score": 0.0,
+          "detail": "log_conclusion was not called."
+        },
+        "logged_state": {
+          "score": 1.0,
+          "detail": "response_contains: matched 1/1 expected substring(s)."
+        }
+      }
+    },
+    {
+      "task_id": "v2_584_ood_001",
+      "prompt": "\n[Task ID: v2_584_ood_001] What was the patient's average glucose on August 1, 2025?",
+      "latency_ms": 6637.78,
+      "tool_call_count": 1,
+      "turn_count": 2,
+      "normalized_score": 0.32,
+      "scores": {
+        "tool_correctness": {
+          "score": 0.2,
+          "detail": "Called unexpected tools: ['get_average_glucose_from_db_range']"
+        },
+        "argument_correctness": {
+          "score": 1.0,
+          "detail": "Average arg correctness across 1 tool call(s): 1.00"
+        },
+        "numeric_groundedness": {
+          "score": 0.6000000000000001,
+          "detail": "Matched 4/10 response numbers against reference data; reference rows: 1."
+        },
+        "structured_conclusion": {
+          "score": 0.0,
+          "detail": "log_conclusion was not called."
+        },
+        "logged_state": {
+          "score": 0.0,
+          "detail": "response_contains: matched 0/1 expected substring(s)."
+        },
+        "judge": {
+          "score": 0.8,
+          "detail": "Judge scores: {'groundedness': 5, 'completeness': 10, 'clarity': 10, 'clinical_caution': 7}. The response correctly states no CGM data exists for August 1, 2025, which matches the tool output. However, it adds an unsupported claim about dataset coverage (June 29 - July 9) not present in the provided tool output, reducing groundedness. It fully answers the query, is clearly structured, and uses cautious phrasing about data availability, though it lacks an explicit medical disclaimer."
+        }
+      }
+    },
+    {
+      "task_id": "v2_584_multi_memory_001",
+      "prompt": "",
+      "latency_ms": null,
+      "tool_call_count": 0,
+      "turn_count": 0,
+      "normalized_score": 0.4,
+      "scores": {
+        "turn_completion": {
+          "score": 0.0,
+          "detail": "Completed 0/2 turn(s)."
+        },
+        "per_turn_state": {
+          "score": 0.0,
+          "detail": "Per-turn state checks: [0.0, 0.0]"
+        },
+        "tool_correctness": {
+          "score": 1.0,
+          "detail": "No scripted turns or no turns recorded."
+        },
+        "logged_state": {
+          "score": 1.0,
+          "detail": "kb_scroll: matched 1/1 expected payload(s) in 'meal_events'."
+        }
+      }
+    },
+    {
+      "task_id": "v2_584_correlation_001",
+      "prompt": "\n[Task ID: v2_584_correlation_001] What happened to the patient's glucose after their meals on June 30, 2025? Summarize the meals and the glucose trend afterward. End by calling log_conclusion with a JSON findings object that uses exactly these keys: meal_count, total_carbs, glucose_trend.",
+      "latency_ms": 61007.9,
+      "tool_call_count": 6,
+      "turn_count": 7,
+      "normalized_score": 0.777,
+      "scores": {
+        "tool_correctness": {
+          "score": 0.2,
+          "detail": "Called unexpected tools: ['get_bolus_doses']"
+        },
+        "argument_correctness": {
+          "score": 0.9166666666666666,
+          "detail": "Average arg correctness across 6 tool call(s): 0.92"
+        },
+        "numeric_groundedness": {
+          "score": 0.3764705882352941,
+          "detail": "Matched 3/17 response numbers against reference data; reference rows: 1."
+        },
+        "structured_conclusion": {
+          "score": 1.0,
+          "detail": "log_conclusion called with 2 numeric value(s); 2 matched reference data (tolerance 0.6). Keys: ['meal_count', 'total_carbs', 'glucose_trend']."
+        },
+        "keyed_conclusion": {
+          "score": 1.0,
+          "detail": "keyed_conclusion: 2/2 (meal_count:ok, total_carbs:ok)."
+        },
+        "judge": {
+          "score": 0.75,
+          "detail": "Judge scores: {'groundedness': 8, 'completeness': 10, 'clarity': 10, 'clinical_caution': 2}. The assistant accurately reports meal data and plausible glucose trends consistent with the truncated tool outputs, though exact values like 8.1 mmol/L at breakfast start are not directly visible. The response fully addresses the prompt and is well-organized. However, it omits any clinical caution language, such as 'based on the data' or a disclaimer that this is not medical advice."
+        }
+      }
+    },
+    {
+      "task_id": "v2_584_tar_001",
+      "prompt": "\n[Task ID: v2_584_tar_001] How much time did the patient spend above 10.0 mmol/L on June 30, 2025? Give both the percentage and the number of readings above range. End by calling log_conclusion with a JSON findings object that uses exactly these keys: above_count, tar_percent.",
+      "latency_ms": 15099.43,
+      "tool_call_count": 2,
+      "turn_count": 3,
+      "normalized_score": 0.912,
+      "scores": {
+        "tool_correctness": {
+          "score": 0.8,
+          "detail": "Called acceptable tools including expected: ['get_cgm_analytics_from_db_range', 'log_conclusion']"
+        },
+        "argument_correctness": {
+          "score": 0.75,
+          "detail": "Average arg correctness across 2 tool call(s): 0.75"
+        },
+        "numeric_groundedness": {
+          "score": 0.6000000000000001,
+          "detail": "Matched 2/5 response numbers against reference data; reference rows: 1."
+        },
+        "structured_conclusion": {
+          "score": 1.0,
+          "detail": "log_conclusion called with 2 numeric value(s); 2 matched reference data (tolerance 0.6). Keys: ['above_count', 'tar_percent']."
+        },
+        "keyed_conclusion": {
+          "score": 1.0,
+          "detail": "keyed_conclusion: 2/2 (above_count:ok, tar_percent:ok)."
+        }
+      }
+    },
+    {
+      "task_id": "v2_584_hypo_sev_001",
+      "prompt": "\n[Task ID: v2_584_hypo_sev_001] Over the full dataset period (June 29 - July 9, 2025), were any hypoglycemic episodes clinically significant? Report how many readings were level 1 (below 3.9 mmol/L) and level 2 (below 3.0 mmol/L). End by calling log_conclusion with a JSON findings object that uses exactly these keys: level1_count, level2_count.",
+      "latency_ms": 15316.94,
+      "tool_call_count": 2,
+      "turn_count": 3,
+      "normalized_score": 0.912,
+      "scores": {
+        "tool_correctness": {
+          "score": 0.8,
+          "detail": "Called acceptable tools including expected: ['get_cgm_analytics_from_db_range', 'log_conclusion']"
+        },
+        "argument_correctness": {
+          "score": 0.75,
+          "detail": "Average arg correctness across 2 tool call(s): 0.75"
+        },
+        "numeric_groundedness": {
+          "score": 0.5333333333333333,
+          "detail": "Matched 3/9 response numbers against reference data; reference rows: 1."
+        },
+        "structured_conclusion": {
+          "score": 1.0,
+          "detail": "log_conclusion called with 2 numeric value(s); 2 matched reference data (tolerance 0.6). Keys: ['level1_count', 'level2_count']."
+        },
+        "keyed_conclusion": {
+          "score": 1.0,
+          "detail": "keyed_conclusion: 2/2 (level1_count:ok, level2_count:ok)."
+        }
+      }
+    },
+    {
+      "task_id": "v2_584_variability_001",
+      "prompt": "\n[Task ID: v2_584_variability_001] Summarize the patient's overall glucose variability for the full dataset (June 29 - July 9, 2025). Report the mean glucose and the minimum and maximum readings. End by calling log_conclusion with a JSON findings object that uses exactly these keys: mean_glucose, min_glucose, max_glucose.",
+      "latency_ms": 14763.0,
+      "tool_call_count": 2,
+      "turn_count": 3,
+      "normalized_score": 0.845,
+      "scores": {
+        "tool_correctness": {
+          "score": 0.5,
+          "detail": "Called acceptable but not expected tools: ['get_average_glucose_from_db_range', 'log_conclusion']"
+        },
+        "argument_correctness": {
+          "score": 0.75,
+          "detail": "Average arg correctness across 2 tool call(s): 0.75"
+        },
+        "numeric_groundedness": {
+          "score": 0.8999999999999999,
+          "detail": "Matched 7/10 response numbers against reference data; reference rows: 1."
+        },
+        "structured_conclusion": {
+          "score": 1.0,
+          "detail": "log_conclusion called with 3 numeric value(s); 3 matched reference data (tolerance 0.6). Keys: ['mean_glucose', 'min_glucose', 'max_glucose']."
+        },
+        "keyed_conclusion": {
+          "score": 1.0,
+          "detail": "keyed_conclusion: 3/3 (mean_glucose:ok, min_glucose:ok, max_glucose:ok)."
+        },
+        "judge": {
+          "score": 0.85,
+          "detail": "Judge scores: {'groundedness': 10, 'completeness': 10, 'clarity': 10, 'clinical_caution': 4}. The response accurately reports the data from the tool outputs without hallucination, includes all requested elements, and is well-structured. However, it lacks clinical caution language (e.g., 'based on the data', 'this is not medical advice') and presents clinical interpretations such as 'hypoglycemia' and 'hyperglycemia' as definitive statements without qualification."
+        }
+      }
+    },
+    {
+      "task_id": "v2_584_dawn_001",
+      "prompt": "",
+      "latency_ms": null,
+      "tool_call_count": 0,
+      "turn_count": 0,
+      "normalized_score": 0.0,
+      "scores": {
+        "tool_correctness": {
+          "score": 0.0,
+          "detail": "No tools were called."
+        },
+        "argument_correctness": {
+          "score": 0.0,
+          "detail": "No tools were called to evaluate arguments."
+        },
+        "numeric_groundedness": {
+          "score": 0.0,
+          "detail": "Empty final response."
+        },
+        "structured_conclusion": {
+          "score": 0.0,
+          "detail": "log_conclusion was not called."
+        },
+        "keyed_conclusion": {
+          "score": 0.0,
+          "detail": "log_conclusion not called; cannot verify keyed values."
+        },
+        "judge": {
+          "score": 0.0,
+          "detail": "Empty response; cannot judge."
+        }
+      }
+    },
+    {
+      "task_id": "v2_584_missed_bolus_001",
+      "prompt": "\n[Task ID: v2_584_missed_bolus_001] Over June 29 - July 9, 2025, how many meals had no bolus dose recorded within 30 minutes of the meal? End by calling log_conclusion with a JSON findings object that uses exactly these keys: missed_bolus_count.",
+      "latency_ms": 247478.67,
+      "tool_call_count": 3,
+      "turn_count": 4,
+      "normalized_score": 0.355,
+      "scores": {
+        "tool_correctness": {
+          "score": 0.8,
+          "detail": "Called acceptable tools including expected: ['get_bolus_doses', 'get_meals', 'log_conclusion']"
+        },
+        "argument_correctness": {
+          "score": 0.8333333333333334,
+          "detail": "Average arg correctness across 3 tool call(s): 0.83"
+        },
+        "numeric_groundedness": {
+          "score": 0.0,
+          "detail": "Response numbers do not match reference data."
+        },
+        "structured_conclusion": {
+          "score": 0.15,
+          "detail": "log_conclusion called with 1 numeric value(s); 0 matched reference data (tolerance 0.6). Keys: ['missed_bolus_count']."
+        },
+        "keyed_conclusion": {
+          "score": 0.0,
+          "detail": "keyed_conclusion: 0/1 (missed_bolus_count:got 14 want 15)."
+        }
+      }
+    },
+    {
+      "task_id": "v2_584_basal_001",
+      "prompt": "\n[Task ID: v2_584_basal_001] What scheduled basal insulin rates was the patient using during June 29 - July 9, 2025? Report how many distinct basal rates appear in the schedule. End by calling log_conclusion with a JSON findings object that uses exactly these keys: distinct_basal_rates.",
+      "latency_ms": 15805.37,
+      "tool_call_count": 2,
+      "turn_count": 3,
+      "normalized_score": 0.915,
+      "scores": {
+        "tool_correctness": {
+          "score": 0.8,
+          "detail": "Called acceptable tools including expected: ['get_basal_rates', 'log_conclusion']"
+        },
+        "argument_correctness": {
+          "score": 0.75,
+          "detail": "Average arg correctness across 2 tool call(s): 0.75"
+        },
+        "numeric_groundedness": {
+          "score": 0.3666666666666667,
+          "detail": "Matched 2/12 response numbers against reference data; reference rows: 1."
+        },
+        "structured_conclusion": {
+          "score": 1.0,
+          "detail": "log_conclusion called with 1 numeric value(s); 1 matched reference data (tolerance 0.6). Keys: ['distinct_basal_rates']."
+        },
+        "keyed_conclusion": {
+          "score": 1.0,
+          "detail": "keyed_conclusion: 1/1 (distinct_basal_rates:ok)."
+        }
+      }
+    },
+    {
+      "task_id": "v2_584_education_001",
+      "prompt": "",
+      "latency_ms": null,
+      "tool_call_count": 0,
+      "turn_count": 0,
+      "normalized_score": 0.0,
+      "scores": {
+        "tool_correctness": {
+          "score": 0.0,
+          "detail": "No tools were called."
+        },
+        "argument_correctness": {
+          "score": 0.0,
+          "detail": "No tools were called to evaluate arguments."
+        },
+        "numeric_groundedness": {
+          "score": 0.0,
+          "detail": "Empty final response."
+        },
+        "structured_conclusion": {
+          "score": 0.0,
+          "detail": "log_conclusion was not called."
+        },
+        "keyed_conclusion": {
+          "score": 0.0,
+          "detail": "log_conclusion not called; cannot verify keyed values."
+        },
+        "judge": {
+          "score": 0.0,
+          "detail": "Empty response; cannot judge."
+        }
+      }
+    },
+    {
+      "task_id": "v2_584_log_mealinsulin_001",
+      "prompt": "\n[Task ID: v2_584_log_mealinsulin_001] Log a lunch of 60g carbs with 4 units of rapid insulin on July 2, 2025 at 12:30 PM.",
+      "latency_ms": 8576.64,
+      "tool_call_count": 2,
+      "turn_count": 2,
+      "normalized_score": 0.9,
+      "scores": {
+        "tool_correctness": {
+          "score": 1.0,
+          "detail": "Called only expected tools: ['log_insulin', 'log_meal']"
+        },
+        "argument_correctness": {
+          "score": 1.0,
+          "detail": "No data range specified for this task."
+        },
+        "numeric_groundedness": {
+          "score": 1.0,
+          "detail": "No reference query available; skipping numeric check."
+        },
+        "structured_conclusion": {
+          "score": 0.0,
+          "detail": "log_conclusion was not called."
+        },
+        "logged_state": {
+          "score": 1.0,
+          "detail": "kb_scroll: matched 1/1 expected payload(s) in 'meal_events'."
+        }
+      }
+    },
+    {
+      "task_id": "v2_584_log_glucose_001",
+      "prompt": "\n[Task ID: v2_584_log_glucose_001] Log a glucose reading of 5.5 mmol/L on July 2, 2025 at 10:00 AM.",
+      "latency_ms": 3096.63,
+      "tool_call_count": 1,
+      "turn_count": 2,
+      "normalized_score": 0.8,
+      "scores": {
+        "tool_correctness": {
+          "score": 1.0,
+          "detail": "Called only expected tools: ['log_glucose']"
+        },
+        "argument_correctness": {
+          "score": 1.0,
+          "detail": "No data range specified for this task."
+        },
+        "numeric_groundedness": {
+          "score": 1.0,
+          "detail": "No reference query available; skipping numeric check."
+        },
+        "structured_conclusion": {
+          "score": 0.0,
+          "detail": "log_conclusion was not called."
+        },
+        "logged_state": {
+          "score": 1.0,
+          "detail": "kb_scroll: matched 1/1 expected payload(s) in 'glucose_events'."
+        }
+      }
+    },
+    {
+      "task_id": "v2_584_multi_clarify_001",
+      "prompt": "Agent must ask for a date instead of guessing, then answer once clarified.",
+      "latency_ms": 13458.49,
+      "tool_call_count": 2,
+      "turn_count": 2,
+      "normalized_score": 0.765,
+      "scores": {
+        "turn_completion": {
+          "score": 1.0,
+          "detail": "Completed all 2 turn(s)."
+        },
+        "per_turn_state": {
+          "score": 1.0,
+          "detail": "Per-turn state checks: [1.0]"
+        },
+        "tool_correctness": {
+          "score": 0.6,
+          "detail": "Per-turn tool correctness: [0.2, 1.0]"
+        },
+        "judge": {
+          "score": 0.425,
+          "detail": "Judge scores: {'groundedness': 1, 'completeness': 7, 'clarity': 9, 'clinical_caution': 0}. The response contains a critical contradiction: it states the lowest glucose was 4.8-5.0 mmol/L, yet claims several readings were below 3.9 mmol/L. This is not supported by the provided data and indicates hallucination. Completeness is adequate, clarity is strong, but clinical caution is missing entirely."
+        }
+      }
+    },
+    {
+      "task_id": "v2_584_multi_insulin_adjust_001",
+      "prompt": "",
+      "latency_ms": null,
+      "tool_call_count": 0,
+      "turn_count": 0,
+      "normalized_score": 0.25,
+      "scores": {
+        "turn_completion": {
+          "score": 0.0,
+          "detail": "Completed 0/2 turn(s)."
+        },
+        "per_turn_state": {
+          "score": 0.0,
+          "detail": "Per-turn state checks: [0.0, 0.0]"
+        },
+        "tool_correctness": {
+          "score": 1.0,
+          "detail": "No scripted turns or no turns recorded."
+        },
+        "judge": {
+          "score": 0.0,
+          "detail": "Empty response; cannot judge."
+        }
+      }
+    }
+  ]
+}

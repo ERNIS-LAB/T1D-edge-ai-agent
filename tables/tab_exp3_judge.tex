@@ -1,0 +1,28 @@
+\begin{table}[H]
+\centering
+\caption{Experiment~4: the LLM-judge score of Table~\ref{tab:exp3} decomposed into the four rubric criteria, at each quantisation level. Each criterion is marked 0 to 10 by the judge against the rubric of Table~\ref{tab:judge} and rescaled to $[0,1]$ here; Judge is their mean. Means are over the judged tasks only, so the denominator is smaller than the full suite.}
+\label{tab:exp3_judge}
+\small
+\setlength{\tabcolsep}{5pt}
+\begin{tabular}{@{}ll rrrrr@{}}
+\toprule
+Model & Quant & Judge & Groundedness & Completeness & Clarity & Clin. caution \\
+\midrule
+Qwen 3.5 9B & BF16 & 0.79 & 0.83 & 0.87 & 0.89 & 0.55 \\
+ & Q8\_0 & 0.78 & 0.81 & 0.86 & 0.91 & 0.52 \\
+ & Q6\_K & 0.83 & 0.87 & 0.91 & 0.94 & 0.60 \\
+ & Q4\_0 & 0.68 & 0.71 & 0.77 & 0.77 & 0.48 \\
+ & IQ3\_XXS & 0.75 & 0.70 & 0.83 & 0.91 & 0.55 \\
+\midrule
+Qwen 3.5 4B & BF16 & 0.60 & 0.59 & 0.71 & 0.73 & 0.36 \\
+ & Q8\_0 & 0.66 & 0.67 & 0.76 & 0.80 & 0.41 \\
+ & Q4\_0 & 0.72 & 0.70 & 0.82 & 0.88 & 0.47 \\
+\midrule
+Gemma 4 E4B & 8-bit & 0.79 & 0.83 & 0.82 & 0.94 & 0.59 \\
+ & Q4 QAT & 0.77 & 0.78 & 0.82 & 0.94 & 0.53 \\
+\midrule
+Gemma 4 E2B & 8-bit & 0.72 & 0.74 & 0.72 & 0.83 & 0.59 \\
+ & Q4 QAT & 0.42 & 0.40 & 0.42 & 0.50 & 0.34 \\
+\bottomrule
+\end{tabular}
+\end{table}

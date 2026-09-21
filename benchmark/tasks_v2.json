@@ -1,0 +1,2570 @@
+[
+  {
+    "task_id": "v2_540_lookup_001",
+    "patient_id": "540",
+    "prompt": "What was the patient's glucose level around 1 PM on July 8, 2027? End by calling log_conclusion with a JSON findings object that uses exactly these keys: glucose_mmol_l.",
+    "category": "lookup",
+    "difficulty": "easy",
+    "expected_tools": [
+      "get_nearest_cgm_reading"
+    ],
+    "acceptable_tools": [
+      "get_nearest_cgm_reading",
+      "get_cgm_readings"
+    ],
+    "data_range": {
+      "start": "2027-07-08T12:00:00+00:00",
+      "end": "2027-07-08T14:00:00+00:00"
+    },
+    "reference_query": "SELECT ROUND(glucose_mmol_l,1) AS glucose_mmol_l FROM cgm_readings WHERE patient_id='540' ORDER BY ABS(strftime('%s',factory_timestamp_utc)-strftime('%s','2027-07-08T13:00:00+00:00')) LIMIT 1",
+    "expected_conclusion_keys": [
+      "glucose_mmol_l"
+    ],
+    "scoring_weights": {
+      "tool_correctness": 0.25,
+      "argument_correctness": 0.25,
+      "structured_conclusion": 0.2,
+      "keyed_conclusion": 0.3
+    },
+    "multi_turn": false,
+    "notes": "Ground truth: nearest reading to 13:00 is 6.7 mmol/L @ 2027-07-08T13:02:02Z."
+  },
+  {
+    "task_id": "v2_540_lowest_001",
+    "patient_id": "540",
+    "prompt": "What was the patient's lowest glucose reading on July 12, 2027? End by calling log_conclusion with a JSON findings object that uses exactly these keys: min_glucose.",
+    "category": "analysis",
+    "difficulty": "easy",
+    "expected_tools": [
+      "get_cgm_readings"
+    ],
+    "acceptable_tools": [
+      "get_cgm_readings",
+      "get_cgm_summary_from_db_range"
+    ],
+    "data_range": {
+      "start": "2027-07-12T00:00:00+00:00",
+      "end": "2027-07-12T23:59:59+00:00"
+    },
+    "reference_query": "SELECT ROUND(MIN(glucose_mmol_l),1) AS min_glucose FROM cgm_readings WHERE patient_id='540' AND factory_timestamp_utc>='2027-07-12T00:00:00+00:00' AND factory_timestamp_utc<='2027-07-12T23:59:59+00:00'",
+    "expected_conclusion_keys": [
+      "min_glucose"
+    ],
+    "scoring_weights": {
+      "tool_correctness": 0.25,
+      "argument_correctness": 0.15,
+      "structured_conclusion": 0.2,
+      "keyed_conclusion": 0.4
+    },
+    "multi_turn": false,
+    "notes": "Ground truth: min glucose on 2027-07-12 is 2.9 mmol/L (a clinically significant low)."
+  },
+  {
+    "task_id": "v2_540_meals_001",
+    "patient_id": "540",
+    "prompt": "How many meals did the patient eat on July 8, 2027, and what were the total carbohydrates? End by calling log_conclusion with a JSON findings object that uses exactly these keys: meal_count, total_carbs.",
+    "category": "summary",
+    "difficulty": "easy",
+    "expected_tools": [
+      "get_meals"
+    ],
+    "acceptable_tools": [
+      "get_meals"
+    ],
+    "data_range": {
+      "start": "2027-07-08T00:00:00+00:00",
+      "end": "2027-07-08T23:59:59+00:00"
+    },
+    "reference_query": "SELECT COUNT(*) AS meal_count, ROUND(SUM(carbs_g),0) AS total_carbs FROM meal WHERE patient_id='540' AND timestamp_utc>='2027-07-08T00:00:00+00:00' AND timestamp_utc<='2027-07-08T23:59:59+00:00'",
+    "expected_conclusion_keys": [
+      "meal_count",
+      "total_carbs"
+    ],
+    "scoring_weights": {
+      "tool_correctness": 0.25,
+      "argument_correctness": 0.15,
+      "structured_conclusion": 0.2,
+      "keyed_conclusion": 0.4
+    },
+    "multi_turn": false,
+    "notes": "Ground truth: 4 meals totalling 193g carbs on 2027-07-08."
+  },
+  {
+    "task_id": "v2_540_bolus_001",
+    "patient_id": "540",
+    "prompt": "What was the patient's total bolus insulin (in units) on July 8, 2027, and how many doses were given? End by calling log_conclusion with a JSON findings object that uses exactly these keys: bolus_count, total_units.",
+    "category": "summary",
+    "difficulty": "medium",
+    "expected_tools": [
+      "get_bolus_doses"
+    ],
+    "acceptable_tools": [
+      "get_bolus_doses"
+    ],
+    "data_range": {
+      "start": "2027-07-08T00:00:00+00:00",
+      "end": "2027-07-08T23:59:59+00:00"
+    },
+    "reference_query": "SELECT COUNT(*) AS bolus_count, ROUND(SUM(dose_units),1) AS total_units FROM bolus WHERE patient_id='540' AND ts_begin_utc>='2027-07-08T00:00:00+00:00' AND ts_begin_utc<='2027-07-08T23:59:59+00:00'",
+    "expected_conclusion_keys": [
+      "bolus_count",
+      "total_units"
+    ],
+    "scoring_weights": {
+      "tool_correctness": 0.25,
+      "argument_correctness": 0.15,
+      "structured_conclusion": 0.2,
+      "keyed_conclusion": 0.4
+    },
+    "multi_turn": false,
+    "notes": "Ground truth: 7 bolus doses totalling 24.4 units on 2027-07-08."
+  },
+  {
+    "task_id": "v2_540_hypo_001",
+    "patient_id": "540",
+    "prompt": "Were there any hypoglycemic episodes (below 3.9 mmol/L) between July 4 and July 7, 2027? Report how many readings were below 3.9 and the minimum glucose. End by calling log_conclusion with a JSON findings object that uses exactly these keys: hypo_count, min_glucose.",
+    "category": "analysis",
+    "difficulty": "medium",
+    "expected_tools": [
+      "get_cgm_readings"
+    ],
+    "acceptable_tools": [
+      "get_cgm_readings",
+      "get_cgm_summary_from_db_range",
+      "get_cgm_analytics_from_db_range"
+    ],
+    "data_range": {
+      "start": "2027-07-04T00:00:00+00:00",
+      "end": "2027-07-07T23:59:59+00:00"
+    },
+    "reference_query": "SELECT COUNT(*) AS hypo_count, ROUND(MIN(glucose_mmol_l),1) AS min_glucose FROM cgm_readings WHERE patient_id='540' AND factory_timestamp_utc>='2027-07-04T00:00:00+00:00' AND factory_timestamp_utc<='2027-07-07T23:59:59+00:00' AND glucose_mmol_l<3.9",
+    "expected_conclusion_keys": [
+      "hypo_count",
+      "min_glucose"
+    ],
+    "scoring_weights": {
+      "tool_correctness": 0.25,
+      "argument_correctness": 0.15,
+      "structured_conclusion": 0.2,
+      "keyed_conclusion": 0.4
+    },
+    "multi_turn": false,
+    "notes": "Ground truth: 87 readings below 3.9 mmol/L, min 3.1 mmol/L (positive hypo case)."
+  },
+  {
+    "task_id": "v2_540_tir_001",
+    "patient_id": "540",
+    "prompt": "What percentage of the patient's glucose readings between July 4 and July 7, 2027 were in range (3.9-10.0 mmol/L)? End by calling log_conclusion with a JSON findings object that uses exactly these keys: tir_percent.",
+    "category": "time_in_range",
+    "difficulty": "medium",
+    "expected_tools": [
+      "get_cgm_summary_from_db_range"
+    ],
+    "acceptable_tools": [
+      "get_cgm_summary_from_db_range",
+      "get_cgm_readings",
+      "get_time_in_range_from_db_range",
+      "get_cgm_analytics_from_db_range"
+    ],
+    "data_range": {
+      "start": "2027-07-04T00:00:00+00:00",
+      "end": "2027-07-07T23:59:59+00:00"
+    },
+    "reference_query": "SELECT ROUND(100.0*SUM(CASE WHEN glucose_mmol_l>=3.9 AND glucose_mmol_l<=10.0 THEN 1 ELSE 0 END)/COUNT(*),1) AS tir_percent FROM cgm_readings WHERE patient_id='540' AND factory_timestamp_utc>='2027-07-04T00:00:00+00:00' AND factory_timestamp_utc<='2027-07-07T23:59:59+00:00'",
+    "expected_conclusion_keys": [
+      "tir_percent"
+    ],
+    "scoring_weights": {
+      "tool_correctness": 0.25,
+      "argument_correctness": 0.15,
+      "structured_conclusion": 0.2,
+      "keyed_conclusion": 0.4
+    },
+    "multi_turn": false,
+    "notes": "Ground truth: TIR (3.9-10.0) = 69.9% over 2027-07-04..07."
+  },
+  {
+    "task_id": "v2_540_ea1c_001",
+    "patient_id": "540",
+    "prompt": "Estimate the patient's CGM-derived A1C (eA1C) for the full dataset period (July 4-14, 2027). Report the mean glucose, estimated A1C, and time in range. End by calling log_conclusion with a JSON findings object that uses exactly these keys: mean_glucose, estimated_a1c, tir_percent.",
+    "category": "summary",
+    "difficulty": "hard",
+    "expected_tools": [
+      "get_cgm_summary_from_db_range"
+    ],
+    "acceptable_tools": [
+      "get_cgm_summary_from_db_range",
+      "get_cgm_readings",
+      "get_estimated_a1c_from_db_range",
+      "get_cgm_analytics_from_db_range"
+    ],
+    "data_range": {
+      "start": "2027-07-04T00:00:00+00:00",
+      "end": "2027-07-14T23:59:59+00:00"
+    },
+    "reference_query": "SELECT ROUND(AVG(glucose_mmol_l),1) AS mean_glucose, ROUND((AVG(glucose_mmol_l)*18.0+46.7)/28.7,1) AS estimated_a1c, ROUND(100.0*SUM(CASE WHEN glucose_mmol_l>=3.9 AND glucose_mmol_l<=10.0 THEN 1 ELSE 0 END)/COUNT(*),1) AS tir_percent FROM cgm_readings WHERE patient_id='540' AND factory_timestamp_utc>='2027-07-04T00:00:00+00:00' AND factory_timestamp_utc<='2027-07-14T23:59:59+00:00'",
+    "expected_conclusion_keys": [
+      "mean_glucose",
+      "estimated_a1c",
+      "tir_percent"
+    ],
+    "scoring_weights": {
+      "tool_correctness": 0.2,
+      "argument_correctness": 0.1,
+      "structured_conclusion": 0.2,
+      "keyed_conclusion": 0.4,
+      "judge": 0.1
+    },
+    "multi_turn": false,
+    "notes": "ADAG formula eA1C=(mean_mgdl+46.7)/28.7. Ground truth: mean 8.8 mmol/L, eA1C 7.2%, TIR 61.7%."
+  },
+  {
+    "task_id": "v2_540_profile_001",
+    "patient_id": "540",
+    "prompt": "What do we know about this patient's profile and insulin regimen?",
+    "category": "lookup",
+    "difficulty": "easy",
+    "expected_tools": [
+      "get_patient_info"
+    ],
+    "acceptable_tools": [
+      "get_patient_info",
+      "get_basal_rates"
+    ],
+    "expected_conclusion_keys": [
+      "insulin_type"
+    ],
+    "verification": {
+      "type": "response_contains",
+      "expected_substrings": [
+        "Humalog"
+      ]
+    },
+    "scoring_weights": {
+      "tool_correctness": 0.3,
+      "argument_correctness": 0.1,
+      "structured_conclusion": 0.3,
+      "logged_state": 0.3
+    },
+    "multi_turn": false,
+    "notes": "Ground truth: patient 540 uses Humalog. logged_state here verifies the response names the correct insulin."
+  },
+  {
+    "task_id": "v2_544_lookup_001",
+    "patient_id": "544",
+    "prompt": "What was the patient's glucose level around 1 PM on June 30, 2027? End by calling log_conclusion with a JSON findings object that uses exactly these keys: glucose_mmol_l.",
+    "category": "lookup",
+    "difficulty": "easy",
+    "expected_tools": [
+      "get_nearest_cgm_reading"
+    ],
+    "acceptable_tools": [
+      "get_nearest_cgm_reading",
+      "get_cgm_readings"
+    ],
+    "data_range": {
+      "start": "2027-06-30T12:00:00+00:00",
+      "end": "2027-06-30T14:00:00+00:00"
+    },
+    "reference_query": "SELECT ROUND(glucose_mmol_l,1) AS glucose_mmol_l FROM cgm_readings WHERE patient_id='544' ORDER BY ABS(strftime('%s',factory_timestamp_utc)-strftime('%s','2027-06-30T13:00:00+00:00')) LIMIT 1",
+    "expected_conclusion_keys": [
+      "glucose_mmol_l"
+    ],
+    "scoring_weights": {
+       "tool_correctness": 0.25,
+      "argument_correctness": 0.25,
+      "structured_conclusion": 0.2,
+      "keyed_conclusion": 0.3
+    },
+    "multi_turn": false,
+    "notes": "Ground truth: nearest reading to 13:00 is 5.5 mmol/L @ 2027-06-30T12:59:00Z."
+  },
+  {
+    "task_id": "v2_544_lowest_001",
+    "patient_id": "544",
+    "prompt": "What was the patient's lowest glucose reading on June 26, 2027? End by calling log_conclusion with a JSON findings object that uses exactly these keys: min_glucose.",
+    "category": "analysis",
+    "difficulty": "easy",
+    "expected_tools": [
+      "get_cgm_readings"
+    ],
+    "acceptable_tools": [
+      "get_cgm_readings",
+      "get_cgm_summary_from_db_range"
+    ],
+    "data_range": {
+      "start": "2027-06-26T00:00:00+00:00",
+      "end": "2027-06-26T23:59:59+00:00"
+    },
+    "reference_query": "SELECT ROUND(MIN(glucose_mmol_l),1) AS min_glucose FROM cgm_readings WHERE patient_id='544' AND factory_timestamp_utc>='2027-06-26T00:00:00+00:00' AND factory_timestamp_utc<='2027-06-26T23:59:59+00:00'",
+    "expected_conclusion_keys": [
+      "min_glucose"
+    ],
+    "scoring_weights": {
+      "tool_correctness": 0.25,
+      "argument_correctness": 0.15,
+      "structured_conclusion": 0.2,
+      "keyed_conclusion": 0.4
+    },
+    "multi_turn": false,
+    "notes": "Ground truth: min glucose on 2027-06-26 is 6.1 mmol/L (no hypoglycemia that day)."
+  },
+  {
+    "task_id": "v2_544_meals_001",
+    "patient_id": "544",
+    "prompt": "How many meals did the patient eat on June 30, 2027, and what were the total carbohydrates? End by calling log_conclusion with a JSON findings object that uses exactly these keys: meal_count, total_carbs.",
+    "category": "summary",
+    "difficulty": "easy",
+    "expected_tools": [
+      "get_meals"
+    ],
+    "acceptable_tools": [
+      "get_meals"
+    ],
+    "data_range": {
+      "start": "2027-06-30T00:00:00+00:00",
+      "end": "2027-06-30T23:59:59+00:00"
+    },
+    "reference_query": "SELECT COUNT(*) AS meal_count, ROUND(SUM(carbs_g),0) AS total_carbs FROM meal WHERE patient_id='544' AND timestamp_utc>='2027-06-30T00:00:00+00:00' AND timestamp_utc<='2027-06-30T23:59:59+00:00'",
+    "expected_conclusion_keys": [
+      "meal_count",
+      "total_carbs"
+    ],
+    "scoring_weights": {
+      "tool_correctness": 0.25,
+      "argument_correctness": 0.15,
+      "structured_conclusion": 0.2,
+      "keyed_conclusion": 0.4
+    },
+    "multi_turn": false,
+    "notes": "Ground truth: 4 meals totalling 258g carbs on 2027-06-30."
+  },
+  {
+    "task_id": "v2_544_bolus_001",
+    "patient_id": "544",
+    "prompt": "What was the patient's total bolus insulin (in units) on June 30, 2027, and how many doses were given? End by calling log_conclusion with a JSON findings object that uses exactly these keys: bolus_count, total_units.",
+    "category": "summary",
+    "difficulty": "medium",
+    "expected_tools": [
+      "get_bolus_doses"
+    ],
+    "acceptable_tools": [
+      "get_bolus_doses"
+    ],
+    "data_range": {
+      "start": "2027-06-30T00:00:00+00:00",
+      "end": "2027-06-30T23:59:59+00:00"
+    },
+    "reference_query": "SELECT COUNT(*) AS bolus_count, ROUND(SUM(dose_units),1) AS total_units FROM bolus WHERE patient_id='544' AND ts_begin_utc>='2027-06-30T00:00:00+00:00' AND ts_begin_utc<='2027-06-30T23:59:59+00:00'",
+    "expected_conclusion_keys": [
+      "bolus_count",
+      "total_units"
+    ],
+    "scoring_weights": {
+      "tool_correctness": 0.25,
+      "argument_correctness": 0.15,
+      "structured_conclusion": 0.2,
+      "keyed_conclusion": 0.4
+    },
+    "multi_turn": false,
+    "notes": "Ground truth: 4 bolus doses totalling 32.8 units on 2027-06-30."
+  },
+  {
+    "task_id": "v2_544_hypo_001",
+    "patient_id": "544",
+    "prompt": "Were there any hypoglycemic episodes (below 3.9 mmol/L) between June 24 and June 27, 2027? Report how many readings were below 3.9 and the minimum glucose. End by calling log_conclusion with a JSON findings object that uses exactly these keys: hypo_count, min_glucose.",
+    "category": "analysis",
+    "difficulty": "medium",
+    "expected_tools": [
+      "get_cgm_readings"
+    ],
+    "acceptable_tools": [
+      "get_cgm_readings",
+      "get_cgm_summary_from_db_range",
+      "get_cgm_analytics_from_db_range"
+    ],
+    "data_range": {
+      "start": "2027-06-24T00:00:00+00:00",
+      "end": "2027-06-27T23:59:59+00:00"
+    },
+    "reference_query": "SELECT COUNT(*) AS hypo_count, ROUND(MIN(glucose_mmol_l),1) AS min_glucose FROM cgm_readings WHERE patient_id='544' AND factory_timestamp_utc>='2027-06-24T00:00:00+00:00' AND factory_timestamp_utc<='2027-06-27T23:59:59+00:00' AND glucose_mmol_l<3.9",
+    "expected_conclusion_keys": [
+      "hypo_count",
+      "min_glucose"
+    ],
+    "scoring_weights": {
+      "tool_correctness": 0.25,
+      "argument_correctness": 0.15,
+      "structured_conclusion": 0.2,
+      "keyed_conclusion": 0.4
+    },
+    "multi_turn": false,
+    "notes": "Ground truth: 25 readings below 3.9 mmol/L, min 3.4 mmol/L."
+  },
+  {
+    "task_id": "v2_544_tir_001",
+    "patient_id": "544",
+    "prompt": "What percentage of the patient's glucose readings between June 24 and June 27, 2027 were in range (3.9-10.0 mmol/L)? End by calling log_conclusion with a JSON findings object that uses exactly these keys: tir_percent.",
+    "category": "time_in_range",
+    "difficulty": "medium",
+    "expected_tools": [
+      "get_cgm_summary_from_db_range"
+    ],
+    "acceptable_tools": [
+      "get_cgm_summary_from_db_range",
+      "get_cgm_readings",
+      "get_time_in_range_from_db_range",
+      "get_cgm_analytics_from_db_range"
+    ],
+    "data_range": {
+      "start": "2027-06-24T00:00:00+00:00",
+      "end": "2027-06-27T23:59:59+00:00"
+    },
+    "reference_query": "SELECT ROUND(100.0*SUM(CASE WHEN glucose_mmol_l>=3.9 AND glucose_mmol_l<=10.0 THEN 1 ELSE 0 END)/COUNT(*),1) AS tir_percent FROM cgm_readings WHERE patient_id='544' AND factory_timestamp_utc>='2027-06-24T00:00:00+00:00' AND factory_timestamp_utc<='2027-06-27T23:59:59+00:00'",
+    "expected_conclusion_keys": [
+      "tir_percent"
+    ],
+    "scoring_weights": {
+      "tool_correctness": 0.25,
+      "argument_correctness": 0.15,
+      "structured_conclusion": 0.2,
+      "keyed_conclusion": 0.4
+    },
+    "multi_turn": false,
+    "notes": "Ground truth: TIR (3.9-10.0) = 60.1% over 2027-06-24..27."
+  },
+  {
+    "task_id": "v2_544_ea1c_001",
+    "patient_id": "544",
+    "prompt": "Estimate the patient's CGM-derived A1C (eA1C) for the full dataset period (June 24 - July 4, 2027). Report the mean glucose, estimated A1C, and time in range. End by calling log_conclusion with a JSON findings object that uses exactly these keys: mean_glucose, estimated_a1c, tir_percent.",
+    "category": "summary",
+    "difficulty": "hard",
+    "expected_tools": [
+      "get_cgm_summary_from_db_range"
+    ],
+    "acceptable_tools": [
+      "get_cgm_summary_from_db_range",
+      "get_cgm_readings",
+      "get_estimated_a1c_from_db_range",
+      "get_cgm_analytics_from_db_range"
+    ],
+    "data_range": {
+      "start": "2027-06-24T00:00:00+00:00",
+      "end": "2027-07-04T23:59:59+00:00"
+    },
+    "reference_query": "SELECT ROUND(AVG(glucose_mmol_l),1) AS mean_glucose, ROUND((AVG(glucose_mmol_l)*18.0+46.7)/28.7,1) AS estimated_a1c, ROUND(100.0*SUM(CASE WHEN glucose_mmol_l>=3.9 AND glucose_mmol_l<=10.0 THEN 1 ELSE 0 END)/COUNT(*),1) AS tir_percent FROM cgm_readings WHERE patient_id='544' AND factory_timestamp_utc>='2027-06-24T00:00:00+00:00' AND factory_timestamp_utc<='2027-07-04T23:59:59+00:00'",
+    "expected_conclusion_keys": [
+      "mean_glucose",
+      "estimated_a1c",
+      "tir_percent"
+    ],
+    "scoring_weights": {
+      "tool_correctness": 0.2,
+      "argument_correctness": 0.1,
+      "structured_conclusion": 0.2,
+      "keyed_conclusion": 0.4,
+      "judge": 0.1
+    },
+    "multi_turn": false,
+    "notes": "ADAG formula. Ground truth: mean 8.7 mmol/L, eA1C 7.1%, TIR 68.3%."
+  },
+  {
+    "task_id": "v2_544_profile_001",
+    "patient_id": "544",
+    "prompt": "What do we know about this patient's profile and insulin regimen?",
+    "category": "lookup",
+    "difficulty": "easy",
+    "expected_tools": [
+      "get_patient_info"
+    ],
+    "acceptable_tools": [
+      "get_patient_info",
+      "get_basal_rates"
+    ],
+    "expected_conclusion_keys": [
+      "insulin_type"
+    ],
+    "verification": {
+      "type": "response_contains",
+      "expected_substrings": [
+        "Humalog"
+      ]
+    },
+    "scoring_weights": {
+      "tool_correctness": 0.3,
+      "argument_correctness": 0.1,
+      "structured_conclusion": 0.3,
+      "logged_state": 0.3
+    },
+    "multi_turn": false,
+    "notes": "Ground truth: patient 544 uses Humalog."
+  },
+  {
+    "task_id": "v2_584_lookup_001",
+    "patient_id": "584",
+    "prompt": "What was the patient's glucose level around 1 PM on June 30, 2025? End by calling log_conclusion with a JSON findings object that uses exactly these keys: glucose_mmol_l.",
+    "category": "lookup",
+    "difficulty": "easy",
+    "expected_tools": [
+      "get_nearest_cgm_reading"
+    ],
+    "acceptable_tools": [
+      "get_nearest_cgm_reading",
+      "get_cgm_readings"
+    ],
+    "data_range": {
+      "start": "2025-06-30T12:00:00+00:00",
+      "end": "2025-06-30T14:00:00+00:00"
+    },
+    "reference_query": "SELECT ROUND(glucose_mmol_l,1) AS glucose_mmol_l FROM cgm_readings WHERE patient_id='584' ORDER BY ABS(strftime('%s',factory_timestamp_utc)-strftime('%s','2025-06-30T13:00:00+00:00')) LIMIT 1",
+    "expected_conclusion_keys": [
+      "glucose_mmol_l"
+    ],
+    "scoring_weights": {
+      "tool_correctness": 0.25,
+      "argument_correctness": 0.25,
+      "structured_conclusion": 0.2,
+      "keyed_conclusion": 0.3
+    },
+    "multi_turn": false,
+    "notes": "Ground truth: nearest reading to 13:00 is 14.6 mmol/L @ 2025-06-30T13:01:00Z (a high reading)."
+  },
+  {
+    "task_id": "v2_584_lowest_001",
+    "patient_id": "584",
+    "prompt": "What was the patient's lowest glucose reading on June 30, 2025? End by calling log_conclusion with a JSON findings object that uses exactly these keys: min_glucose.",
+    "category": "analysis",
+    "difficulty": "easy",
+    "expected_tools": [
+      "get_cgm_readings"
+    ],
+    "acceptable_tools": [
+      "get_cgm_readings",
+      "get_cgm_summary_from_db_range"
+    ],
+    "data_range": {
+      "start": "2025-06-30T00:00:00+00:00",
+      "end": "2025-06-30T23:59:59+00:00"
+    },
+    "reference_query": "SELECT ROUND(MIN(glucose_mmol_l),1) AS min_glucose FROM cgm_readings WHERE patient_id='584' AND factory_timestamp_utc>='2025-06-30T00:00:00+00:00' AND factory_timestamp_utc<='2025-06-30T23:59:59+00:00'",
+    "expected_conclusion_keys": [
+      "min_glucose"
+    ],
+    "scoring_weights": {
+      "tool_correctness": 0.25,
+      "argument_correctness": 0.15,
+      "structured_conclusion": 0.2,
+      "keyed_conclusion": 0.4
+    },
+    "multi_turn": false,
+    "notes": "Ground truth: min glucose on 2025-06-30 is 4.9 mmol/L."
+  },
+  {
+    "task_id": "v2_584_meals_001",
+    "patient_id": "584",
+    "prompt": "How many meals did the patient eat on June 30, 2025, and what were the total carbohydrates? End by calling log_conclusion with a JSON findings object that uses exactly these keys: meal_count, total_carbs.",
+    "category": "summary",
+    "difficulty": "easy",
+    "expected_tools": [
+      "get_meals"
+    ],
+    "acceptable_tools": [
+      "get_meals"
+    ],
+    "data_range": {
+      "start": "2025-06-30T00:00:00+00:00",
+      "end": "2025-06-30T23:59:59+00:00"
+    },
+    "reference_query": "SELECT COUNT(*) AS meal_count, ROUND(SUM(carbs_g),0) AS total_carbs FROM meal WHERE patient_id='584' AND timestamp_utc>='2025-06-30T00:00:00+00:00' AND timestamp_utc<='2025-06-30T23:59:59+00:00'",
+    "expected_conclusion_keys": [
+      "meal_count",
+      "total_carbs"
+    ],
+    "scoring_weights": {
+      "tool_correctness": 0.25,
+      "argument_correctness": 0.15,
+      "structured_conclusion": 0.2,
+      "keyed_conclusion": 0.4
+    },
+    "multi_turn": false,
+    "notes": "Ground truth: 3 meals totalling 180g carbs on 2025-06-30."
+  },
+  {
+    "task_id": "v2_584_bolus_001",
+    "patient_id": "584",
+    "prompt": "What was the patient's total bolus insulin (in units) on June 30, 2025, and how many doses were given? End by calling log_conclusion with a JSON findings object that uses exactly these keys: bolus_count, total_units.",
+    "category": "summary",
+    "difficulty": "medium",
+    "expected_tools": [
+      "get_bolus_doses"
+    ],
+    "acceptable_tools": [
+      "get_bolus_doses"
+    ],
+    "data_range": {
+      "start": "2025-06-30T00:00:00+00:00",
+      "end": "2025-06-30T23:59:59+00:00"
+    },
+    "reference_query": "SELECT COUNT(*) AS bolus_count, ROUND(SUM(dose_units),1) AS total_units FROM bolus WHERE patient_id='584' AND ts_begin_utc>='2025-06-30T00:00:00+00:00' AND ts_begin_utc<='2025-06-30T23:59:59+00:00'",
+    "expected_conclusion_keys": [
+      "bolus_count",
+      "total_units"
+    ],
+    "scoring_weights": {
+      "tool_correctness": 0.25,
+      "argument_correctness": 0.15,
+      "structured_conclusion": 0.2,
+      "keyed_conclusion": 0.4
+    },
+    "multi_turn": false,
+    "notes": "Ground truth: 10 bolus doses totalling 62.9 units on 2025-06-30."
+  },
+  {
+    "task_id": "v2_584_hypo_001",
+    "patient_id": "584",
+    "prompt": "Were there any hypoglycemic episodes (below 3.9 mmol/L) between June 29 and July 2, 2025? Report how many readings were below 3.9 and the minimum glucose. End by calling log_conclusion with a JSON findings object that uses exactly these keys: hypo_count.",
+    "category": "analysis",
+    "difficulty": "medium",
+    "expected_tools": [
+      "get_cgm_readings"
+    ],
+    "acceptable_tools": [
+      "get_cgm_readings",
+      "get_cgm_summary_from_db_range",
+      "get_cgm_analytics_from_db_range"
+    ],
+    "data_range": {
+      "start": "2025-06-29T00:00:00+00:00",
+      "end": "2025-07-02T23:59:59+00:00"
+    },
+    "reference_query": "SELECT COUNT(*) AS hypo_count FROM cgm_readings WHERE patient_id='584' AND factory_timestamp_utc>='2025-06-29T00:00:00+00:00' AND factory_timestamp_utc<='2025-07-02T23:59:59+00:00' AND glucose_mmol_l<3.9",
+    "expected_conclusion_keys": [
+      "hypo_count"
+    ],
+    "scoring_weights": {
+      "tool_correctness": 0.25,
+      "argument_correctness": 0.15,
+      "structured_conclusion": 0.2,
+      "keyed_conclusion": 0.4
+    },
+    "multi_turn": false,
+    "notes": "NEGATIVE/robustness case: 0 readings below 3.9 mmol/L in this window. Correct answer is 'no hypoglycemic episodes'; the agent must not fabricate one. hypo_count ground truth = 0."
+  },
+  {
+    "task_id": "v2_584_tir_001",
+    "patient_id": "584",
+    "prompt": "What percentage of the patient's glucose readings between June 29 and July 2, 2025 were in range (3.9-10.0 mmol/L)? End by calling log_conclusion with a JSON findings object that uses exactly these keys: tir_percent.",
+    "category": "time_in_range",
+    "difficulty": "medium",
+    "expected_tools": [
+      "get_cgm_summary_from_db_range"
+    ],
+    "acceptable_tools": [
+      "get_cgm_summary_from_db_range",
+      "get_cgm_readings",
+      "get_time_in_range_from_db_range",
+      "get_cgm_analytics_from_db_range"
+    ],
+    "data_range": {
+      "start": "2025-06-29T00:00:00+00:00",
+      "end": "2025-07-02T23:59:59+00:00"
+    },
+    "reference_query": "SELECT ROUND(100.0*SUM(CASE WHEN glucose_mmol_l>=3.9 AND glucose_mmol_l<=10.0 THEN 1 ELSE 0 END)/COUNT(*),1) AS tir_percent FROM cgm_readings WHERE patient_id='584' AND factory_timestamp_utc>='2025-06-29T00:00:00+00:00' AND factory_timestamp_utc<='2025-07-02T23:59:59+00:00'",
+    "expected_conclusion_keys": [
+      "tir_percent"
+    ],
+    "scoring_weights": {
+      "tool_correctness": 0.25,
+      "argument_correctness": 0.15,
+      "structured_conclusion": 0.2,
+      "keyed_conclusion": 0.4
+    },
+    "multi_turn": false,
+    "notes": "Ground truth: TIR (3.9-10.0) = 57.9% over 2025-06-29..07-02."
+  },
+  {
+    "task_id": "v2_584_ea1c_001",
+    "patient_id": "584",
+    "prompt": "Estimate the patient's CGM-derived A1C (eA1C) for the full dataset period (June 29 - July 9, 2025). Report the mean glucose, estimated A1C, and time in range. End by calling log_conclusion with a JSON findings object that uses exactly these keys: mean_glucose, estimated_a1c, tir_percent.",
+    "category": "summary",
+    "difficulty": "hard",
+    "expected_tools": [
+      "get_cgm_summary_from_db_range"
+    ],
+    "acceptable_tools": [
+      "get_cgm_summary_from_db_range",
+      "get_cgm_readings",
+      "get_estimated_a1c_from_db_range",
+      "get_cgm_analytics_from_db_range"
+    ],
+    "data_range": {
+      "start": "2025-06-29T00:00:00+00:00",
+      "end": "2025-07-09T23:59:59+00:00"
+    },
+    "reference_query": "SELECT ROUND(AVG(glucose_mmol_l),1) AS mean_glucose, ROUND((AVG(glucose_mmol_l)*18.0+46.7)/28.7,1) AS estimated_a1c, ROUND(100.0*SUM(CASE WHEN glucose_mmol_l>=3.9 AND glucose_mmol_l<=10.0 THEN 1 ELSE 0 END)/COUNT(*),1) AS tir_percent FROM cgm_readings WHERE patient_id='584' AND factory_timestamp_utc>='2025-06-29T00:00:00+00:00' AND factory_timestamp_utc<='2025-07-09T23:59:59+00:00'",
+    "expected_conclusion_keys": [
+      "mean_glucose",
+      "estimated_a1c",
+      "tir_percent"
+    ],
+    "scoring_weights": {
+      "tool_correctness": 0.2,
+      "argument_correctness": 0.1,
+      "structured_conclusion": 0.2,
+      "keyed_conclusion": 0.4,
+      "judge": 0.1
+    },
+    "multi_turn": false,
+    "notes": "ADAG formula. Ground truth: mean 9.5 mmol/L, eA1C 7.6%, TIR 61.9%."
+  },
+  {
+    "task_id": "v2_584_profile_001",
+    "patient_id": "584",
+    "prompt": "What do we know about this patient's profile and insulin regimen?",
+    "category": "lookup",
+    "difficulty": "easy",
+    "expected_tools": [
+      "get_patient_info"
+    ],
+    "acceptable_tools": [
+      "get_patient_info",
+      "get_basal_rates"
+    ],
+    "expected_conclusion_keys": [
+      "insulin_type"
+    ],
+    "verification": {
+      "type": "response_contains",
+      "expected_substrings": [
+        "Novalog"
+      ]
+    },
+    "scoring_weights": {
+      "tool_correctness": 0.3,
+      "argument_correctness": 0.1,
+      "structured_conclusion": 0.3,
+      "logged_state": 0.3
+    },
+    "multi_turn": false,
+    "notes": "Ground truth: patient 584 uses Novalog (differs from 540/544 \u2014 tests that the agent reads patient-specific metadata rather than memorizing)."
+  },
+  {
+    "task_id": "v2_540_ood_001",
+    "patient_id": "540",
+    "prompt": "What was the patient's average glucose on July 25, 2027?",
+    "category": "out_of_distribution",
+    "difficulty": "medium",
+    "expected_tools": [
+      "get_cgm_summary_from_db_range"
+    ],
+    "acceptable_tools": [
+      "get_cgm_summary_from_db_range",
+      "get_cgm_readings"
+    ],
+    "data_range": {
+      "start": "2027-07-25T00:00:00+00:00",
+      "end": "2027-07-25T23:59:59+00:00"
+    },
+    "reference_query": "SELECT COUNT(*) AS reading_count FROM cgm_readings WHERE patient_id='540' AND factory_timestamp_utc>='2027-07-25T00:00:00+00:00' AND factory_timestamp_utc<='2027-07-25T23:59:59+00:00'",
+    "verification": {
+      "type": "response_contains",
+      "expected_substrings": [
+        "no data"
+      ]
+    },
+    "scoring_weights": {
+      "tool_correctness": 0.3,
+      "argument_correctness": 0.1,
+      "logged_state": 0.4,
+      "judge": 0.2
+    },
+    "multi_turn": false,
+    "notes": "ROBUSTNESS: 2027-07-25 is outside the dataset (coverage ends 2027-07-14). Correct behavior is to query, find zero readings, and state there is no data \u2014 NOT to fabricate an average. logged_state checks the response acknowledges missing data."
+  },
+  {
+    "task_id": "v2_544_ood_001",
+    "patient_id": "544",
+    "prompt": "Show me the patient's glucose readings for December 1, 2027.",
+    "category": "out_of_distribution",
+    "difficulty": "medium",
+    "expected_tools": [
+      "get_cgm_readings"
+    ],
+    "acceptable_tools": [
+      "get_cgm_readings",
+      "get_cgm_summary_from_db_range"
+    ],
+    "data_range": {
+      "start": "2027-12-01T00:00:00+00:00",
+      "end": "2027-12-01T23:59:59+00:00"
+    },
+    "reference_query": "SELECT COUNT(*) AS reading_count FROM cgm_readings WHERE patient_id='544' AND factory_timestamp_utc>='2027-12-01T00:00:00+00:00' AND factory_timestamp_utc<='2027-12-01T23:59:59+00:00'",
+    "verification": {
+      "type": "response_contains",
+      "expected_substrings": [
+        "no data"
+      ]
+    },
+    "scoring_weights": {
+      "tool_correctness": 0.3,
+      "argument_correctness": 0.1,
+      "logged_state": 0.4,
+      "judge": 0.2
+    },
+    "multi_turn": false,
+    "notes": "ROBUSTNESS: Dec 2027 is outside patient 544 coverage (ends 2027-07-04). Correct answer: no data available."
+  },
+  {
+    "task_id": "v2_food_gi_001",
+    "prompt": "For breakfast, the patient is deciding between oats and white bread. Look up the glycemic index of each, classify it as low (GI <=55), medium (56-69), or high (>=70), and recommend which is the better choice for blood-sugar control. End by calling log_conclusion with a JSON findings object that includes a 'recommended_food' key.",
+    "category": "food_glycemic",
+    "difficulty": "easy",
+    "expected_tools": [
+      "get_glycemic_index"
+    ],
+    "acceptable_tools": [
+      "get_glycemic_index",
+      "search_food_nutrition",
+      "get_ingredient_nutrition"
+    ],
+    "expected_conclusion_keys": [
+      "recommended_food"
+    ],
+    "verification": {
+      "type": "food_conclusion",
+      "expected_classifications": {
+        "oats": "low",
+        "white bread": "high"
+      },
+      "expected_recommendation": [
+        "oats"
+      ],
+      "recommendation_key": "recommended_food"
+    },
+    "scoring_weights": {
+      "tool_correctness": 0.25,
+      "argument_correctness": 0.1,
+      "structured_conclusion": 0.15,
+      "logged_state": 0.3,
+      "judge": 0.2
+    },
+    "multi_turn": false,
+    "notes": "Cached GI: oats 40.0 (low), white bread 74.78 (high). Correct recommendation = oats."
+  },
+  {
+    "task_id": "v2_food_gi_002",
+    "prompt": "The patient wants a carbohydrate side dish and is choosing between lentils and white rice. Look up the glycemic index of each, classify each as low (GI <=55), medium (56-69), or high (>=70), and recommend the better choice for blood-sugar control. End by calling log_conclusion with a JSON findings object that includes a 'recommended_food' key.",
+    "category": "food_glycemic",
+    "difficulty": "easy",
+    "expected_tools": [
+      "get_glycemic_index"
+    ],
+    "acceptable_tools": [
+      "get_glycemic_index",
+      "search_food_nutrition",
+      "get_ingredient_nutrition"
+    ],
+    "expected_conclusion_keys": [
+      "recommended_food"
+    ],
+    "verification": {
+      "type": "food_conclusion",
+      "expected_classifications": {
+        "lentils": "low",
+        "white rice": "medium"
+      },
+      "expected_recommendation": [
+        "lentils"
+      ],
+      "recommendation_key": "recommended_food"
+    },
+    "scoring_weights": {
+      "tool_correctness": 0.25,
+      "argument_correctness": 0.1,
+      "structured_conclusion": 0.15,
+      "logged_state": 0.3,
+      "judge": 0.2
+    },
+    "multi_turn": false,
+    "notes": "Cached GI: lentils 24.6 (low), white rice 61.19 (medium). Correct recommendation = lentils."
+  },
+  {
+    "task_id": "v2_food_gi_003",
+    "prompt": "The patient wants a piece of fruit and is torn between an apple and watermelon. Look up the glycemic index of each, classify each as low (GI <=55), medium (56-69), or high (>=70), and recommend the better choice for blood-sugar control. End by calling log_conclusion with a JSON findings object that includes a 'recommended_food' key.",
+    "category": "food_glycemic",
+    "difficulty": "easy",
+    "expected_tools": [
+      "get_glycemic_index"
+    ],
+    "acceptable_tools": [
+      "get_glycemic_index",
+      "search_food_nutrition",
+      "get_ingredient_nutrition"
+    ],
+    "expected_conclusion_keys": [
+      "recommended_food"
+    ],
+    "verification": {
+      "type": "food_conclusion",
+      "expected_classifications": {
+        "apple": "low",
+        "watermelon": "high"
+      },
+      "expected_recommendation": [
+        "apple"
+      ],
+      "recommendation_key": "recommended_food"
+    },
+    "scoring_weights": {
+      "tool_correctness": 0.25,
+      "argument_correctness": 0.1,
+      "structured_conclusion": 0.15,
+      "logged_state": 0.3,
+      "judge": 0.2
+    },
+    "multi_turn": false,
+    "notes": "Cached GI: apple 32.0 (low), watermelon 74.67 (high). Correct recommendation = apple."
+  },
+  {
+    "task_id": "v2_food_gi_004",
+    "prompt": "The patient assumes sweet potato is always the lower-glycemic choice over a regular baked potato. Look up the glycemic index of baked potato and sweet potato, classify each as low (GI <=55), medium (56-69), or high (>=70), and tell the patient which is actually lower. End by calling log_conclusion with a JSON findings object that includes a 'recommended_food' key.",
+    "category": "food_glycemic",
+    "difficulty": "medium",
+    "expected_tools": [
+      "get_glycemic_index"
+    ],
+    "acceptable_tools": [
+      "get_glycemic_index",
+      "search_food_nutrition",
+      "get_ingredient_nutrition"
+    ],
+    "expected_conclusion_keys": [
+      "recommended_food"
+    ],
+    "verification": {
+      "type": "food_conclusion",
+      "expected_classifications": {
+        "baked potato": "low",
+        "sweet potato": "medium"
+      },
+      "expected_recommendation": [
+        "baked potato"
+      ],
+      "recommendation_key": "recommended_food"
+    },
+    "scoring_weights": {
+      "tool_correctness": 0.25,
+      "argument_correctness": 0.1,
+      "structured_conclusion": 0.15,
+      "logged_state": 0.3,
+      "judge": 0.2
+    },
+    "multi_turn": false,
+    "notes": "ASSUMPTION-CHALLENGE: cached GI baked potato 42.67 (low) vs sweet potato 58.0 (medium). The cached data makes baked potato the lower-GI option, contradicting the patient's assumption; the agent should go with the looked-up data, not the premise."
+  },
+  {
+    "task_id": "v2_food_gi_005",
+    "prompt": "Rank these three breakfast options from lowest to highest glycemic index: oats, apple, and white rice. Classify each as low (GI <=55), medium (56-69), or high (>=70). End by calling log_conclusion with a JSON findings object that includes a 'recommended_food' key for the best blood-sugar choice.",
+    "category": "food_glycemic",
+    "difficulty": "medium",
+    "expected_tools": [
+      "get_glycemic_index"
+    ],
+    "acceptable_tools": [
+      "get_glycemic_index",
+      "search_food_nutrition",
+      "get_ingredient_nutrition"
+    ],
+    "expected_conclusion_keys": [
+      "recommended_food"
+    ],
+    "verification": {
+      "type": "food_conclusion",
+      "expected_classifications": {
+        "apple": "low",
+        "oats": "low",
+        "white rice": "medium"
+      },
+      "expected_recommendation": [
+        "apple"
+      ],
+      "recommendation_key": "recommended_food"
+    },
+    "scoring_weights": {
+      "tool_correctness": 0.25,
+      "argument_correctness": 0.1,
+      "structured_conclusion": 0.15,
+      "logged_state": 0.3,
+      "judge": 0.2
+    },
+    "multi_turn": false,
+    "notes": "Cached GI: apple 32.0 < oats 40.0 < white rice 61.19. Correct order apple<oats<white rice; lowest-GI single choice = apple."
+  },
+  {
+    "task_id": "v2_540_multi_memory_001",
+    "patient_id": "540",
+    "description": "Log a meal in turn 1, recall it in turn 2. Both turns use tools (avoids penalizing correct no-tool turns).",
+    "category": "memory",
+    "mode": "multi_turn",
+    "max_turns": 2,
+    "user_simulator": {
+      "type": "scripted",
+      "script": [
+        {
+          "turn": 1,
+          "user_message": "Log a breakfast of 45g carbs on July 6, 2027 at 8:00 AM.",
+          "expected_tools": [
+            "log_meal"
+          ],
+          "state_check": {
+            "type": "kb_scroll",
+            "collection": "meal_events",
+            "since_iso": "2027-07-06T00:00:00+00:00",
+            "expected_payloads": [
+              {
+                "carbs_g": 45.0,
+                "meal_type": "Breakfast"
+              }
+            ]
+          }
+        },
+        {
+          "turn": 2,
+          "user_message": "What did I log for breakfast on July 6?",
+          "expected_tools": [
+            "search_logged_events"
+          ],
+          "state_check": {
+            "type": "response_contains",
+            "expected_substrings": [
+              "45",
+              "Breakfast"
+            ]
+          }
+        }
+      ]
+    },
+    "scoring_weights": {
+      "turn_completion": 0.3,
+      "tool_correctness": 0.2,
+      "per_turn_state": 0.3,
+      "logged_state": 0.2
+    },
+    "verification": {
+      "type": "kb_scroll",
+      "collection": "meal_events",
+      "since_iso": "2027-07-06T00:00:00+00:00",
+      "expected_payloads": [
+        {
+          "carbs_g": 45.0,
+          "meal_type": "Breakfast"
+        }
+      ]
+    },
+    "multi_turn": true,
+    "notes": "Stateful memory task. Both scored turns call a tool, so it does not trip the no-tool-turn scoring quirk noted in BENCHMARK_REVIEW.md."
+  },
+  {
+    "task_id": "v2_584_ood_001",
+    "patient_id": "584",
+    "prompt": "What was the patient's average glucose on August 1, 2025?",
+    "category": "out_of_distribution",
+    "difficulty": "medium",
+    "expected_tools": [
+      "get_cgm_summary_from_db_range"
+    ],
+    "acceptable_tools": [
+      "get_cgm_summary_from_db_range",
+      "get_cgm_readings"
+    ],
+    "data_range": {
+      "start": "2025-08-01T00:00:00+00:00",
+      "end": "2025-08-01T23:59:59+00:00"
+    },
+    "reference_query": "SELECT COUNT(*) AS reading_count FROM cgm_readings WHERE patient_id='584' AND factory_timestamp_utc>='2025-08-01T00:00:00+00:00' AND factory_timestamp_utc<='2025-08-01T23:59:59+00:00'",
+    "verification": {
+      "type": "response_contains",
+      "expected_substrings": [
+        "no data"
+      ]
+    },
+    "scoring_weights": {
+      "tool_correctness": 0.3,
+      "argument_correctness": 0.1,
+      "logged_state": 0.4,
+      "judge": 0.2
+    },
+    "multi_turn": false,
+    "notes": "ROBUSTNESS: Aug 2025 is outside patient 584 coverage (ends 2025-07-09). Correct answer: no data available."
+  },
+  {
+    "task_id": "v2_544_multi_memory_001",
+    "patient_id": "544",
+    "description": "Log a meal in turn 1, recall it in turn 2. Both turns use tools (avoids penalizing correct no-tool turns).",
+    "category": "memory",
+    "mode": "multi_turn",
+    "max_turns": 2,
+    "user_simulator": {
+      "type": "scripted",
+      "script": [
+        {
+          "turn": 1,
+          "user_message": "Log a breakfast of 55g carbs on June 28, 2027 at 8:00 AM.",
+          "expected_tools": [
+            "log_meal"
+          ],
+          "state_check": {
+            "type": "kb_scroll",
+            "collection": "meal_events",
+            "since_iso": "2027-06-28T00:00:00+00:00",
+            "expected_payloads": [
+              {
+                "carbs_g": 55.0,
+                "meal_type": "Breakfast"
+              }
+            ]
+          }
+        },
+        {
+          "turn": 2,
+          "user_message": "What did I log for breakfast on June 28?",
+          "expected_tools": [
+            "search_logged_events"
+          ],
+          "state_check": {
+            "type": "response_contains",
+            "expected_substrings": [
+              "55",
+              "Breakfast"
+            ]
+          }
+        }
+      ]
+    },
+    "scoring_weights": {
+      "turn_completion": 0.3,
+      "tool_correctness": 0.2,
+      "per_turn_state": 0.3,
+      "logged_state": 0.2
+    },
+    "verification": {
+      "type": "kb_scroll",
+      "collection": "meal_events",
+      "since_iso": "2027-06-28T00:00:00+00:00",
+      "expected_payloads": [
+        {
+          "carbs_g": 55.0,
+          "meal_type": "Breakfast"
+        }
+      ]
+    },
+    "multi_turn": true,
+    "notes": "Stateful memory task. Both scored turns call a tool, so it does not trip the no-tool-turn scoring quirk noted in BENCHMARK_REVIEW.md."
+  },
+  {
+    "task_id": "v2_584_multi_memory_001",
+    "patient_id": "584",
+    "description": "Log a meal in turn 1, recall it in turn 2. Both turns use tools (avoids penalizing correct no-tool turns).",
+    "category": "memory",
+    "mode": "multi_turn",
+    "max_turns": 2,
+    "user_simulator": {
+      "type": "scripted",
+      "script": [
+        {
+          "turn": 1,
+          "user_message": "Log a breakfast of 40g carbs on July 1, 2025 at 8:00 AM.",
+          "expected_tools": [
+            "log_meal"
+          ],
+          "state_check": {
+            "type": "kb_scroll",
+            "collection": "meal_events",
+            "since_iso": "2025-07-01T00:00:00+00:00",
+            "expected_payloads": [
+              {
+                "carbs_g": 40.0,
+                "meal_type": "Breakfast"
+              }
+            ]
+          }
+        },
+        {
+          "turn": 2,
+          "user_message": "What did I log for breakfast on July 1?",
+          "expected_tools": [
+            "search_logged_events"
+          ],
+          "state_check": {
+            "type": "response_contains",
+            "expected_substrings": [
+              "40",
+              "Breakfast"
+            ]
+          }
+        }
+      ]
+    },
+    "scoring_weights": {
+      "turn_completion": 0.3,
+      "tool_correctness": 0.2,
+      "per_turn_state": 0.3,
+      "logged_state": 0.2
+    },
+    "verification": {
+      "type": "kb_scroll",
+      "collection": "meal_events",
+      "since_iso": "2025-07-01T00:00:00+00:00",
+      "expected_payloads": [
+        {
+          "carbs_g": 40.0,
+          "meal_type": "Breakfast"
+        }
+      ]
+    },
+    "multi_turn": true,
+    "notes": "Stateful memory task. Both scored turns call a tool, so it does not trip the no-tool-turn scoring quirk noted in BENCHMARK_REVIEW.md."
+  },
+  {
+    "task_id": "v2_540_correlation_001",
+    "patient_id": "540",
+    "prompt": "What happened to the patient's glucose after their meals on July 8, 2027? Summarize the meals and the glucose trend afterward. End by calling log_conclusion with a JSON findings object that uses exactly these keys: meal_count, total_carbs, glucose_trend.",
+    "category": "correlation",
+    "difficulty": "medium",
+    "expected_tools": [
+      "get_meals",
+      "get_cgm_readings"
+    ],
+    "acceptable_tools": [
+      "get_meals",
+      "get_cgm_readings",
+      "get_nearest_cgm_reading",
+      "get_cgm_spikes_from_db_range"
+    ],
+    "data_range": {
+      "start": "2027-07-08T00:00:00+00:00",
+      "end": "2027-07-08T23:59:59+00:00"
+    },
+    "reference_query": "SELECT COUNT(*) AS meal_count, ROUND(SUM(carbs_g),0) AS total_carbs FROM meal WHERE patient_id='540' AND timestamp_utc>='2027-07-08T00:00:00+00:00' AND timestamp_utc<='2027-07-08T23:59:59+00:00'",
+    "expected_conclusion_keys": [
+      "meal_count",
+      "total_carbs",
+      "glucose_trend"
+    ],
+    "scoring_weights": {
+      "tool_correctness": 0.2,
+      "argument_correctness": 0.15,
+      "structured_conclusion": 0.15,
+      "keyed_conclusion": 0.3,
+      "judge": 0.2
+    },
+    "multi_turn": false,
+    "notes": "Multi-tool correlation (meals + CGM). Ground truth: 4 meals, 193g carbs on July 8, 2027. glucose_trend is prose (judge)."
+  },
+  {
+    "task_id": "v2_540_tar_001",
+    "patient_id": "540",
+    "prompt": "How much time did the patient spend above 10.0 mmol/L on July 8, 2027? Give both the percentage and the number of readings above range. End by calling log_conclusion with a JSON findings object that uses exactly these keys: above_count, tar_percent.",
+    "category": "time_above_range",
+    "difficulty": "medium",
+    "expected_tools": [
+      "get_cgm_summary_from_db_range",
+      "get_cgm_analytics_from_db_range"
+    ],
+    "acceptable_tools": [
+      "get_cgm_summary_from_db_range",
+      "get_cgm_readings",
+      "get_cgm_analytics_from_db_range"
+    ],
+    "data_range": {
+      "start": "2027-07-08T00:00:00+00:00",
+      "end": "2027-07-08T23:59:59+00:00"
+    },
+    "reference_query": "SELECT SUM(CASE WHEN glucose_mmol_l>10.0 THEN 1 ELSE 0 END) AS above_count, ROUND(100.0*SUM(CASE WHEN glucose_mmol_l>10.0 THEN 1 ELSE 0 END)/COUNT(*),1) AS tar_percent FROM cgm_readings WHERE patient_id='540' AND factory_timestamp_utc>='2027-07-08T00:00:00+00:00' AND factory_timestamp_utc<='2027-07-08T23:59:59+00:00'",
+    "expected_conclusion_keys": [
+      "above_count",
+      "tar_percent"
+    ],
+    "scoring_weights": {
+      "tool_correctness": 0.25,
+      "argument_correctness": 0.15,
+      "structured_conclusion": 0.2,
+      "keyed_conclusion": 0.4
+    },
+    "multi_turn": false,
+    "notes": "Ground truth on July 8, 2027: 18 readings >10.0 mmol/L = 6.3% TAR."
+  },
+  {
+    "task_id": "v2_540_hypo_sev_001",
+    "patient_id": "540",
+    "prompt": "Over the full dataset period (July 4-14, 2027), were any hypoglycemic episodes clinically significant? Report how many readings were level 1 (below 3.9 mmol/L) and level 2 (below 3.0 mmol/L). End by calling log_conclusion with a JSON findings object that uses exactly these keys: level1_count, level2_count.",
+    "category": "hypoglycemia_severity",
+    "difficulty": "medium",
+    "expected_tools": [
+      "get_cgm_readings",
+      "get_cgm_analytics_from_db_range"
+    ],
+    "acceptable_tools": [
+      "get_cgm_readings",
+      "get_cgm_summary_from_db_range",
+      "get_cgm_analytics_from_db_range"
+    ],
+    "data_range": {
+      "start": "2027-07-04T00:00:00+00:00",
+      "end": "2027-07-14T23:59:59+00:00"
+    },
+    "reference_query": "SELECT SUM(CASE WHEN glucose_mmol_l<3.9 THEN 1 ELSE 0 END) AS level1_count, SUM(CASE WHEN glucose_mmol_l<3.0 THEN 1 ELSE 0 END) AS level2_count FROM cgm_readings WHERE patient_id='540' AND factory_timestamp_utc>='2027-07-04T00:00:00+00:00' AND factory_timestamp_utc<='2027-07-14T23:59:59+00:00'",
+    "expected_conclusion_keys": [
+      "level1_count",
+      "level2_count"
+    ],
+    "scoring_weights": {
+      "tool_correctness": 0.25,
+      "argument_correctness": 0.15,
+      "structured_conclusion": 0.2,
+      "keyed_conclusion": 0.4
+    },
+    "multi_turn": false,
+    "notes": "Ground truth: level1(<3.9)=142, level2(<3.0)=11."
+  },
+  {
+    "task_id": "v2_540_variability_001",
+    "patient_id": "540",
+    "prompt": "Summarize the patient's overall glucose variability for the full dataset (July 4-14, 2027). Report the mean glucose and the minimum and maximum readings. End by calling log_conclusion with a JSON findings object that uses exactly these keys: mean_glucose, min_glucose, max_glucose.",
+    "category": "weekly_trend",
+    "difficulty": "medium",
+    "expected_tools": [
+      "get_cgm_summary_from_db_range"
+    ],
+    "acceptable_tools": [
+      "get_cgm_summary_from_db_range",
+      "get_cgm_readings",
+      "get_average_glucose_from_db_range",
+      "get_cgm_analytics_from_db_range"
+    ],
+    "data_range": {
+      "start": "2027-07-04T00:00:00+00:00",
+      "end": "2027-07-14T23:59:59+00:00"
+    },
+    "reference_query": "SELECT ROUND(AVG(glucose_mmol_l),1) AS mean_glucose, ROUND(MIN(glucose_mmol_l),1) AS min_glucose, ROUND(MAX(glucose_mmol_l),1) AS max_glucose FROM cgm_readings WHERE patient_id='540' AND factory_timestamp_utc>='2027-07-04T00:00:00+00:00' AND factory_timestamp_utc<='2027-07-14T23:59:59+00:00'",
+    "expected_conclusion_keys": [
+      "mean_glucose",
+      "min_glucose",
+      "max_glucose"
+    ],
+    "scoring_weights": {
+      "tool_correctness": 0.2,
+      "argument_correctness": 0.1,
+      "structured_conclusion": 0.15,
+      "keyed_conclusion": 0.35,
+      "judge": 0.2
+    },
+    "multi_turn": false,
+    "notes": "Ground truth: mean 8.8, min 2.7, max 22.2 mmol/L."
+  },
+  {
+    "task_id": "v2_540_dawn_001",
+    "patient_id": "540",
+    "prompt": "Does this patient show a dawn phenomenon over July 4-14, 2027? Compare the average glucose around 3 AM with the average around 6 AM and explain. End by calling log_conclusion with a JSON findings object that uses exactly these keys: avg_pre_dawn, avg_wake.",
+    "category": "pattern_analysis",
+    "difficulty": "hard",
+    "expected_tools": [
+      "get_cgm_readings",
+      "get_cgm_analytics_from_db_range"
+    ],
+    "acceptable_tools": [
+      "get_cgm_readings",
+      "get_cgm_summary_from_db_range",
+      "get_cgm_analytics_from_db_range"
+    ],
+    "data_range": {
+      "start": "2027-07-04T00:00:00+00:00",
+      "end": "2027-07-14T23:59:59+00:00"
+    },
+    "reference_query": "SELECT ROUND(AVG(CASE WHEN CAST(substr(factory_timestamp_utc,12,2) AS INT)=3 THEN glucose_mmol_l END),1) AS avg_pre_dawn, ROUND(AVG(CASE WHEN CAST(substr(factory_timestamp_utc,12,2) AS INT)=6 THEN glucose_mmol_l END),1) AS avg_wake FROM cgm_readings WHERE patient_id='540' AND factory_timestamp_utc>='2027-07-04T00:00:00+00:00' AND factory_timestamp_utc<='2027-07-14T23:59:59+00:00'",
+    "expected_conclusion_keys": [
+      "avg_pre_dawn",
+      "avg_wake"
+    ],
+    "scoring_weights": {
+      "tool_correctness": 0.2,
+      "argument_correctness": 0.1,
+      "structured_conclusion": 0.15,
+      "keyed_conclusion": 0.25,
+      "judge": 0.3
+    },
+    "multi_turn": false,
+    "notes": "Ground truth: ~3 AM avg 9.1, ~6 AM avg 9.2 mmol/L. Dawn phenomenon = morning rise (wake>pre-dawn); none of these patients show a strong rise, so the grounded answer is 'no clear dawn phenomenon' (reasoning/negative case, judge-assessed)."
+  },
+  {
+    "task_id": "v2_540_missed_bolus_001",
+    "patient_id": "540",
+    "prompt": "Over July 4-14, 2027, how many meals had no bolus dose recorded within 30 minutes of the meal? End by calling log_conclusion with a JSON findings object that uses exactly these keys: missed_bolus_count.",
+    "category": "missed_bolus_detection",
+    "difficulty": "hard",
+    "expected_tools": [
+      "get_meals",
+      "get_bolus_doses"
+    ],
+    "acceptable_tools": [
+      "get_meals",
+      "get_bolus_doses"
+    ],
+    "data_range": {
+      "start": "2027-07-04T00:00:00+00:00",
+      "end": "2027-07-14T23:59:59+00:00"
+    },
+    "reference_query": "SELECT COUNT(*) AS missed_bolus_count FROM meal m WHERE m.patient_id='540' AND m.timestamp_utc>='2027-07-04T00:00:00+00:00' AND m.timestamp_utc<='2027-07-14T23:59:59+00:00' AND NOT EXISTS (SELECT 1 FROM bolus b WHERE b.patient_id='540' AND ABS(strftime('%s',b.ts_begin_utc)-strftime('%s',m.timestamp_utc))<=1800)",
+    "expected_conclusion_keys": [
+      "missed_bolus_count"
+    ],
+    "scoring_weights": {
+      "tool_correctness": 0.25,
+      "argument_correctness": 0.15,
+      "structured_conclusion": 0.2,
+      "keyed_conclusion": 0.4
+    },
+    "multi_turn": false,
+    "notes": "Cross-references meals vs bolus timing (+/-30 min). Ground truth: 10 meals with no nearby bolus."
+  },
+  {
+    "task_id": "v2_540_basal_001",
+    "patient_id": "540",
+    "prompt": "What scheduled basal insulin rates was the patient using during July 4-14, 2027? Report how many distinct basal rates appear in the schedule. End by calling log_conclusion with a JSON findings object that uses exactly these keys: distinct_basal_rates.",
+    "category": "lookup",
+    "difficulty": "medium",
+    "expected_tools": [
+      "get_basal_rates"
+    ],
+    "acceptable_tools": [
+      "get_basal_rates",
+      "get_patient_info"
+    ],
+    "data_range": {
+      "start": "2027-07-04T00:00:00+00:00",
+      "end": "2027-07-14T23:59:59+00:00"
+    },
+    "reference_query": "SELECT COUNT(DISTINCT rate_units_per_hr) AS distinct_basal_rates FROM basal WHERE patient_id='540' AND timestamp_utc>='2027-07-04T00:00:00+00:00' AND timestamp_utc<='2027-07-14T23:59:59+00:00'",
+    "expected_conclusion_keys": [
+      "distinct_basal_rates"
+    ],
+    "scoring_weights": {
+      "tool_correctness": 0.3,
+      "argument_correctness": 0.1,
+      "structured_conclusion": 0.2,
+      "keyed_conclusion": 0.4
+    },
+    "multi_turn": false,
+    "notes": "Ground truth: 4 distinct basal rates. Exercises get_basal_rates."
+  },
+  {
+    "task_id": "v2_540_education_001",
+    "patient_id": "540",
+    "prompt": "Explain to the patient, in plain language, what their evening glucose patterns over July 4-14, 2027 suggest about their dinner bolus timing. Look at the meals, insulin, and what the CGM did afterward. End by calling log_conclusion with a JSON findings object that uses exactly these keys: avg_evening_glucose.",
+    "category": "patient_education",
+    "difficulty": "hard",
+    "expected_tools": [
+      "get_meals",
+      "get_bolus_doses",
+      "get_cgm_readings"
+    ],
+    "acceptable_tools": [
+      "get_meals",
+      "get_bolus_doses",
+      "get_cgm_readings",
+      "get_cgm_spikes_from_db_range",
+      "get_nearest_cgm_reading"
+    ],
+    "data_range": {
+      "start": "2027-07-04T00:00:00+00:00",
+      "end": "2027-07-14T23:59:59+00:00"
+    },
+    "reference_query": "SELECT ROUND(AVG(glucose_mmol_l),1) AS avg_evening_glucose FROM cgm_readings WHERE patient_id='540' AND factory_timestamp_utc>='2027-07-04T00:00:00+00:00' AND factory_timestamp_utc<='2027-07-14T23:59:59+00:00' AND CAST(substr(factory_timestamp_utc,12,2) AS INT) BETWEEN 18 AND 22",
+    "expected_conclusion_keys": [
+      "avg_evening_glucose"
+    ],
+    "scoring_weights": {
+      "tool_correctness": 0.15,
+      "argument_correctness": 0.1,
+      "structured_conclusion": 0.15,
+      "keyed_conclusion": 0.2,
+      "judge": 0.4
+    },
+    "multi_turn": false,
+    "notes": "Patient-education task; scored heavily by LLM judge (clarity, accuracy, patient-appropriateness). Ground truth evening (18-22h) avg = 8.4 mmol/L."
+  },
+  {
+    "task_id": "v2_540_log_mealinsulin_001",
+    "patient_id": "540",
+    "prompt": "Log a lunch of 60g carbs with 4 units of rapid insulin on July 9, 2027 at 12:30 PM.",
+    "category": "logging",
+    "difficulty": "medium",
+    "expected_tools": [
+      "log_meal",
+      "log_insulin"
+    ],
+    "acceptable_tools": [
+      "log_meal",
+      "log_insulin",
+      "log_conclusion"
+    ],
+    "verification": {
+      "type": "kb_scroll",
+      "collection": "meal_events",
+      "since_iso": "2027-07-09T00:00:00+00:00",
+      "expected_payloads": [
+        {
+          "carbs_g": 60.0,
+          "meal_type": "Lunch"
+        }
+      ]
+    },
+    "scoring_weights": {
+      "tool_correctness": 0.3,
+      "argument_correctness": 0.1,
+      "structured_conclusion": 0.1,
+      "logged_state": 0.5
+    },
+    "multi_turn": false,
+    "notes": "Stateful meal+insulin logging. State check verifies the meal in meal_events; log_insulin is covered by tool_correctness."
+  },
+  {
+    "task_id": "v2_540_log_glucose_001",
+    "patient_id": "540",
+    "prompt": "Log a glucose reading of 5.5 mmol/L on July 9, 2027 at 10:00 AM.",
+    "category": "logging",
+    "difficulty": "easy",
+    "expected_tools": [
+      "log_glucose"
+    ],
+    "acceptable_tools": [
+      "log_glucose",
+      "log_conclusion"
+    ],
+    "verification": {
+      "type": "kb_scroll",
+      "collection": "glucose_events",
+      "since_iso": "2027-07-09T00:00:00+00:00",
+      "expected_payloads": [
+        {
+          "glucose_mmol_l": 5.5
+        }
+      ]
+    },
+    "scoring_weights": {
+      "tool_correctness": 0.3,
+      "structured_conclusion": 0.2,
+      "logged_state": 0.5
+    },
+    "multi_turn": false,
+    "notes": "Stateful glucose logging. With the fixed log_glucose tool, a 5.5 mmol/L input is stored as 5.5 mmol/L (no /18 quirk)."
+  },
+  {
+    "task_id": "v2_540_multi_clarify_001",
+    "patient_id": "540",
+    "description": "Agent must ask for a date instead of guessing, then answer once clarified.",
+    "category": "clarification",
+    "mode": "multi_turn",
+    "max_turns": 3,
+    "user_simulator": {
+      "type": "scripted",
+      "script": [
+        {
+          "turn": 1,
+          "user_message": "What was my glucose in the morning?",
+          "expected_tools": [],
+          "stop_condition": "response_contains",
+          "stop_criteria": {
+            "expected_substrings": [
+              "which date",
+              "what date",
+              "when",
+              "what day"
+            ]
+          }
+        },
+        {
+          "turn": 2,
+          "user_message": "July 5, 2027. Between 6 AM and noon.",
+          "expected_tools": [
+            "get_cgm_readings"
+          ],
+          "data_range": {
+            "start": "2027-07-05T06:00:00+00:00",
+            "end": "2027-07-05T12:00:00+00:00"
+          },
+          "state_check": {
+            "type": "response_contains",
+            "expected_substrings": [
+              "mmol"
+            ]
+          }
+        }
+      ]
+    },
+    "scoring_weights": {
+      "turn_completion": 0.3,
+      "tool_correctness": 0.3,
+      "per_turn_state": 0.2,
+      "judge": 0.2
+    },
+    "multi_turn": true,
+    "notes": "Tau-bench-style clarification. Turn 1 correctly uses NO tool (scored via the fixed no-tool-turn logic)."
+  },
+  {
+    "task_id": "v2_540_multi_insulin_adjust_001",
+    "patient_id": "540",
+    "description": "Two-turn clinical-reasoning dialogue: identify lows, then reason about a basal adjustment per ADA guidance.",
+    "category": "insulin_adjustment_dialogue",
+    "difficulty": "hard",
+    "mode": "multi_turn",
+    "max_turns": 3,
+    "user_simulator": {
+      "type": "scripted",
+      "script": [
+        {
+          "turn": 1,
+          "user_message": "Were there any lows on July 13, 2027?",
+          "expected_tools": [
+            "get_cgm_readings"
+          ],
+          "data_range": {
+            "start": "2027-07-13T00:00:00+00:00",
+            "end": "2027-07-13T23:59:59+00:00"
+          },
+          "state_check": {
+            "type": "response_contains",
+            "expected_substrings": [
+              "3."
+            ]
+          }
+        },
+        {
+          "turn": 2,
+          "user_message": "Given that pattern, should we consider adjusting the basal? What does ADA guidance suggest?",
+          "expected_tools": [],
+          "state_check": {
+            "type": "response_contains",
+            "expected_substrings": [
+              "basal"
+            ]
+          }
+        }
+      ]
+    },
+    "scoring_weights": {
+      "turn_completion": 0.25,
+      "tool_correctness": 0.25,
+      "per_turn_state": 0.2,
+      "judge": 0.3
+    },
+    "multi_turn": true,
+    "notes": "ADA guidance: if no clear cause for hypoglycemia, lower dose ~10-20%. Turn 2 is pure reasoning with NO tool (scored via the fixed no-tool-turn logic). Must include a not-medical-advice disclaimer (judge)."
+  },
+  {
+    "task_id": "v2_544_correlation_001",
+    "patient_id": "544",
+    "prompt": "What happened to the patient's glucose after their meals on June 30, 2027? Summarize the meals and the glucose trend afterward. End by calling log_conclusion with a JSON findings object that uses exactly these keys: meal_count, total_carbs, glucose_trend.",
+    "category": "correlation",
+    "difficulty": "medium",
+    "expected_tools": [
+      "get_meals",
+      "get_cgm_readings"
+    ],
+    "acceptable_tools": [
+      "get_meals",
+      "get_cgm_readings",
+      "get_nearest_cgm_reading",
+      "get_cgm_spikes_from_db_range"
+    ],
+    "data_range": {
+      "start": "2027-06-30T00:00:00+00:00",
+      "end": "2027-06-30T23:59:59+00:00"
+    },
+    "reference_query": "SELECT COUNT(*) AS meal_count, ROUND(SUM(carbs_g),0) AS total_carbs FROM meal WHERE patient_id='544' AND timestamp_utc>='2027-06-30T00:00:00+00:00' AND timestamp_utc<='2027-06-30T23:59:59+00:00'",
+    "expected_conclusion_keys": [
+      "meal_count",
+      "total_carbs",
+      "glucose_trend"
+    ],
+    "scoring_weights": {
+      "tool_correctness": 0.2,
+      "argument_correctness": 0.15,
+      "structured_conclusion": 0.15,
+      "keyed_conclusion": 0.3,
+      "judge": 0.2
+    },
+    "multi_turn": false,
+    "notes": "Multi-tool correlation (meals + CGM). Ground truth: 4 meals, 258g carbs on June 30, 2027. glucose_trend is prose (judge)."
+  },
+  {
+    "task_id": "v2_544_tar_001",
+    "patient_id": "544",
+    "prompt": "How much time did the patient spend above 10.0 mmol/L on June 30, 2027? Give both the percentage and the number of readings above range. End by calling log_conclusion with a JSON findings object that uses exactly these keys: above_count, tar_percent.",
+    "category": "time_above_range",
+    "difficulty": "medium",
+    "expected_tools": [
+      "get_cgm_summary_from_db_range",
+      "get_cgm_analytics_from_db_range"
+    ],
+    "acceptable_tools": [
+      "get_cgm_summary_from_db_range",
+      "get_cgm_readings",
+      "get_cgm_analytics_from_db_range"
+    ],
+    "data_range": {
+      "start": "2027-06-30T00:00:00+00:00",
+      "end": "2027-06-30T23:59:59+00:00"
+    },
+    "reference_query": "SELECT SUM(CASE WHEN glucose_mmol_l>10.0 THEN 1 ELSE 0 END) AS above_count, ROUND(100.0*SUM(CASE WHEN glucose_mmol_l>10.0 THEN 1 ELSE 0 END)/COUNT(*),1) AS tar_percent FROM cgm_readings WHERE patient_id='544' AND factory_timestamp_utc>='2027-06-30T00:00:00+00:00' AND factory_timestamp_utc<='2027-06-30T23:59:59+00:00'",
+    "expected_conclusion_keys": [
+      "above_count",
+      "tar_percent"
+    ],
+    "scoring_weights": {
+      "tool_correctness": 0.25,
+      "argument_correctness": 0.15,
+      "structured_conclusion": 0.2,
+      "keyed_conclusion": 0.4
+    },
+    "multi_turn": false,
+    "notes": "Ground truth on June 30, 2027: 79 readings >10.0 mmol/L = 27.4% TAR."
+  },
+  {
+    "task_id": "v2_544_hypo_sev_001",
+    "patient_id": "544",
+    "prompt": "Over the full dataset period (June 24 - July 4, 2027), were any hypoglycemic episodes clinically significant? Report how many readings were level 1 (below 3.9 mmol/L) and level 2 (below 3.0 mmol/L). End by calling log_conclusion with a JSON findings object that uses exactly these keys: level1_count, level2_count.",
+    "category": "hypoglycemia_severity",
+    "difficulty": "medium",
+    "expected_tools": [
+      "get_cgm_readings",
+      "get_cgm_analytics_from_db_range"
+    ],
+    "acceptable_tools": [
+      "get_cgm_readings",
+      "get_cgm_summary_from_db_range",
+      "get_cgm_analytics_from_db_range"
+    ],
+    "data_range": {
+      "start": "2027-06-24T00:00:00+00:00",
+      "end": "2027-07-04T23:59:59+00:00"
+    },
+    "reference_query": "SELECT SUM(CASE WHEN glucose_mmol_l<3.9 THEN 1 ELSE 0 END) AS level1_count, SUM(CASE WHEN glucose_mmol_l<3.0 THEN 1 ELSE 0 END) AS level2_count FROM cgm_readings WHERE patient_id='544' AND factory_timestamp_utc>='2027-06-24T00:00:00+00:00' AND factory_timestamp_utc<='2027-07-04T23:59:59+00:00'",
+    "expected_conclusion_keys": [
+      "level1_count",
+      "level2_count"
+    ],
+    "scoring_weights": {
+      "tool_correctness": 0.25,
+      "argument_correctness": 0.15,
+      "structured_conclusion": 0.2,
+      "keyed_conclusion": 0.4
+    },
+    "multi_turn": false,
+    "notes": "Ground truth: level1(<3.9)=33, level2(<3.0)=0. 544 has NO level-2 events (negative case)."
+  },
+  {
+    "task_id": "v2_544_variability_001",
+    "patient_id": "544",
+    "prompt": "Summarize the patient's overall glucose variability for the full dataset (June 24 - July 4, 2027). Report the mean glucose and the minimum and maximum readings. End by calling log_conclusion with a JSON findings object that uses exactly these keys: mean_glucose, min_glucose, max_glucose.",
+    "category": "weekly_trend",
+    "difficulty": "medium",
+    "expected_tools": [
+      "get_cgm_summary_from_db_range"
+    ],
+    "acceptable_tools": [
+      "get_cgm_summary_from_db_range",
+      "get_cgm_readings",
+      "get_average_glucose_from_db_range",
+      "get_cgm_analytics_from_db_range"
+    ],
+    "data_range": {
+      "start": "2027-06-24T00:00:00+00:00",
+      "end": "2027-07-04T23:59:59+00:00"
+    },
+    "reference_query": "SELECT ROUND(AVG(glucose_mmol_l),1) AS mean_glucose, ROUND(MIN(glucose_mmol_l),1) AS min_glucose, ROUND(MAX(glucose_mmol_l),1) AS max_glucose FROM cgm_readings WHERE patient_id='544' AND factory_timestamp_utc>='2027-06-24T00:00:00+00:00' AND factory_timestamp_utc<='2027-07-04T23:59:59+00:00'",
+    "expected_conclusion_keys": [
+      "mean_glucose",
+      "min_glucose",
+      "max_glucose"
+    ],
+    "scoring_weights": {
+      "tool_correctness": 0.2,
+      "argument_correctness": 0.1,
+      "structured_conclusion": 0.15,
+      "keyed_conclusion": 0.35,
+      "judge": 0.2
+    },
+    "multi_turn": false,
+    "notes": "Ground truth: mean 8.7, min 3.4, max 18.6 mmol/L."
+  },
+  {
+    "task_id": "v2_544_dawn_001",
+    "patient_id": "544",
+    "prompt": "Does this patient show a dawn phenomenon over June 24 - July 4, 2027? Compare the average glucose around 3 AM with the average around 6 AM and explain. End by calling log_conclusion with a JSON findings object that uses exactly these keys: avg_pre_dawn, avg_wake.",
+    "category": "pattern_analysis",
+    "difficulty": "hard",
+    "expected_tools": [
+      "get_cgm_readings",
+      "get_cgm_analytics_from_db_range"
+    ],
+    "acceptable_tools": [
+      "get_cgm_readings",
+      "get_cgm_summary_from_db_range",
+      "get_cgm_analytics_from_db_range"
+    ],
+    "data_range": {
+      "start": "2027-06-24T00:00:00+00:00",
+      "end": "2027-07-04T23:59:59+00:00"
+    },
+    "reference_query": "SELECT ROUND(AVG(CASE WHEN CAST(substr(factory_timestamp_utc,12,2) AS INT)=3 THEN glucose_mmol_l END),1) AS avg_pre_dawn, ROUND(AVG(CASE WHEN CAST(substr(factory_timestamp_utc,12,2) AS INT)=6 THEN glucose_mmol_l END),1) AS avg_wake FROM cgm_readings WHERE patient_id='544' AND factory_timestamp_utc>='2027-06-24T00:00:00+00:00' AND factory_timestamp_utc<='2027-07-04T23:59:59+00:00'",
+    "expected_conclusion_keys": [
+      "avg_pre_dawn",
+      "avg_wake"
+    ],
+    "scoring_weights": {
+      "tool_correctness": 0.2,
+      "argument_correctness": 0.1,
+      "structured_conclusion": 0.15,
+      "keyed_conclusion": 0.25,
+      "judge": 0.3
+    },
+    "multi_turn": false,
+    "notes": "Ground truth: ~3 AM avg 7.1, ~6 AM avg 5.7 mmol/L. Dawn phenomenon = morning rise (wake>pre-dawn); none of these patients show a strong rise, so the grounded answer is 'no clear dawn phenomenon' (reasoning/negative case, judge-assessed)."
+  },
+  {
+    "task_id": "v2_544_missed_bolus_001",
+    "patient_id": "544",
+    "prompt": "Over June 24 - July 4, 2027, how many meals had no bolus dose recorded within 30 minutes of the meal? End by calling log_conclusion with a JSON findings object that uses exactly these keys: missed_bolus_count.",
+    "category": "missed_bolus_detection",
+    "difficulty": "hard",
+    "expected_tools": [
+      "get_meals",
+      "get_bolus_doses"
+    ],
+    "acceptable_tools": [
+      "get_meals",
+      "get_bolus_doses"
+    ],
+    "data_range": {
+      "start": "2027-06-24T00:00:00+00:00",
+      "end": "2027-07-04T23:59:59+00:00"
+    },
+    "reference_query": "SELECT COUNT(*) AS missed_bolus_count FROM meal m WHERE m.patient_id='544' AND m.timestamp_utc>='2027-06-24T00:00:00+00:00' AND m.timestamp_utc<='2027-07-04T23:59:59+00:00' AND NOT EXISTS (SELECT 1 FROM bolus b WHERE b.patient_id='544' AND ABS(strftime('%s',b.ts_begin_utc)-strftime('%s',m.timestamp_utc))<=1800)",
+    "expected_conclusion_keys": [
+      "missed_bolus_count"
+    ],
+    "scoring_weights": {
+      "tool_correctness": 0.25,
+      "argument_correctness": 0.15,
+      "structured_conclusion": 0.2,
+      "keyed_conclusion": 0.4
+    },
+    "multi_turn": false,
+    "notes": "Cross-references meals vs bolus timing (+/-30 min). Ground truth: 1 meals with no nearby bolus."
+  },
+  {
+    "task_id": "v2_544_basal_001",
+    "patient_id": "544",
+    "prompt": "What scheduled basal insulin rates was the patient using during June 24 - July 4, 2027? Report how many distinct basal rates appear in the schedule. End by calling log_conclusion with a JSON findings object that uses exactly these keys: distinct_basal_rates.",
+    "category": "lookup",
+    "difficulty": "medium",
+    "expected_tools": [
+      "get_basal_rates"
+    ],
+    "acceptable_tools": [
+      "get_basal_rates",
+      "get_patient_info"
+    ],
+    "data_range": {
+      "start": "2027-06-24T00:00:00+00:00",
+      "end": "2027-07-04T23:59:59+00:00"
+    },
+    "reference_query": "SELECT COUNT(DISTINCT rate_units_per_hr) AS distinct_basal_rates FROM basal WHERE patient_id='544' AND timestamp_utc>='2027-06-24T00:00:00+00:00' AND timestamp_utc<='2027-07-04T23:59:59+00:00'",
+    "expected_conclusion_keys": [
+      "distinct_basal_rates"
+    ],
+    "scoring_weights": {
+      "tool_correctness": 0.3,
+      "argument_correctness": 0.1,
+      "structured_conclusion": 0.2,
+      "keyed_conclusion": 0.4
+    },
+    "multi_turn": false,
+    "notes": "Ground truth: 7 distinct basal rates. Exercises get_basal_rates."
+  },
+  {
+    "task_id": "v2_544_education_001",
+    "patient_id": "544",
+    "prompt": "Explain to the patient, in plain language, what their evening glucose patterns over June 24 - July 4, 2027 suggest about their dinner bolus timing. Look at the meals, insulin, and what the CGM did afterward. End by calling log_conclusion with a JSON findings object that uses exactly these keys: avg_evening_glucose.",
+    "category": "patient_education",
+    "difficulty": "hard",
+    "expected_tools": [
+      "get_meals",
+      "get_bolus_doses",
+      "get_cgm_readings"
+    ],
+    "acceptable_tools": [
+      "get_meals",
+      "get_bolus_doses",
+      "get_cgm_readings",
+      "get_cgm_spikes_from_db_range",
+      "get_nearest_cgm_reading"
+    ],
+    "data_range": {
+      "start": "2027-06-24T00:00:00+00:00",
+      "end": "2027-07-04T23:59:59+00:00"
+    },
+    "reference_query": "SELECT ROUND(AVG(glucose_mmol_l),1) AS avg_evening_glucose FROM cgm_readings WHERE patient_id='544' AND factory_timestamp_utc>='2027-06-24T00:00:00+00:00' AND factory_timestamp_utc<='2027-07-04T23:59:59+00:00' AND CAST(substr(factory_timestamp_utc,12,2) AS INT) BETWEEN 18 AND 22",
+    "expected_conclusion_keys": [
+      "avg_evening_glucose"
+    ],
+    "scoring_weights": {
+      "tool_correctness": 0.15,
+      "argument_correctness": 0.1,
+      "structured_conclusion": 0.15,
+      "keyed_conclusion": 0.2,
+      "judge": 0.4
+    },
+    "multi_turn": false,
+    "notes": "Patient-education task; scored heavily by LLM judge (clarity, accuracy, patient-appropriateness). Ground truth evening (18-22h) avg = 10.2 mmol/L."
+  },
+  {
+    "task_id": "v2_544_log_mealinsulin_001",
+    "patient_id": "544",
+    "prompt": "Log a lunch of 60g carbs with 4 units of rapid insulin on June 29, 2027 at 12:30 PM.",
+    "category": "logging",
+    "difficulty": "medium",
+    "expected_tools": [
+      "log_meal",
+      "log_insulin"
+    ],
+    "acceptable_tools": [
+      "log_meal",
+      "log_insulin",
+      "log_conclusion"
+    ],
+    "verification": {
+      "type": "kb_scroll",
+      "collection": "meal_events",
+      "since_iso": "2027-06-29T00:00:00+00:00",
+      "expected_payloads": [
+        {
+          "carbs_g": 60.0,
+          "meal_type": "Lunch"
+        }
+      ]
+    },
+    "scoring_weights": {
+      "tool_correctness": 0.3,
+      "argument_correctness": 0.1,
+      "structured_conclusion": 0.1,
+      "logged_state": 0.5
+    },
+    "multi_turn": false,
+    "notes": "Stateful meal+insulin logging. State check verifies the meal in meal_events; log_insulin is covered by tool_correctness."
+  },
+  {
+    "task_id": "v2_544_log_glucose_001",
+    "patient_id": "544",
+    "prompt": "Log a glucose reading of 5.5 mmol/L on June 29, 2027 at 10:00 AM.",
+    "category": "logging",
+    "difficulty": "easy",
+    "expected_tools": [
+      "log_glucose"
+    ],
+    "acceptable_tools": [
+      "log_glucose",
+      "log_conclusion"
+    ],
+    "verification": {
+      "type": "kb_scroll",
+      "collection": "glucose_events",
+      "since_iso": "2027-06-29T00:00:00+00:00",
+      "expected_payloads": [
+        {
+          "glucose_mmol_l": 5.5
+        }
+      ]
+    },
+    "scoring_weights": {
+      "tool_correctness": 0.3,
+      "structured_conclusion": 0.2,
+      "logged_state": 0.5
+    },
+    "multi_turn": false,
+    "notes": "Stateful glucose logging. With the fixed log_glucose tool, a 5.5 mmol/L input is stored as 5.5 mmol/L (no /18 quirk)."
+  },
+  {
+    "task_id": "v2_544_multi_clarify_001",
+    "patient_id": "544",
+    "description": "Agent must ask for a date instead of guessing, then answer once clarified.",
+    "category": "clarification",
+    "mode": "multi_turn",
+    "max_turns": 3,
+    "user_simulator": {
+      "type": "scripted",
+      "script": [
+        {
+          "turn": 1,
+          "user_message": "What was my glucose in the morning?",
+          "expected_tools": [],
+          "stop_condition": "response_contains",
+          "stop_criteria": {
+            "expected_substrings": [
+              "which date",
+              "what date",
+              "when",
+              "what day"
+            ]
+          }
+        },
+        {
+          "turn": 2,
+          "user_message": "June 26, 2027. Between 6 AM and noon.",
+          "expected_tools": [
+            "get_cgm_readings"
+          ],
+          "data_range": {
+            "start": "2027-06-26T06:00:00+00:00",
+            "end": "2027-06-26T12:00:00+00:00"
+          },
+          "state_check": {
+            "type": "response_contains",
+            "expected_substrings": [
+              "mmol"
+            ]
+          }
+        }
+      ]
+    },
+    "scoring_weights": {
+      "turn_completion": 0.3,
+      "tool_correctness": 0.3,
+      "per_turn_state": 0.2,
+      "judge": 0.2
+    },
+    "multi_turn": true,
+    "notes": "Tau-bench-style clarification. Turn 1 correctly uses NO tool (scored via the fixed no-tool-turn logic)."
+  },
+  {
+    "task_id": "v2_544_multi_insulin_adjust_001",
+    "patient_id": "544",
+    "description": "Two-turn clinical-reasoning dialogue: identify lows, then reason about a basal adjustment per ADA guidance.",
+    "category": "insulin_adjustment_dialogue",
+    "difficulty": "hard",
+    "mode": "multi_turn",
+    "max_turns": 3,
+    "user_simulator": {
+      "type": "scripted",
+      "script": [
+        {
+          "turn": 1,
+          "user_message": "Were there any lows on June 24, 2027?",
+          "expected_tools": [
+            "get_cgm_readings"
+          ],
+          "data_range": {
+            "start": "2027-06-24T00:00:00+00:00",
+            "end": "2027-06-24T23:59:59+00:00"
+          },
+          "state_check": {
+            "type": "response_contains",
+            "expected_substrings": [
+              "3."
+            ]
+          }
+        },
+        {
+          "turn": 2,
+          "user_message": "Given that pattern, should we consider adjusting the basal? What does ADA guidance suggest?",
+          "expected_tools": [],
+          "state_check": {
+            "type": "response_contains",
+            "expected_substrings": [
+              "basal"
+            ]
+          }
+        }
+      ]
+    },
+    "scoring_weights": {
+      "turn_completion": 0.25,
+      "tool_correctness": 0.25,
+      "per_turn_state": 0.2,
+      "judge": 0.3
+    },
+    "multi_turn": true,
+    "notes": "ADA guidance: if no clear cause for hypoglycemia, lower dose ~10-20%. Turn 2 is pure reasoning with NO tool (scored via the fixed no-tool-turn logic). Must include a not-medical-advice disclaimer (judge)."
+  },
+  {
+    "task_id": "v2_584_correlation_001",
+    "patient_id": "584",
+    "prompt": "What happened to the patient's glucose after their meals on June 30, 2025? Summarize the meals and the glucose trend afterward. End by calling log_conclusion with a JSON findings object that uses exactly these keys: meal_count, total_carbs, glucose_trend.",
+    "category": "correlation",
+    "difficulty": "medium",
+    "expected_tools": [
+      "get_meals",
+      "get_cgm_readings"
+    ],
+    "acceptable_tools": [
+      "get_meals",
+      "get_cgm_readings",
+      "get_nearest_cgm_reading",
+      "get_cgm_spikes_from_db_range"
+    ],
+    "data_range": {
+      "start": "2025-06-30T00:00:00+00:00",
+      "end": "2025-06-30T23:59:59+00:00"
+    },
+    "reference_query": "SELECT COUNT(*) AS meal_count, ROUND(SUM(carbs_g),0) AS total_carbs FROM meal WHERE patient_id='584' AND timestamp_utc>='2025-06-30T00:00:00+00:00' AND timestamp_utc<='2025-06-30T23:59:59+00:00'",
+    "expected_conclusion_keys": [
+      "meal_count",
+      "total_carbs",
+      "glucose_trend"
+    ],
+    "scoring_weights": {
+      "tool_correctness": 0.2,
+      "argument_correctness": 0.15,
+      "structured_conclusion": 0.15,
+      "keyed_conclusion": 0.3,
+      "judge": 0.2
+    },
+    "multi_turn": false,
+    "notes": "Multi-tool correlation (meals + CGM). Ground truth: 3 meals, 180g carbs on June 30, 2025. glucose_trend is prose (judge)."
+  },
+  {
+    "task_id": "v2_584_tar_001",
+    "patient_id": "584",
+    "prompt": "How much time did the patient spend above 10.0 mmol/L on June 30, 2025? Give both the percentage and the number of readings above range. End by calling log_conclusion with a JSON findings object that uses exactly these keys: above_count, tar_percent.",
+    "category": "time_above_range",
+    "difficulty": "medium",
+    "expected_tools": [
+      "get_cgm_summary_from_db_range",
+      "get_cgm_analytics_from_db_range"
+    ],
+    "acceptable_tools": [
+      "get_cgm_summary_from_db_range",
+      "get_cgm_readings",
+      "get_cgm_analytics_from_db_range"
+    ],
+    "data_range": {
+      "start": "2025-06-30T00:00:00+00:00",
+      "end": "2025-06-30T23:59:59+00:00"
+    },
+    "reference_query": "SELECT SUM(CASE WHEN glucose_mmol_l>10.0 THEN 1 ELSE 0 END) AS above_count, ROUND(100.0*SUM(CASE WHEN glucose_mmol_l>10.0 THEN 1 ELSE 0 END)/COUNT(*),1) AS tar_percent FROM cgm_readings WHERE patient_id='584' AND factory_timestamp_utc>='2025-06-30T00:00:00+00:00' AND factory_timestamp_utc<='2025-06-30T23:59:59+00:00'",
+    "expected_conclusion_keys": [
+      "above_count",
+      "tar_percent"
+    ],
+    "scoring_weights": {
+      "tool_correctness": 0.25,
+      "argument_correctness": 0.15,
+      "structured_conclusion": 0.2,
+      "keyed_conclusion": 0.4
+    },
+    "multi_turn": false,
+    "notes": "Ground truth on June 30, 2025: 148 readings >10.0 mmol/L = 53.0% TAR."
+  },
+  {
+    "task_id": "v2_584_hypo_sev_001",
+    "patient_id": "584",
+    "prompt": "Over the full dataset period (June 29 - July 9, 2025), were any hypoglycemic episodes clinically significant? Report how many readings were level 1 (below 3.9 mmol/L) and level 2 (below 3.0 mmol/L). End by calling log_conclusion with a JSON findings object that uses exactly these keys: level1_count, level2_count.",
+    "category": "hypoglycemia_severity",
+    "difficulty": "medium",
+    "expected_tools": [
+      "get_cgm_readings",
+      "get_cgm_analytics_from_db_range"
+    ],
+    "acceptable_tools": [
+      "get_cgm_readings",
+      "get_cgm_summary_from_db_range",
+      "get_cgm_analytics_from_db_range"
+    ],
+    "data_range": {
+      "start": "2025-06-29T00:00:00+00:00",
+      "end": "2025-07-09T23:59:59+00:00"
+    },
+    "reference_query": "SELECT SUM(CASE WHEN glucose_mmol_l<3.9 THEN 1 ELSE 0 END) AS level1_count, SUM(CASE WHEN glucose_mmol_l<3.0 THEN 1 ELSE 0 END) AS level2_count FROM cgm_readings WHERE patient_id='584' AND factory_timestamp_utc>='2025-06-29T00:00:00+00:00' AND factory_timestamp_utc<='2025-07-09T23:59:59+00:00'",
+    "expected_conclusion_keys": [
+      "level1_count",
+      "level2_count"
+    ],
+    "scoring_weights": {
+      "tool_correctness": 0.25,
+      "argument_correctness": 0.15,
+      "structured_conclusion": 0.2,
+      "keyed_conclusion": 0.4
+    },
+    "multi_turn": false,
+    "notes": "Ground truth: level1(<3.9)=27, level2(<3.0)=4."
+  },
+  {
+    "task_id": "v2_584_variability_001",
+    "patient_id": "584",
+    "prompt": "Summarize the patient's overall glucose variability for the full dataset (June 29 - July 9, 2025). Report the mean glucose and the minimum and maximum readings. End by calling log_conclusion with a JSON findings object that uses exactly these keys: mean_glucose, min_glucose, max_glucose.",
+    "category": "weekly_trend",
+    "difficulty": "medium",
+    "expected_tools": [
+      "get_cgm_summary_from_db_range"
+    ],
+    "acceptable_tools": [
+      "get_cgm_summary_from_db_range",
+      "get_cgm_readings",
+      "get_average_glucose_from_db_range",
+      "get_cgm_analytics_from_db_range"
+    ],
+    "data_range": {
+      "start": "2025-06-29T00:00:00+00:00",
+      "end": "2025-07-09T23:59:59+00:00"
+    },
+    "reference_query": "SELECT ROUND(AVG(glucose_mmol_l),1) AS mean_glucose, ROUND(MIN(glucose_mmol_l),1) AS min_glucose, ROUND(MAX(glucose_mmol_l),1) AS max_glucose FROM cgm_readings WHERE patient_id='584' AND factory_timestamp_utc>='2025-06-29T00:00:00+00:00' AND factory_timestamp_utc<='2025-07-09T23:59:59+00:00'",
+    "expected_conclusion_keys": [
+      "mean_glucose",
+      "min_glucose",
+      "max_glucose"
+    ],
+    "scoring_weights": {
+      "tool_correctness": 0.2,
+      "argument_correctness": 0.1,
+      "structured_conclusion": 0.15,
+      "keyed_conclusion": 0.35,
+      "judge": 0.2
+    },
+    "multi_turn": false,
+    "notes": "Ground truth: mean 9.5, min 2.3, max 22.2 mmol/L."
+  },
+  {
+    "task_id": "v2_584_dawn_001",
+    "patient_id": "584",
+    "prompt": "Does this patient show a dawn phenomenon over June 29 - July 9, 2025? Compare the average glucose around 3 AM with the average around 6 AM and explain. End by calling log_conclusion with a JSON findings object that uses exactly these keys: avg_pre_dawn, avg_wake.",
+    "category": "pattern_analysis",
+    "difficulty": "hard",
+    "expected_tools": [
+      "get_cgm_readings",
+      "get_cgm_analytics_from_db_range"
+    ],
+    "acceptable_tools": [
+      "get_cgm_readings",
+      "get_cgm_summary_from_db_range",
+      "get_cgm_analytics_from_db_range"
+    ],
+    "data_range": {
+      "start": "2025-06-29T00:00:00+00:00",
+      "end": "2025-07-09T23:59:59+00:00"
+    },
+    "reference_query": "SELECT ROUND(AVG(CASE WHEN CAST(substr(factory_timestamp_utc,12,2) AS INT)=3 THEN glucose_mmol_l END),1) AS avg_pre_dawn, ROUND(AVG(CASE WHEN CAST(substr(factory_timestamp_utc,12,2) AS INT)=6 THEN glucose_mmol_l END),1) AS avg_wake FROM cgm_readings WHERE patient_id='584' AND factory_timestamp_utc>='2025-06-29T00:00:00+00:00' AND factory_timestamp_utc<='2025-07-09T23:59:59+00:00'",
+    "expected_conclusion_keys": [
+      "avg_pre_dawn",
+      "avg_wake"
+    ],
+    "scoring_weights": {
+      "tool_correctness": 0.2,
+      "argument_correctness": 0.1,
+      "structured_conclusion": 0.15,
+      "keyed_conclusion": 0.25,
+      "judge": 0.3
+    },
+    "multi_turn": false,
+    "notes": "Ground truth: ~3 AM avg 10.5, ~6 AM avg 7.5 mmol/L. Dawn phenomenon = morning rise (wake>pre-dawn); none of these patients show a strong rise, so the grounded answer is 'no clear dawn phenomenon' (reasoning/negative case, judge-assessed)."
+  },
+  {
+    "task_id": "v2_584_missed_bolus_001",
+    "patient_id": "584",
+    "prompt": "Over June 29 - July 9, 2025, how many meals had no bolus dose recorded within 30 minutes of the meal? End by calling log_conclusion with a JSON findings object that uses exactly these keys: missed_bolus_count.",
+    "category": "missed_bolus_detection",
+    "difficulty": "hard",
+    "expected_tools": [
+      "get_meals",
+      "get_bolus_doses"
+    ],
+    "acceptable_tools": [
+      "get_meals",
+      "get_bolus_doses"
+    ],
+    "data_range": {
+      "start": "2025-06-29T00:00:00+00:00",
+      "end": "2025-07-09T23:59:59+00:00"
+    },
+    "reference_query": "SELECT COUNT(*) AS missed_bolus_count FROM meal m WHERE m.patient_id='584' AND m.timestamp_utc>='2025-06-29T00:00:00+00:00' AND m.timestamp_utc<='2025-07-09T23:59:59+00:00' AND NOT EXISTS (SELECT 1 FROM bolus b WHERE b.patient_id='584' AND ABS(strftime('%s',b.ts_begin_utc)-strftime('%s',m.timestamp_utc))<=1800)",
+    "expected_conclusion_keys": [
+      "missed_bolus_count"
+    ],
+    "scoring_weights": {
+      "tool_correctness": 0.25,
+      "argument_correctness": 0.15,
+      "structured_conclusion": 0.2,
+      "keyed_conclusion": 0.4
+    },
+    "multi_turn": false,
+    "notes": "Cross-references meals vs bolus timing (+/-30 min). Ground truth: 15 meals with no nearby bolus."
+  },
+  {
+    "task_id": "v2_584_basal_001",
+    "patient_id": "584",
+    "prompt": "What scheduled basal insulin rates was the patient using during June 29 - July 9, 2025? Report how many distinct basal rates appear in the schedule. End by calling log_conclusion with a JSON findings object that uses exactly these keys: distinct_basal_rates.",
+    "category": "lookup",
+    "difficulty": "medium",
+    "expected_tools": [
+      "get_basal_rates"
+    ],
+    "acceptable_tools": [
+      "get_basal_rates",
+      "get_patient_info"
+    ],
+    "data_range": {
+      "start": "2025-06-29T00:00:00+00:00",
+      "end": "2025-07-09T23:59:59+00:00"
+    },
+    "reference_query": "SELECT COUNT(DISTINCT rate_units_per_hr) AS distinct_basal_rates FROM basal WHERE patient_id='584' AND timestamp_utc>='2025-06-29T00:00:00+00:00' AND timestamp_utc<='2025-07-09T23:59:59+00:00'",
+    "expected_conclusion_keys": [
+      "distinct_basal_rates"
+    ],
+    "scoring_weights": {
+      "tool_correctness": 0.3,
+      "argument_correctness": 0.1,
+      "structured_conclusion": 0.2,
+      "keyed_conclusion": 0.4
+    },
+    "multi_turn": false,
+    "notes": "Ground truth: 4 distinct basal rates. Exercises get_basal_rates."
+  },
+  {
+    "task_id": "v2_584_education_001",
+    "patient_id": "584",
+    "prompt": "Explain to the patient, in plain language, what their evening glucose patterns over June 29 - July 9, 2025 suggest about their dinner bolus timing. Look at the meals, insulin, and what the CGM did afterward. End by calling log_conclusion with a JSON findings object that uses exactly these keys: avg_evening_glucose.",
+    "category": "patient_education",
+    "difficulty": "hard",
+    "expected_tools": [
+      "get_meals",
+      "get_bolus_doses",
+      "get_cgm_readings"
+    ],
+    "acceptable_tools": [
+      "get_meals",
+      "get_bolus_doses",
+      "get_cgm_readings",
+      "get_cgm_spikes_from_db_range",
+      "get_nearest_cgm_reading"
+    ],
+    "data_range": {
+      "start": "2025-06-29T00:00:00+00:00",
+      "end": "2025-07-09T23:59:59+00:00"
+    },
+    "reference_query": "SELECT ROUND(AVG(glucose_mmol_l),1) AS avg_evening_glucose FROM cgm_readings WHERE patient_id='584' AND factory_timestamp_utc>='2025-06-29T00:00:00+00:00' AND factory_timestamp_utc<='2025-07-09T23:59:59+00:00' AND CAST(substr(factory_timestamp_utc,12,2) AS INT) BETWEEN 18 AND 22",
+    "expected_conclusion_keys": [
+      "avg_evening_glucose"
+    ],
+    "scoring_weights": {
+      "tool_correctness": 0.15,
+      "argument_correctness": 0.1,
+      "structured_conclusion": 0.15,
+      "keyed_conclusion": 0.2,
+      "judge": 0.4
+    },
+    "multi_turn": false,
+    "notes": "Patient-education task; scored heavily by LLM judge (clarity, accuracy, patient-appropriateness). Ground truth evening (18-22h) avg = 9.9 mmol/L."
+  },
+  {
+    "task_id": "v2_584_log_mealinsulin_001",
+    "patient_id": "584",
+    "prompt": "Log a lunch of 60g carbs with 4 units of rapid insulin on July 2, 2025 at 12:30 PM.",
+    "category": "logging",
+    "difficulty": "medium",
+    "expected_tools": [
+      "log_meal",
+      "log_insulin"
+    ],
+    "acceptable_tools": [
+      "log_meal",
+      "log_insulin",
+      "log_conclusion"
+    ],
+    "verification": {
+      "type": "kb_scroll",
+      "collection": "meal_events",
+      "since_iso": "2025-07-02T00:00:00+00:00",
+      "expected_payloads": [
+        {
+          "carbs_g": 60.0,
+          "meal_type": "Lunch"
+        }
+      ]
+    },
+    "scoring_weights": {
+      "tool_correctness": 0.3,
+      "argument_correctness": 0.1,
+      "structured_conclusion": 0.1,
+      "logged_state": 0.5
+    },
+    "multi_turn": false,
+    "notes": "Stateful meal+insulin logging. State check verifies the meal in meal_events; log_insulin is covered by tool_correctness."
+  },
+  {
+    "task_id": "v2_584_log_glucose_001",
+    "patient_id": "584",
+    "prompt": "Log a glucose reading of 5.5 mmol/L on July 2, 2025 at 10:00 AM.",
+    "category": "logging",
+    "difficulty": "easy",
+    "expected_tools": [
+      "log_glucose"
+    ],
+    "acceptable_tools": [
+      "log_glucose",
+      "log_conclusion"
+    ],
+    "verification": {
+      "type": "kb_scroll",
+      "collection": "glucose_events",
+      "since_iso": "2025-07-02T00:00:00+00:00",
+      "expected_payloads": [
+        {
+          "glucose_mmol_l": 5.5
+        }
+      ]
+    },
+    "scoring_weights": {
+      "tool_correctness": 0.3,
+      "structured_conclusion": 0.2,
+      "logged_state": 0.5
+    },
+    "multi_turn": false,
+    "notes": "Stateful glucose logging. With the fixed log_glucose tool, a 5.5 mmol/L input is stored as 5.5 mmol/L (no /18 quirk)."
+  },
+  {
+    "task_id": "v2_584_multi_clarify_001",
+    "patient_id": "584",
+    "description": "Agent must ask for a date instead of guessing, then answer once clarified.",
+    "category": "clarification",
+    "mode": "multi_turn",
+    "max_turns": 3,
+    "user_simulator": {
+      "type": "scripted",
+      "script": [
+        {
+          "turn": 1,
+          "user_message": "What was my glucose in the morning?",
+          "expected_tools": [],
+          "stop_condition": "response_contains",
+          "stop_criteria": {
+            "expected_substrings": [
+              "which date",
+              "what date",
+              "when",
+              "what day"
+            ]
+          }
+        },
+        {
+          "turn": 2,
+          "user_message": "July 1, 2025. Between 6 AM and noon.",
+          "expected_tools": [
+            "get_cgm_readings"
+          ],
+          "data_range": {
+            "start": "2025-07-01T06:00:00+00:00",
+            "end": "2025-07-01T12:00:00+00:00"
+          },
+          "state_check": {
+            "type": "response_contains",
+            "expected_substrings": [
+              "mmol"
+            ]
+          }
+        }
+      ]
+    },
+    "scoring_weights": {
+      "turn_completion": 0.3,
+      "tool_correctness": 0.3,
+      "per_turn_state": 0.2,
+      "judge": 0.2
+    },
+    "multi_turn": true,
+    "notes": "Tau-bench-style clarification. Turn 1 correctly uses NO tool (scored via the fixed no-tool-turn logic)."
+  },
+  {
+    "task_id": "v2_584_multi_insulin_adjust_001",
+    "patient_id": "584",
+    "description": "Two-turn clinical-reasoning dialogue: identify lows, then reason about a basal adjustment per ADA guidance.",
+    "category": "insulin_adjustment_dialogue",
+    "difficulty": "hard",
+    "mode": "multi_turn",
+    "max_turns": 3,
+    "user_simulator": {
+      "type": "scripted",
+      "script": [
+        {
+          "turn": 1,
+          "user_message": "Were there any lows on July 9, 2025?",
+          "expected_tools": [
+            "get_cgm_readings"
+          ],
+          "data_range": {
+            "start": "2025-07-09T00:00:00+00:00",
+            "end": "2025-07-09T23:59:59+00:00"
+          },
+          "state_check": {
+            "type": "response_contains",
+            "expected_substrings": [
+              "3."
+            ]
+          }
+        },
+        {
+          "turn": 2,
+          "user_message": "Given that pattern, should we consider adjusting the basal? What does ADA guidance suggest?",
+          "expected_tools": [],
+          "state_check": {
+            "type": "response_contains",
+            "expected_substrings": [
+              "basal"
+            ]
+          }
+        }
+      ]
+    },
+    "scoring_weights": {
+      "turn_completion": 0.25,
+      "tool_correctness": 0.25,
+      "per_turn_state": 0.2,
+      "judge": 0.3
+    },
+    "multi_turn": true,
+    "notes": "ADA guidance: if no clear cause for hypoglycemia, lower dose ~10-20%. Turn 2 is pure reasoning with NO tool (scored via the fixed no-tool-turn logic). Must include a not-medical-advice disclaimer (judge)."
+  },
+  {
+    "task_id": "v2_559_dawn_001",
+    "patient_id": "559",
+    "prompt": "Does this patient show a dawn phenomenon over January 18-27, 2022? Compare the average glucose around 3 AM with the average around 6 AM and explain. End by calling log_conclusion with a JSON findings object that uses exactly these keys: avg_pre_dawn, avg_wake.",
+    "category": "pattern_analysis",
+    "difficulty": "hard",
+    "expected_tools": [
+      "get_cgm_readings",
+      "get_cgm_analytics_from_db_range"
+    ],
+    "acceptable_tools": [
+      "get_cgm_readings",
+      "get_cgm_summary_from_db_range",
+      "get_cgm_analytics_from_db_range"
+    ],
+    "data_range": {
+      "start": "2022-01-18T00:00:00+00:00",
+      "end": "2022-01-27T23:59:59+00:00"
+    },
+    "reference_query": "SELECT ROUND(AVG(CASE WHEN CAST(substr(factory_timestamp_utc,12,2) AS INT)=3 THEN glucose_mmol_l END),1) AS avg_pre_dawn, ROUND(AVG(CASE WHEN CAST(substr(factory_timestamp_utc,12,2) AS INT)=6 THEN glucose_mmol_l END),1) AS avg_wake FROM cgm_readings WHERE patient_id='559' AND factory_timestamp_utc>='2022-01-18T00:00:00+00:00' AND factory_timestamp_utc<='2022-01-27T23:59:59+00:00'",
+    "expected_conclusion_keys": [
+      "avg_pre_dawn",
+      "avg_wake"
+    ],
+    "scoring_weights": {
+      "tool_correctness": 0.2,
+      "argument_correctness": 0.1,
+      "structured_conclusion": 0.15,
+      "keyed_conclusion": 0.25,
+      "judge": 0.3
+    },
+    "multi_turn": false,
+    "notes": "POSITIVE dawn case: ~3 AM avg 8.0 -> ~6 AM avg 11.6 mmol/L (+3.6 rise). The grounded answer is YES, a clear dawn phenomenon \u2014 contrast with the dawn-negative cases (540/544/584). Judge-assessed reasoning."
+  }
+]

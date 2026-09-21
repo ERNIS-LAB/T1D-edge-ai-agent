@@ -1,0 +1,18 @@
+\begin{table*}[!t]
+\centering
+\caption{Experiment~1: unconstrained models on the tool-enabled suite. Each task is scored on the subset of dimensions it defines: Tool (tool correctness), Arg. (argument correctness), Num. (numeric groundedness), Struct. (structured conclusion), Keyed (key-aligned conclusion), Judge (LLM-judge score), State (logged state), Turn (turn completion), P/T (per-turn state). Each column is that dimension's mean over the tasks where it was evaluated. Overall is computed per task --- the unweighted mean of the dimensions that task received --- and then averaged over tasks; because the dimensions are evaluated on differing numbers of tasks, Overall is not the average of the columns beside it. A failed task scores 0 on every dimension and remains in the denominator; Fail is that non-termination rate.}
+\label{tab:exp1}
+\small
+\setlength{\tabcolsep}{4pt}
+\begin{tabular}{@{}ll rrrrrrrrrrr@{}}
+\toprule
+Model & Params & Overall & Tool & Arg. & Num. & Struct. & Keyed & Judge & State & Turn & P/T & Fail \\
+\midrule
+Gemma 4 31B & 31B & 0.80 & 0.60 & 0.82 & 0.64 & 0.94 & 0.98 & 0.80 & 0.85 & 1.00 & 1.00 & 0\% \\
+Qwen 3.6 27B & 27B & 0.79 & 0.59 & 0.82 & 0.61 & 0.91 & 0.96 & 0.85 & 0.85 & 1.00 & 0.94 & 1\% \\
+Qwen 3.6 35B & 35B (A3B) & 0.78 & 0.58 & 0.83 & 0.60 & 0.90 & 0.95 & 0.84 & 0.85 & 1.00 & 1.00 & 1\% \\
+Kimi K2.6 & $\sim$1T (MoE) & 0.76 & 0.59 & 0.83 & 0.61 & 0.88 & 0.91 & 0.64 & 0.75 & 1.00 & 0.89 & 0\% \\
+Gemma 4 26B & 26B (A4B) & 0.72 & 0.66 & 0.85 & 0.64 & 0.61 & 0.65 & 0.85 & 0.90 & 1.00 & 0.94 & 3\% \\
+\bottomrule
+\end{tabular}
+\end{table*}

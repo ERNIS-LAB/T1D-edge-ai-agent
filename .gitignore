@@ -1,0 +1,55 @@
+# --- Secrets ---------------------------------------------------------------
+.env
+.env.*
+!.env.example
+
+# --- Python ----------------------------------------------------------------
+venv/
+.venv/
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# --- Restricted data -------------------------------------------------------
+# OhioT1DM is distributed under a signed Data Use Agreement and must NOT be
+# redistributed. See the README for how to request it from Ohio University.
+# Leading slash anchors this to the repo root so the agent/data/ package -- which
+# is source, not data -- is still tracked.
+/data/
+
+# --- Personal health data / runtime state ----------------------------------
+# Generated glucose reports and the local CGM/KB stores contain real readings.
+reports/
+.kb_data/
+*.sqlite3
+*.db
+
+# --- Benchmark + analysis output -------------------------------------------
+benchmark_run_logs/
+**/analysis_charts/
+
+# --- Node / web ------------------------------------------------------------
+node_modules/
+dist/
+*.tsbuildinfo
+
+# --- LaTeX build artifacts -------------------------------------------------
+*.aux
+*.bbl
+*.blg
+*.log
+*.out
+*.synctex.gz
+*.fls
+*.fdb_latexmk
+*.toc
+
+# --- OS / editor -----------------------------------------------------------
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.swp

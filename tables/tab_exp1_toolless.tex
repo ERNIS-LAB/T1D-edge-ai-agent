@@ -1,0 +1,17 @@
+\begin{table*}[!t]
+\centering
+\caption{Experiment~2: value of tools. Numeric-groundedness and LLM-judge scores with tools vs.\ without, for the two models run in both arms. $\Delta$ is the drop when tools are removed. The toolless arm cannot run the tasks that need the tools it removes, so both arms are restricted here to the 58 tasks they share; the tool-enabled columns are therefore over those tasks rather than the full suite, and differ slightly from the corresponding columns of Table~\ref{tab:exp1}.}
+\label{tab:exp1_toolless}
+\small
+\setlength{\tabcolsep}{4pt}
+\begin{tabular}{@{}lrrrrrr@{}}
+\toprule
+& \multicolumn{3}{c}{Numeric} & \multicolumn{3}{c}{Judge} \\
+\cmidrule(lr){2-4}\cmidrule(lr){5-7}
+Model & Tools & No-tools & $\Delta$ & Tools & No-tools & $\Delta$ \\
+\midrule
+Kimi K2.6 & 0.53 & 0.40 & $-0.13$ & 0.62 & 0.52 & $-0.10$ \\
+Qwen 3.6 35B & 0.52 & 0.30 & $-0.22$ & 0.84 & 0.54 & $-0.30$ \\
+\bottomrule
+\end{tabular}
+\end{table*}

@@ -1,0 +1,5 @@
+identifier,context,footprint
+qwen3.5-9b-iq3_xxs,4096,5.84 GB
+qwen3.5-4b-q4_0,8192,3.92 GB
+gemma-4-e2b-4bit,8192,4.37 GB
+gemma-4-e4b-it-qat,8192,6.13 GB

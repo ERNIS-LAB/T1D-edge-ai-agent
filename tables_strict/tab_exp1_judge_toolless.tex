@@ -1,0 +1,22 @@
+\begin{table}[H]
+\centering
+\caption{Experiment~2: judge criteria with tools vs.\ without, for the two models run in both arms. $\Delta$ is the drop when tools are removed. Both arms are restricted to the 58 tasks they share, as in Table~\ref{tab:exp1_toolless}.}
+\label{tab:exp1_judge_toolless}
+\small
+\setlength{\tabcolsep}{5pt}
+\begin{tabular}{@{}llrrr@{}}
+\toprule
+Model & Criterion & Tools & No-tools & $\Delta$ \\
+\midrule
+Kimi K2.6 & Groundedness & 0.90 & 0.49 & $-0.41$ \\
+ & Completeness & 0.55 & 0.48 & $-0.07$ \\
+ & Clarity & 0.66 & 0.58 & $-0.08$ \\
+ & Clin. caution & 0.39 & 0.39 & $-0.01$ \\
+\addlinespace
+Qwen 3.6 35B & Groundedness & 0.88 & 0.18 & $-0.69$ \\
+ & Completeness & 0.90 & 0.41 & $-0.49$ \\
+ & Clarity & 0.94 & 0.49 & $-0.45$ \\
+ & Clin. caution & 0.65 & 0.26 & $-0.39$ \\
+\bottomrule
+\end{tabular}
+\end{table}

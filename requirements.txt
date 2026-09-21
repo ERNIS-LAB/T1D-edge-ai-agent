@@ -1,0 +1,40 @@
+# --- Agent core -------------------------------------------------------------
+# LangChain abstractions (messages, tools, prompts)
+langchain>=1.0
+langchain-core>=0.3.0
+
+# ChatOpenAI — the client used for every OpenAI-compatible endpoint
+# (LM Studio, Ollama, vLLM, OpenAI). Also installs the openai package.
+langchain-openai>=0.2.0
+
+# LangGraph — StateGraph agent loop, ToolNode, MessagesState
+langgraph>=1.0
+
+# Reads .env so credentials stay out of the source tree (see config.py)
+python-dotenv>=1.0.0
+
+# Scheduled report generation
+apscheduler>=3.10.0
+
+# --- Data + domain ----------------------------------------------------------
+# Glucose statistics (time-in-range, A1C estimation, etc.)
+glucostats>=1.0.0
+pandas>=2.0.0
+numpy>=2.0.0
+
+# LibreLinkUp client for live CGM sync (optional at runtime — see .env.example)
+pylibrelinkup>=0.10.0
+
+# Official Spoonacular OpenAPI client (the PyPI package of that name is an
+# unofficial wrapper, so install from source)
+spoonacular @ git+https://github.com/ddsky/spoonacular-api-clients.git#subdirectory=python
+
+# --- Knowledge base / RAG ---------------------------------------------------
+qdrant-client>=1.9.0
+sentence-transformers>=3.0.0
+
+# --- Benchmark analysis + paper figures -------------------------------------
+matplotlib>=3.8.0
+
+# --- Testing ----------------------------------------------------------------
+pytest>=8.0.0

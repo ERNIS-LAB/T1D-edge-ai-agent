@@ -1,0 +1,17 @@
+\begin{table}[H]
+\centering
+\caption{Experiment~3: the LLM-judge score of Table~\ref{tab:exp2} decomposed into the four rubric criteria, for the small models. Each criterion is marked 0 to 10 by the judge against the rubric of Table~\ref{tab:judge} and rescaled to $[0,1]$ here; Judge is their mean. Means are over the judged tasks only, so the denominator is smaller than the full suite.}
+\label{tab:exp2_judge}
+\small
+\setlength{\tabcolsep}{5pt}
+\begin{tabular}{@{}l rrrrr@{}}
+\toprule
+Model & Judge & Groundedness & Completeness & Clarity & Clin. caution \\
+\midrule
+Qwen 3.5 9B (Q8\_0) & 0.78 & 0.81 & 0.86 & 0.91 & 0.52 \\
+Gemma 4 E4B (8-bit) & 0.77 & 0.80 & 0.79 & 0.91 & 0.57 \\
+Qwen 3.5 4B (Q8\_0) & 0.66 & 0.67 & 0.76 & 0.80 & 0.41 \\
+Gemma 4 E2B (8-bit) & 0.62 & 0.63 & 0.62 & 0.71 & 0.51 \\
+\bottomrule
+\end{tabular}
+\end{table}

@@ -1,0 +1,23 @@
+\begin{table*}[!t]
+\centering
+\caption{Experiment~5: edge-target models at full (32k) and reduced context windows. Each reduced window is the maximum Ollama would load for that model on the device, or the original 32k where it allowed. Footprint is the size of the loaded model weights through Ollama. Columns otherwise as in Table~\ref{tab:exp1}.}
+\label{tab:exp4}
+\small
+\setlength{\tabcolsep}{4pt}
+\begin{tabular}{@{}lll rrrrrrrrrrr@{}}
+\toprule
+Model & Context & Footprint & Overall & Tool & Arg. & Num. & Struct. & Keyed & Judge & State & Turn & P/T & Fail \\
+\midrule
+Qwen 3.5 9B (IQ3\_XXS) & 32k & 4.0\,GB & 0.74 & 0.67 & 0.84 & 0.56 & 0.70 & 0.82 & 0.75 & 0.95 & 1.00 & 1.00 & 1\% \\
+ & 4k & --- & 0.62 & 0.65 & 0.76 & 0.50 & 0.48 & 0.53 & 0.56 & 0.95 & 0.89 & 0.78 & 12\% \\
+\addlinespace
+Qwen 3.5 4B (Q4\_0) & 32k & 3.1\,GB & 0.73 & 0.61 & 0.81 & 0.60 & 0.72 & 0.85 & 0.72 & 0.90 & 0.89 & 0.83 & 3\% \\
+ & 8k & --- & 0.68 & 0.59 & 0.76 & 0.57 & 0.63 & 0.72 & 0.62 & 0.85 & 0.89 & 0.83 & 8\% \\
+\addlinespace
+Gemma 4 E2B (Q4 QAT) & 32k & 1.4\,GB & 0.64 & 0.65 & 0.81 & 0.25 & 0.73 & 0.66 & 0.42 & 0.80 & 1.00 & 0.92 & 57\% \\
+\addlinespace
+Gemma 4 E4B (Q4 QAT) & 32k & 2.8\,GB & 0.72 & 0.65 & 0.81 & 0.57 & 0.67 & 0.75 & 0.77 & 0.85 & 1.00 & 0.94 & 4\% \\
+\addlinespace
+\bottomrule
+\end{tabular}
+\end{table*}

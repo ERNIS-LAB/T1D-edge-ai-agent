@@ -1,0 +1,17 @@
+\begin{table*}[!t]
+\centering
+\caption{Experiment~3: small language models on the tool-enabled suite, all at 8-bit so that the comparison isolates model size and family from quantisation. Columns as in Table~\ref{tab:exp1}.}
+\label{tab:exp2}
+\small
+\setlength{\tabcolsep}{4pt}
+\begin{tabular}{@{}ll rrrrrrrrrrr@{}}
+\toprule
+Model & Params & Overall & Tool & Arg. & Num. & Struct. & Keyed & Judge & State & Turn & P/T & Fail \\
+\midrule
+Gemma 4 E4B (8-bit) & E4B & 0.77 & 0.67 & 0.80 & 0.65 & 0.77 & 0.83 & 0.77 & 0.86 & 0.90 & 0.88 & 1\% \\
+Qwen 3.5 9B (Q8\_0) & 9B & 0.75 & 0.58 & 0.81 & 0.60 & 0.80 & 0.89 & 0.78 & 0.77 & 0.73 & 0.73 & 3\% \\
+Qwen 3.5 4B (Q8\_0) & 4B & 0.71 & 0.58 & 0.80 & 0.56 & 0.71 & 0.83 & 0.66 & 0.71 & 0.58 & 0.58 & 6\% \\
+Gemma 4 E2B (8-bit) & E2B & 0.67 & 0.57 & 0.72 & 0.61 & 0.65 & 0.62 & 0.62 & 0.57 & 0.56 & 0.52 & 10\% \\
+\bottomrule
+\end{tabular}
+\end{table*}

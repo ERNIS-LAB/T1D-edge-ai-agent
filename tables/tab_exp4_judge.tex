@@ -1,0 +1,23 @@
+\begin{table}[H]
+\centering
+\caption{Experiment~5: the LLM-judge score of Table~\ref{tab:exp4} decomposed into the four rubric criteria, at full and reduced context. Each criterion is marked 0 to 10 by the judge against the rubric of Table~\ref{tab:judge} and rescaled to $[0,1]$ here; Judge is their mean. Means are over the judged tasks only, so the denominator is smaller than the full suite.}
+\label{tab:exp4_judge}
+\small
+\setlength{\tabcolsep}{5pt}
+\begin{tabular}{@{}ll rrrrr@{}}
+\toprule
+Model & Context & Judge & Groundedness & Completeness & Clarity & Clin. caution \\
+\midrule
+Qwen 3.5 9B (IQ3\_XXS) & 32k & 0.75 & 0.70 & 0.83 & 0.91 & 0.55 \\
+ & 4k & 0.56 & 0.57 & 0.56 & 0.72 & 0.40 \\
+\addlinespace
+Qwen 3.5 4B (Q4\_0) & 32k & 0.72 & 0.70 & 0.82 & 0.88 & 0.47 \\
+ & 8k & 0.62 & 0.64 & 0.69 & 0.75 & 0.39 \\
+\addlinespace
+Gemma 4 E2B (Q4 QAT) & 32k & 0.42 & 0.40 & 0.42 & 0.50 & 0.34 \\
+\addlinespace
+Gemma 4 E4B (Q4 QAT) & 32k & 0.77 & 0.78 & 0.82 & 0.94 & 0.53 \\
+\addlinespace
+\bottomrule
+\end{tabular}
+\end{table}
