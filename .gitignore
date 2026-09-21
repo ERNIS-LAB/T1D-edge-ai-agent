@@ -36,17 +36,6 @@ node_modules/
 dist/
 *.tsbuildinfo
 
-# --- LaTeX build artifacts -------------------------------------------------
-*.aux
-*.bbl
-*.blg
-*.log
-*.out
-*.synctex.gz
-*.fls
-*.fdb_latexmk
-*.toc
-
 # --- OS / editor -----------------------------------------------------------
 .DS_Store
 Thumbs.db

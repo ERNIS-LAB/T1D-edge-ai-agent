@@ -362,10 +362,9 @@ Also in `analysis/`:
 The benchmark and the OhioT1DM analysis scripts need the **OhioT1DM dataset**,
 which is **not included in this repository**.
 
-It is distributed by Ohio University under a signed Data Use Agreement that
-prohibits redistribution. You must request it yourself:
+You can request the dataset here:
 
-<http://smarthealth.cs.ohio.edu/OhioT1DM-dataset.html>
+<https://webpages.charlotte.edu/rbunescu/data/ohiot1dm/OhioT1DM-dataset.html>
 
 Once you have it, extract it so the paths look like this:
 
@@ -476,4 +475,4 @@ professional. The authors accept no liability for any use of this software.
 Released under the [MIT License](LICENSE).
 
 The OhioT1DM dataset is **not** covered by this license and is not distributed
-here; it remains subject to its own Data Use Agreement.
+here;
